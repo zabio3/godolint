@@ -1,0 +1,8 @@
+FROM golang:latest
+
+WORKDIR /go
+ADD . /go
+
+RUN cd /usr/src/app && git clone git@github.com:zabio3/godolint.git /usr/src/app
+
+CMD ["go", "run", "main.go"]

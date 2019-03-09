@@ -69,6 +69,12 @@ Available options:
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
+		{
+			command:           "godolint ../../testdata/src/DL3003_Dockerfile",
+			expectedOutStream: "../../testdata/src/DL3003_Dockerfile:6 DL3003 Use WORKDIR to switch to a directory\n",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
+		},
 	}
 
 	for i, tc := range cases {
