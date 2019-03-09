@@ -14,12 +14,30 @@ func TestCLI_Run(t *testing.T) {
 		expectedExitCode  int
 	}{
 		{
+			command:           "godolint",
+			expectedOutStream: "",
+			expectedErrStream: "Please provide a Dockerfile\n",
+			expectedExitCode:  ExitCodeNoExistError,
+		},
+		{
 			command: "godolint -h",
 			expectedOutStream: `Usage: godolint <Dockerfile>
 godolint is a Dockerfile linter command line tool that helps you build best practice Docker images.
 `,
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeParseFlagsError,
+		},
+		{
+			command:           "godolint testdata/no-file",
+			expectedOutStream: "",
+			expectedErrStream: "open testdata/no-file: no such file or directory\n",
+			expectedExitCode:  ExitCodeFileError,
+		},
+		{
+			command:           "godolint ../../testdata/src/Dockerfile",
+			expectedOutStream: "[]\n",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
 		},
 	}
 
