@@ -22,8 +22,15 @@ const (
 
 const name = "godolint"
 
-const usage = `Usage: godolint <Dockerfile>
-godolint is a Dockerfile linter command line tool that helps you build best practice Docker images.
+const usage = `
+hadolint - Dockerfile Linter written in Golang
+
+Usage: hadolint [--ignore RULECODE]
+  Lint Dockerfile for errors and best practices
+
+Available options:
+  --ignore RULECODE        A rule to ignore. If present, the ignore list in the
+                           config file is ignored
 `
 
 // CLI represents CLI interface
@@ -31,14 +38,29 @@ type CLI struct {
 	outStream, errStream io.Writer
 }
 
+type sliceString []string
+
+func (ss *sliceString) String() string {
+	return fmt.Sprintf("%s", *ss)
+}
+
+func (ss *sliceString) Set(value string) error {
+	*ss = append(*ss, value)
+	return nil
+}
+
 func (cli *CLI) run(args []string) int {
+	var ignoreString sliceString
+
 	flags := flag.NewFlagSet(name, flag.ContinueOnError)
 	flags.Usage = func() {
 		_, _ = fmt.Fprintf(cli.outStream, usage)
 	}
 
-	// ToDo Set necessary flags (--ignore-rule)
+	flags.Var(&ignoreString, "ignore", "Set ignore strings")
+
 	if err := flags.Parse(args[1:]); err != nil {
+		_, _ = fmt.Fprintf(cli.errStream, "%s\n", err)
 		return ExitCodeParseFlagsError
 	}
 
@@ -61,7 +83,7 @@ func (cli *CLI) run(args []string) int {
 		return ExitCodeAstParseError
 	}
 
-	rst, err := linter.Analize(r.AST, file)
+	rst, err := linter.Analize(r.AST, file, ignoreString)
 	if err != nil {
 		_, _ = fmt.Fprintf(cli.errStream, "%s\n", err)
 		return ExitCodeLintCheckError

@@ -21,10 +21,17 @@ func TestCLI_Run(t *testing.T) {
 		},
 		{
 			command: "godolint -h",
-			expectedOutStream: `Usage: godolint <Dockerfile>
-godolint is a Dockerfile linter command line tool that helps you build best practice Docker images.
+			expectedOutStream: `
+hadolint - Dockerfile Linter written in Golang
+
+Usage: hadolint [--ignore RULECODE]
+  Lint Dockerfile for errors and best practices
+
+Available options:
+  --ignore RULECODE        A rule to ignore. If present, the ignore list in the
+                           config file is ignored
 `,
-			expectedErrStream: "",
+			expectedErrStream: "flag: help requested\n",
 			expectedExitCode:  ExitCodeParseFlagsError,
 		},
 		{
@@ -42,6 +49,18 @@ godolint is a Dockerfile linter command line tool that helps you build best prac
 		{
 			command:           "godolint ../../testdata/src/DL3000_Dockerfile",
 			expectedOutStream: "../../testdata/src/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR\n",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
+		},
+		{
+			command:           "godolint ../../testdata/src/DL3001_Dockerfile",
+			expectedOutStream: "../../testdata/src/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`\n",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
+		},
+		{
+			command:           "godolint --ignore DL3001 ../../testdata/src/DL3001_Dockerfile",
+			expectedOutStream: "",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
