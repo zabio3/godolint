@@ -19,9 +19,9 @@ const (
 	ExitCodeLintCheckError
 )
 
-const Name = "godolint"
+const name = "godolint"
 
-const Usage = `Usage: godolint <Dockerfile>
+const usage = `Usage: godolint <Dockerfile>
 godolint is a Dockerfile linter command line tool that helps you build best practice Docker images.
 `
 
@@ -30,10 +30,10 @@ type CLI struct {
 	outStream, errStream io.Writer
 }
 
-func (cli *CLI) Run(args []string) int {
-	flags := flag.NewFlagSet(Name, flag.ContinueOnError)
+func (cli *CLI) run(args []string) int {
+	flags := flag.NewFlagSet(name, flag.ContinueOnError)
 	flags.Usage = func() {
-		_, _ = fmt.Fprintf(cli.outStream, Usage)
+		_, _ = fmt.Fprintf(cli.outStream, usage)
 	}
 
 	// ToDo Set necessary flags (--ignore-rule)
