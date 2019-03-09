@@ -21,10 +21,9 @@ func TestCLI_Run(t *testing.T) {
 		},
 		{
 			command: "godolint -h",
-			expectedOutStream: `
-hadolint - Dockerfile Linter written in Golang
+			expectedOutStream: `godolint - Dockerfile Linter written in Golang
 
-Usage: hadolint [--ignore RULECODE]
+Usage: godolint [--ignore RULECODE]
   Lint Dockerfile for errors and best practices
 
 Available options:

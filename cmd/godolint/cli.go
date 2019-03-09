@@ -22,10 +22,9 @@ const (
 
 const name = "godolint"
 
-const usage = `
-hadolint - Dockerfile Linter written in Golang
+const usage = `godolint - Dockerfile Linter written in Golang
 
-Usage: hadolint [--ignore RULECODE]
+Usage: godolint [--ignore RULECODE]
   Lint Dockerfile for errors and best practices
 
 Available options:
