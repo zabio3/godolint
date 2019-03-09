@@ -1,6 +1,6 @@
 godolint
 ===
-[![GitHub release](http://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](release)
+[![GitHub release](http://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](https://github.com/zabio3/godolint/releases/latest)
 [![Build Status](https://travis-ci.org/zabio3/godolint.svg?branch=master)](https://travis-ci.org/zabio3/godolint)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
@@ -19,6 +19,8 @@ $ godolint <Dockerfile>
 
 ##### Example
 
+To check Dockerfile
+
 ```
 $ godolint testdata/src/DL3000_Dockerfile
 testdata/src/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR
@@ -29,6 +31,8 @@ testdata/src/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense
 
 #### Options
 
+You can set some options:
+
 ```
 Available options:
   --ignore RULECODE        A rule to ignore. If present, the ignore list in the
@@ -37,8 +41,20 @@ Available options:
 
 ##### Example
 
+To check Dockerfile
+
 ```
 $ godolint --ignore DL3000 testdata/src/DL3000_Dockerfile
+```
+
+## Install
+
+You can download binary from release page and place it in $PATH directory.
+
+Or you can use go get,
+
+```
+$ go get github.com/zabio3/godolint/cmd/godolint
 ```
 
 ## Rules
