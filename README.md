@@ -5,9 +5,11 @@ godolint
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
+**Comming soon !!**
+
 A smarter Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images. 
 The linter is parsing the Dockerfile into an AST and performs rules on top of the AST. 
-(Affected tools: [hadolint](https://github.com/hadolint/hadolint/wiki))
+(inspired by [hadolint](https://github.com/hadolint/hadolint/wiki))
 
 ## Usage
 
@@ -67,7 +69,35 @@ An incomplete list of implemented rules.
 | DL3001   | For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig. |
 | DL3002   | Last user should not be root.                                                                                                                       |
 | DL3003   | Use WORKDIR to switch to a directory.                                                                                                               |
-
+| DL3004 (Unimplemented) | Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root.                                                        |
+| DL3005 (Unimplemented) | Do not use apt-get upgrade or dist-upgrade.                                                                                                         |
+| DL3007 (Unimplemented) | Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag.                                         |
+| DL3006 (Unimplemented) | Always tag the version of an image explicitly.                                                                                                      |
+| DL3008 (Unimplemented) | Pin versions in apt-get install.                                                                                                                    |
+| DL3009 (Unimplemented) | Delete the apt-get lists after installing something.                                                                                                |
+| DL3010 (Unimplemented) | Use ADD for extracting archives into an image.                                                                                                      |
+| DL3011 (Unimplemented) | Valid UNIX ports range from 0 to 65535.                                                                                                             |
+| DL3012 (Unimplemented) | Provide an email address or URL as maintainer.                                                                                                      |
+| DL3013 (Unimplemented) | Pin versions in pip.                                                                                                                                |
+| DL3014 (Unimplemented) | Use the `-y` switch.                                                                                                                                |
+| DL3015 (Unimplemented) | Avoid additional packages by specifying --no-install-recommends.                                                                                    |
+| DL3016 (Unimplemented) | Pin versions in `npm`.                                                                                                                              |
+| DL3017 (Unimplemented) | Do not use `apk upgrade`.                                                                                                                           |
+| DL3018 (Unimplemented) | Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`.                                                          |
+| DL3019 (Unimplemented) | Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages.                        |
+| DL3020 (Unimplemented) | Use `COPY` instead of `ADD` for files and folders.                                                                                                  |
+| DL3021 (Unimplemented) | `COPY` with more than 2 arguments requires the last argument to end with `/`                                                                        |
+| DL3022 (Unimplemented) | `COPY --from` should reference a previously defined `FROM` alias                                                                                    |
+| DL3023 (Unimplemented) | `COPY --from` cannot reference its own `FROM` alias                                                                                                 |
+| DL3024 (Unimplemented) | `FROM` aliases (stage names) must be unique                                                                                                         |
+| DL3025 (Unimplemented) | Use arguments JSON notation for CMD and ENTRYPOINT arguments                                                                                        |
+| DL3026 (Unimplemented) | Use only an allowed registry in the FROM image                                                                                                      |
+| DL4000 (Unimplemented) | MAINTAINER is deprecated.                                                                                                                           |
+| DL4001 (Unimplemented) | Either use Wget or Curl but not both.                                                                                                               |
+| DL4003 (Unimplemented) | Multiple `CMD` instructions found.                                                                                                                  |
+| DL4004 (Unimplemented) | Multiple `ENTRYPOINT` instructions found.                                                                                                           |
+| DL4005 (Unimplemented) | Use `SHELL` to change the default shell.                                                                                                            |
+| DL4006 (Unimplemented) | Set the `SHELL` option -o pipefail before `RUN` with a pipe in it                                                                                   |
 
 ### AST
 
