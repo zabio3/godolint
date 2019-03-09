@@ -4,6 +4,7 @@ import (
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
+// Analize Apply docker best practice rules to docker ast
 func Analize(node *parser.Node, file string, ignoreRules []string) ([]string, error) {
 	var (
 		rst           []string

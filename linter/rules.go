@@ -7,17 +7,21 @@ import (
 	"strings"
 )
 
+// Rule is filtered rule (with ignore rule applied)
+// CheckF func(node *parser.Node, file string) (rst []string, err error)
 type Rule struct {
 	Code     string
 	Severity string
-	CheckF   interface{} // func(node *parser.Node, file string) (rst []string, err error)
+	CheckF   interface{}
 }
 
+// RuleKeys is (Docker best practice rule key)
 var RuleKeys = []string{
 	"DL3000",
 	"DL3001",
 }
 
+// Rules (Docker best practice rule key)
 var Rules = map[string]*Rule{
 	"DL3000": {
 		Code:     "DL3000",
@@ -31,6 +35,7 @@ var Rules = map[string]*Rule{
 	},
 }
 
+// DL3000Check is "Use absolute WORKDIR."
 func DL3000Check(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "workdir" {
@@ -46,6 +51,7 @@ func DL3000Check(node *parser.Node, file string) (rst []string, err error) {
 	return rst, nil
 }
 
+// DL3001Check is "For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig."
 func DL3001Check(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {

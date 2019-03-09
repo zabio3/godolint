@@ -11,6 +11,7 @@ import (
 	"github.com/zabio3/godolint/linter"
 )
 
+// Exit codes are int values that represent an exit code for a particular error.
 const (
 	ExitCodeOK = iota
 	ExitCodeParseFlagsError
