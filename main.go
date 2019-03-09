@@ -1,3 +1,0 @@
-package godolint
-
-func main() {}

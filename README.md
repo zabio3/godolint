@@ -6,4 +6,5 @@ godolint
 
 Coming Soon!
 
-Dockerfile linter, validate inline bash, written in Golang
+A smarter Dockerfile linter that helps you build best practice Docker images. 
+The linter is parsing the Dockerfile into an AST and performs rules on top of the AST. 
