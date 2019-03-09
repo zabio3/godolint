@@ -1,0 +1,5 @@
+github.com/moby/buildkit v0.3.3 h1:7eh9tOdFSuE84Q5wvmUjXhEvqnO7nNiwja45Hr59+uc=
+github.com/moby/buildkit v0.3.3/go.mod h1:nnELdKPRkUAQR6pAB3mRU3+IlbqL3SSaAWqQL8k/K+4=
+github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
+github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/zabio3/godolint v0.0.0-20190309095937-5f2a9c6e8943 h1:M8k5xYQHMx7jx3iGn1oeXyNwRvdBpe284yEKFtnvVRw=
