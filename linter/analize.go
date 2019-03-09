@@ -6,6 +6,7 @@ import (
 
 func Analize(node *parser.Node, file string) ([]string, error) {
 	var rst []string
+	// ToDo Filtering rules to apply
 	for _, k := range RuleKeys {
 		v, err := Rules[k].CheckF.(func(node *parser.Node, file string) (rst []string, err error))(node, file)
 		if err != nil {

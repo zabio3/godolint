@@ -16,3 +16,4 @@ An incomplete list of implemented rules.
 | Rule                                                         | Description                                                                                                                                         |
 |:-------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
 | DL3000 | Use absolute WORKDIR.                                                                                                                               |
+| DL3001 | For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig. |
