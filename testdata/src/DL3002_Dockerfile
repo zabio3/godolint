@@ -1,0 +1,7 @@
+FROM golang:latest
+
+USER root
+WORKDIR /go
+ADD . /go
+
+CMD ["go", "run", "main.go"]

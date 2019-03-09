@@ -28,7 +28,7 @@ $ godolint testdata/src/DL3001_Dockerfile
 testdata/src/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`
 ```
 
-##### Options
+#### Options
 
 ```
 Available options:
@@ -50,3 +50,4 @@ An incomplete list of implemented rules.
 |:-------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
 | DL3000 | Use absolute WORKDIR.                                                                                                                               |
 | DL3001 | For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig. |
+| DL3002 | Last user should not be root.     

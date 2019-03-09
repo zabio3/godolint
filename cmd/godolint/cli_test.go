@@ -63,6 +63,12 @@ Available options:
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
+		{
+			command:           "godolint ../../testdata/src/DL3002_Dockerfile",
+			expectedOutStream: "../../testdata/src/DL3002_Dockerfile:3 DL3002 Last USER should not be root\n",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
+		},
 	}
 
 	for i, tc := range cases {
