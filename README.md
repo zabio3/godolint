@@ -41,7 +41,7 @@ Available options:
 
 ##### Example
 
-To check Dockerfile
+To check Dockerfile (exclude specific rules).
 
 ```
 $ godolint --ignore DL3000 testdata/src/DL3000_Dockerfile
@@ -67,3 +67,9 @@ An incomplete list of implemented rules.
 | DL3001   | For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig. |
 | DL3002   | Last user should not be root.                                                                                                                       |
 | DL3003   | Use WORKDIR to switch to a directory.                                                                                                               |
+
+
+### AST
+
+Dockerfile syntax is fully described in the [Dockerfile reference](https://docs.docker.com/engine/reference/builder/). 
+Just take a look at [moby/buildkit](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) in the language-docker project to see the AST definition.
