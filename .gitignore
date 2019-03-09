@@ -18,3 +18,5 @@
 bin/
 vendor/
 godolint
+
+.goreleaser.yml
