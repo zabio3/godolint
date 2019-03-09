@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"github.com/zabio3/godolint/linter"
@@ -60,12 +61,12 @@ func (cli *CLI) run(args []string) int {
 		return ExitCodeAstParseError
 	}
 
-	rst, err := linter.Analize(r.AST)
+	rst, err := linter.Analize(r.AST, file)
 	if err != nil {
 		_, _ = fmt.Fprintf(cli.errStream, "%s\n", err)
 		return ExitCodeLintCheckError
 	}
 
-	_, _ = fmt.Fprintf(cli.outStream, "%s\n", rst)
+	_, _ = fmt.Fprintf(cli.outStream, strings.Trim(fmt.Sprintf("%s", rst), "[]"))
 	return ExitCodeOK
 }

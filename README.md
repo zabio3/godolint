@@ -6,5 +6,13 @@ godolint
 
 Coming Soon!
 
-A smarter Dockerfile linter that helps you build best practice Docker images. 
+A smarter Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images. 
 The linter is parsing the Dockerfile into an AST and performs rules on top of the AST. 
+
+## Rules
+
+An incomplete list of implemented rules.
+
+| Rule                                                         | Description                                                                                                                                         |
+|:-------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
+| DL3000 | Use absolute WORKDIR.                                                                                                                               |

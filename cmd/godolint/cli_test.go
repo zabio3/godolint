@@ -34,8 +34,14 @@ godolint is a Dockerfile linter command line tool that helps you build best prac
 			expectedExitCode:  ExitCodeFileError,
 		},
 		{
-			command:           "godolint ../../testdata/src/Dockerfile",
-			expectedOutStream: "[]\n",
+			command:           "godolint ../../testdata/src/OK_Dockerfile",
+			expectedOutStream: "",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
+		},
+		{
+			command:           "godolint ../../testdata/src/DL3000_Dockerfile",
+			expectedOutStream: "../../testdata/src/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
@@ -48,7 +54,7 @@ godolint is a Dockerfile linter command line tool that helps you build best prac
 		cli := CLI{outStream: outStream, errStream: errStream}
 		args := strings.Split(tc.command, " ")
 
-		if got := cli.Run(args); got != tc.expectedExitCode {
+		if got := cli.run(args); got != tc.expectedExitCode {
 			t.Errorf("#%d %q exits with %d, want %d", i, tc.command, got, tc.expectedExitCode)
 		}
 
