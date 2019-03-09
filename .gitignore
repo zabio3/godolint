@@ -13,10 +13,8 @@
 # Development environment
 .idea
 
-#
-
 bin/
 vendor/
 godolint
-
+dist/
 .goreleaser.yml
