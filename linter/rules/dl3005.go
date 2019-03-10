@@ -12,11 +12,12 @@ func dl3005Check(node *parser.Node, file string) (rst []string, err error) {
 		if child.Value == "run" {
 			isAptGet, isUpgrade := false, false
 			for _, v := range strings.Fields(child.Next.Value) {
-				if v == "apt-get" {
+				switch v {
+				case "apt-get":
 					isAptGet = true
-				}
-				if v == "upgrade" {
+				case "upgrade":
 					isUpgrade = true
+				default:
 				}
 			}
 			if isAptGet && isUpgrade {

@@ -74,7 +74,7 @@ An incomplete list of implemented rules.
 | DL3005   | Do not use apt-get upgrade or dist-upgrade.                                                                                                         |
 | DL3006   | Always tag the version of an image explicitly.      
 | DL3007   | Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag.                                         |                                                                                                |
-| DL3008 (Unimplemented) | Pin versions in apt-get install.                                                                                                                    |
+| DL3008   | Pin versions in apt-get install.                                                                                                                    |
 | DL3009 (Unimplemented) | Delete the apt-get lists after installing something.                                                                                                |
 | DL3010 (Unimplemented) | Use ADD for extracting archives into an image.                                                                                                      |
 | DL3011 (Unimplemented) | Valid UNIX ports range from 0 to 65535.                                                                                                             |
