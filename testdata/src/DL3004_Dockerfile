@@ -1,0 +1,8 @@
+FROM ubuntu:latest
+
+RUN sudo apt-get install
+
+WORKDIR /go
+ADD . /go
+
+CMD ["go", "run", "main.go"]
