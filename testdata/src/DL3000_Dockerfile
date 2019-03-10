@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.12.0-stretch
 
 WORKDIR go/
 ADD . /go
