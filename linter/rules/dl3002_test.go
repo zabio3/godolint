@@ -24,6 +24,20 @@ CMD ["go", "run", "main.go"]
 			expectedRst: []string{"DL3002Check_Dockerfile:3 DL3002 Last USER should not be root\n"},
 			expectedErr: nil,
 		},
+		{
+			dockerfileStr: `FROM golang:latest
+
+USER root
+WORKDIR /go
+ADD . /go
+USER zabio3
+
+CMD ["go", "run", "main.go"]
+`,
+			file:        "DL3002Check_Dockerfile_2",
+			expectedRst: nil,
+			expectedErr: nil,
+		},
 	}
 
 	for i, tc := range cases {

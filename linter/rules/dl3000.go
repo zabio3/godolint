@@ -10,10 +10,10 @@ import (
 func dl3000Check(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "workdir" {
-			absPath, err := filepath.Abs(child.Next.Value)
-			if err != nil {
-				return nil, err
-			}
+			absPath, _ := filepath.Abs(child.Next.Value)
+			//if err != nil {
+			//	return nil, err
+			//}
 			if absPath != child.Next.Value {
 				rst = append(rst, fmt.Sprintf("%s:%v DL3000 Use absolute WORKDIR\n", file, child.StartLine))
 			}
