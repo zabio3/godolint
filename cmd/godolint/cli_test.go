@@ -75,6 +75,12 @@ Available options:
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
+		{
+			command:           "godolint ../../testdata/src/DL3004_Dockerfile",
+			expectedOutStream: "../../testdata/src/DL3004_Dockerfile:3 DL3004 Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root.\n",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
+		},
 	}
 
 	for i, tc := range cases {
