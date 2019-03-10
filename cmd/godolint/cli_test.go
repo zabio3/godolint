@@ -85,7 +85,7 @@ Available options:
 		args := strings.Split(tc.command, " ")
 
 		if got := cli.run(args); got != tc.expectedExitCode {
-			t.Errorf("#%d %q exits with %d, want %d", i, tc.command, got, tc.expectedExitCode)
+			t.Errorf("#%d %q exits: want: %d, got: %d", i, tc.command, tc.expectedExitCode, got)
 		}
 
 		if got := outStream.String(); got != tc.expectedOutStream {
