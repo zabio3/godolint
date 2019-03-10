@@ -53,7 +53,7 @@ $ godolint --ignore DL3000 testdata/src/DL3000_Dockerfile
 
 You can download binary from release page and place it in $PATH directory.
 
-Or you can use go get,
+Or you can use go get
 
 ```
 $ go get github.com/zabio3/godolint/cmd/godolint
