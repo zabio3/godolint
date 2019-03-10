@@ -71,7 +71,7 @@ An incomplete list of implemented rules.
 | DL3002   | Last user should not be root.                                                                                                                       |
 | DL3003   | Use WORKDIR to switch to a directory.                                                                                                               |
 | DL3004   | Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root.                                                        |
-| DL3005 (Unimplemented) | Do not use apt-get upgrade or dist-upgrade.                                                                                                         |
+| DL3005   | Do not use apt-get upgrade or dist-upgrade.                                                                                                         |
 | DL3007 (Unimplemented) | Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag.                                         |
 | DL3006 (Unimplemented) | Always tag the version of an image explicitly.                                                                                                      |
 | DL3008 (Unimplemented) | Pin versions in apt-get install.                                                                                                                    |
