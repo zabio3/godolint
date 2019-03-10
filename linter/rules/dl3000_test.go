@@ -12,8 +12,7 @@ func TestDL3000Check(t *testing.T) {
 		expectedErr   error
 	}{
 		{
-			dockerfileStr: `
-FROM golang:latest
+			dockerfileStr: `FROM golang:latest
 
 WORKDIR go/
 ADD . /go
@@ -21,7 +20,7 @@ ADD . /go
 CMD ["go", "run", "main.go"]
 `,
 			file:        "DL3000Check_Dockerfile",
-			expectedRst: []string{"DL3000Check_Dockerfile:4 DL3000 Use absolute WORKDIR\n"},
+			expectedRst: []string{"DL3000Check_Dockerfile:3 DL3000 Use absolute WORKDIR\n"},
 			expectedErr: nil,
 		},
 	}
@@ -42,8 +41,4 @@ CMD ["go", "run", "main.go"]
 		}
 		cleanup(t)
 	}
-}
-
-func cleanup(t *testing.T) {
-	t.Helper()
 }

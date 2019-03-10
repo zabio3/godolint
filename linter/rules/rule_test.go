@@ -3,6 +3,7 @@ package rules
 import (
 	"bytes"
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
+	"testing"
 )
 
 func dockerFileParse(dockerfileStr string) (*parser.Result, error) {
@@ -29,4 +30,8 @@ func sliceEq(a, b []string) bool {
 	}
 
 	return true
+}
+
+func cleanup(t *testing.T) {
+	t.Helper()
 }
