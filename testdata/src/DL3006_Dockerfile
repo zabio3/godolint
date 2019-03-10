@@ -1,0 +1,7 @@
+FROM debian
+RUN apt-get update
+
+WORKDIR /go
+ADD . /go
+
+CMD ["go", "run", "main.go"]
