@@ -14,8 +14,7 @@ func dl3008Check(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			isAptGet, isInstall := false, false
-			args := strings.Fields(child.Next.Value)
-			for _, v := range args {
+			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apt-get":
 					isAptGet = true

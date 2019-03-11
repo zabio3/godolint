@@ -10,54 +10,37 @@ import (
 func dl3009Check(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
-			isInstall, isCleanAptDone := false, false
-			args := strings.Fields(child.Next.Value)
-			for i, v := range args {
+			isAptGet, isInstalled, isRm, hasRmPath, hasClean := false, false, false, false, false
+			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apt-get":
-					if len(args) > i+1 {
-						switch args[i+1] {
-						case "update", "install":
-							isInstall = true
-						default:
-							if isInstall {
-								isCleanAptDone = hasCleanApt(args[i+1:])
-							}
-						}
+					isAptGet = true
+				case "install", "update":
+					if isAptGet {
+						isInstalled = true
+					}
+				case "clean":
+					if isInstalled {
+						hasClean = true
+					}
+				case "&&":
+					isAptGet = false
+				case "rm":
+					if isInstalled {
+						isRm = true
+					}
+				case "/var/lib/apt/lists/*":
+					if isRm {
+						hasRmPath = true
+					}
+				default:
+					if isInstalled && !(hasRmPath && hasClean) {
+						rst = append(rst, fmt.Sprintf("%s:%v DL3009 Delete the apt-get lists after installing something\n", file, child.StartLine))
+						isAptGet, isInstalled, isRm, hasRmPath, hasClean = false, false, false, false, false
 					}
 				}
-			}
-			if isInstall && !isCleanAptDone {
-				rst = append(rst, fmt.Sprintf("%s:%v DL3009 Delete the apt-get lists after installing something\n", file, child.StartLine))
 			}
 		}
 	}
 	return rst, nil
-}
-
-func hasCleanApt(args []string) bool {
-	hasClean, hasRemove := false, false
-	size := len(args)
-	for i, v := range args {
-		switch v {
-		case "&&":
-			continue
-		case "apt-get":
-			if size > i+1 && args[i+1] == "clean" {
-				hasClean = true
-			}
-		case "rm":
-			if size > i+1 {
-				for _, w := range args[i+1:] {
-					switch w {
-					case "&&":
-						continue
-					case "/var/lib/apt/lists/*":
-						hasRemove = true
-					}
-				}
-			}
-		}
-	}
-	return hasClean && hasRemove
 }
