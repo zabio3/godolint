@@ -74,7 +74,7 @@ An incomplete list of implemented rules.
 | DL3007   | Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag.                                         |                                                                                                |
 | DL3008   | Pin versions in apt-get install.                                                                                                                    |
 | DL3009   | Delete the apt-get lists after installing something.                                                                                                |
-| DL3010 (Unimplemented) | Use ADD for extracting archives into an image.                                                                                                      |
+| DL3010   | Use ADD for extracting archives into an image.                                                                                                      |
 | DL3011 (Unimplemented) | Valid UNIX ports range from 0 to 65535.                                                                                                             |
 | DL3012 (Unimplemented) | Provide an email address or URL as maintainer.                                                                                                      |
 | DL3013 (Unimplemented) | Pin versions in pip.                                                                                                                                |
