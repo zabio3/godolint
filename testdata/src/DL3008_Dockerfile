@@ -1,4 +1,4 @@
 FROM busybox:1.0
-RUN apt-get install python
+RUN apt-get install python && apt-get clean && rm /var/lib/apt/lists/*
 
 CMD ["go", "run", "main.go"]
