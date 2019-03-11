@@ -21,6 +21,16 @@ CMD ["go", "run", "main.go"]
 			expectedRst: []string{"DL3008Check_Dockerfile:2 DL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`\n"},
 			expectedErr: nil,
 		},
+		{
+			dockerfileStr: `FROM busybox:1.0
+RUN apt-get install python && apt-get clean
+
+CMD ["go", "run", "main.go"]
+`,
+			file:        "DL3008Check_Dockerfile_2",
+			expectedRst: []string{"DL3008Check_Dockerfile_2:2 DL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`\n"},
+			expectedErr: nil,
+		},
 	}
 
 	for i, tc := range cases {

@@ -21,6 +21,16 @@ CMD ["go", "run", "main.go"]
 			expectedRst: []string{"DL3009Check_Dockerfile:2 DL3009 Delete the apt-get lists after installing something\n"},
 			expectedErr: nil,
 		},
+		{
+			dockerfileStr: `FROM debian:1.12.0-stretch
+RUN apt-get update && apt-get install -y python && apt-get clean && rm /var/lib/apt/lists/*
+
+CMD ["go", "run", "main.go"]
+`,
+			file:        "DL3009Check_Dockerfile_2",
+			expectedRst: nil,
+			expectedErr: nil,
+		},
 	}
 
 	for i, tc := range cases {

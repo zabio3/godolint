@@ -24,6 +24,7 @@ func dl3008Check(node *parser.Node, file string) (rst []string, err error) {
 					}
 				case "&&":
 					isAptGet, isInstall = false, false
+					continue
 				default:
 					if isInstall && !verPattern.MatchString(v) {
 						rst = append(rst, fmt.Sprintf("%s:%v DL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`\n", file, child.StartLine))
