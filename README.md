@@ -6,11 +6,9 @@ godolint
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-**Comming soon !!**
-
-A smarter Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images. 
-The linter is parsing the Dockerfile into an AST and performs rules on top of the AST. 
-(inspired by [hadolint](https://github.com/hadolint/hadolint/wiki))
+A Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images. 
+For static analysis of AST, [moby/buildkit](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) is used, and lint check is done.
+The tool is parsing the Dockerfile into an AST and performs rules on top of the AST.(inspired by [Haskell Dockerfile Linter](https://github.com/hadolint/hadolint))
 
 ## Usage
 
