@@ -26,7 +26,7 @@ func dl3013Check(node *parser.Node, file string) (rst []string, err error) {
 					isPip, isInstall = false, false
 				default:
 					if isPip && isInstall && !verPattern3013.MatchString(v) && length == len(rst) {
-						rst = append(rst, fmt.Sprintf("%s:%v Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n", file, child.StartLine))
+						rst = append(rst, fmt.Sprintf("%s:%v DL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n", file, child.StartLine))
 					}
 					isPip, isInstall = false, false
 				}

@@ -18,8 +18,8 @@ RUN pip install https://github.com/Banno/carbon/tarball/0.9.x-fix-events-callbac
 `,
 			file: "DL3013Check_Dockerfile",
 			expectedRst: []string{
-				"DL3013Check_Dockerfile:2 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n",
-				"DL3013Check_Dockerfile:3 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n"},
+				"DL3013Check_Dockerfile:2 DL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n",
+				"DL3013Check_Dockerfile:3 DL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n"},
 			expectedErr: nil,
 		},
 		{
@@ -28,7 +28,7 @@ RUN pip install django && pip install https://github.com/Banno/carbon/tarball/0.
 `,
 			file: "DL3013Check_Dockerfile_2",
 			expectedRst: []string{
-				"DL3013Check_Dockerfile_2:2 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n"},
+				"DL3013Check_Dockerfile_2:2 DL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n"},
 			expectedErr: nil,
 		},
 	}
