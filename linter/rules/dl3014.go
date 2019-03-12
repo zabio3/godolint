@@ -14,7 +14,7 @@ func dl3014Check(node *parser.Node, file string) (rst []string, err error) {
 
 	for _, child := range node.Children {
 		if child.Value == "run" {
-			isAptGet, isInstalled := false, false
+			isAptGet, isInstalled, length := false, false, len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apt-get":
@@ -26,7 +26,7 @@ func dl3014Check(node *parser.Node, file string) (rst []string, err error) {
 				case "&&":
 					isAptGet, isInstalled = false, false
 				default:
-					if isInstalled && !yesPattern.MatchString(v) {
+					if isInstalled && !yesPattern.MatchString(v) && length == len(rst) {
 						rst = append(rst, fmt.Sprintf("%s:%v DL3014 Use the `-y` switch to avoid manual input `apt-get -y install <package>`\n", file, child.StartLine))
 					}
 					isAptGet, isInstalled = false, false

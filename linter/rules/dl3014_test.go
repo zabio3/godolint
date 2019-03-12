@@ -21,7 +21,7 @@ RUN apt-get install python=2.7
 		},
 		{
 			dockerfileStr: `FROM debian
-RUN apt-get install python=2.7 && apt-get -y install python=2.7
+RUN apt-get install python=2.7 && apt-get install ruby
 `,
 			file:        "DL3014Check_Dockerfile_2",
 			expectedRst: []string{"DL3014Check_Dockerfile_2:2 DL3014 Use the `-y` switch to avoid manual input `apt-get -y install <package>`\n"},
