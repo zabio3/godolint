@@ -82,6 +82,12 @@ Available options:
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
+			command:           "godolint ../../testdata/src/MaxScanSize_File",
+			expectedOutStream: "",
+			expectedErrStream: "file with no instructions.\n",
+			expectedExitCode:  ExitCodeAstParseError,
+		},
+		{
 			command:           "godolint --ignore NO_RULE ../../testdata/src/OK_Dockerfile",
 			expectedOutStream: "",
 			expectedErrStream: "no exist rule specified by ignore flag: NO_RULE\n",

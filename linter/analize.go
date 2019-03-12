@@ -16,11 +16,11 @@ func Analize(node *parser.Node, file string, ignoreRules []string) ([]string, er
 	// Filter rules to apply
 	if len(ignoreRules) != 0 {
 		for _, v := range ignoreRules {
-			rst, err := getFilterdList(v, rules.RuleKeys)
+			xs, err := getFilterdList(v, rules.RuleKeys)
 			if err != nil {
 				return nil, err
 			}
-			filteredRules = rst
+			filteredRules = xs
 		}
 	} else {
 		filteredRules = rules.RuleKeys
