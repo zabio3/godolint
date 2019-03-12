@@ -44,7 +44,6 @@ EXPOSE hoge
 		}
 
 		expectedErr := tc.expectedErr
-
 		if gotErr != nil && expectedErr != nil {
 			if gotErr.Error() != expectedErr.Error() {
 				t.Errorf("#%d dl3011Check error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
