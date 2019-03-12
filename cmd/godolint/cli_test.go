@@ -84,7 +84,7 @@ Available options:
 		{
 			command:           "godolint ../../testdata/src/MaxScanSize_File",
 			expectedOutStream: "",
-			expectedErrStream: "file with no instructions.\n",
+			expectedErrStream: "dockerfile line greater than max allowed size of 65535\n",
 			expectedExitCode:  ExitCodeAstParseError,
 		},
 		{
