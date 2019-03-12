@@ -6,9 +6,9 @@ godolint
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-A Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images. 
+A Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images (inspired by [Haskell Dockerfile Linter](https://github.com/hadolint/hadolint)). 
 For static analysis of AST, [moby/buildkit](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) is used, and lint check is done.
-The tool is parsing the Dockerfile into an AST and performs rules on top of the AST.(inspired by [Haskell Dockerfile Linter](https://github.com/hadolint/hadolint))
+The tool is parsing the Dockerfile into an AST and performs rules on top of the AST.
 
 ## Usage
 
@@ -75,6 +75,7 @@ An incomplete list of implemented rules.
 | [DL3008](https://github.com/hadolint/hadolint/wiki/DL3008)   | Pin versions in apt-get install.                                                                                                                    |
 | [DL3009](https://github.com/hadolint/hadolint/wiki/DL3009)   | Delete the apt-get lists after installing something.                                                                                                |
 | [DL3010](https://github.com/hadolint/hadolint/wiki/DL3010)   | Use ADD for extracting archives into an image.                                                                                                      |
+| [DL3011](https://github.com/hadolint/hadolint/wiki/DL3011)   | Valid UNIX ports range from 0 to 65535.                                   
 
 ### AST
 
