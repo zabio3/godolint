@@ -64,13 +64,14 @@ func (cli *CLI) run(args []string) int {
 		return ExitCodeParseFlagsError
 	}
 
+	length := len(args)
 	// The Dockerfile to be analyzed must be the last.
-	if len(args) < 2 {
+	if length < 2 {
 		_, _ = fmt.Fprintf(cli.errStream, "Please provide a Dockerfile\n")
 		return ExitCodeNoExistError
 	}
 
-	file := args[len(args)-1]
+	file := args[length-1]
 	f, err := os.Open(file)
 	if err != nil {
 		_, _ = fmt.Fprintf(cli.errStream, "%s\n", err)

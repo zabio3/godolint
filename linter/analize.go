@@ -1,6 +1,7 @@
 package linter
 
 import (
+	"fmt"
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"github.com/zabio3/godolint/linter/rules"
 )
@@ -12,14 +13,14 @@ func Analize(node *parser.Node, file string, ignoreRules []string) ([]string, er
 		filteredRules []string
 	)
 
-	// Filtering rules to apply
+	// Filter rules to apply
 	if len(ignoreRules) != 0 {
 		for _, v := range ignoreRules {
-			for _, w := range rules.RuleKeys {
-				if v != w {
-					filteredRules = append(filteredRules, w)
-				}
+			rst, err := getFilterdList(v, rules.RuleKeys)
+			if err != nil {
+				return nil, err
 			}
+			filteredRules = rst
 		}
 	} else {
 		filteredRules = rules.RuleKeys
@@ -35,4 +36,22 @@ func Analize(node *parser.Node, file string, ignoreRules []string) ([]string, er
 		}
 	}
 	return rst, nil
+}
+
+func getFilterdList(s string, xs []string) ([]string, error) {
+	var filteredRules []string
+	isExist := false
+	for _, x := range xs {
+		if x == s {
+			isExist = true
+		} else {
+			filteredRules = append(filteredRules, x)
+		}
+	}
+
+	if !isExist {
+		return nil, fmt.Errorf("no exist rule specified by ignore flag: %s", s)
+	}
+
+	return filteredRules, nil
 }

@@ -81,6 +81,12 @@ Available options:
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
+		{
+			command:           "godolint --ignore NO_RULE ../../testdata/src/OK_Dockerfile",
+			expectedOutStream: "",
+			expectedErrStream: "no exist rule specified by ignore flag: NO_RULE\n",
+			expectedExitCode:  ExitCodeLintCheckError,
+		},
 	}
 
 	for i, tc := range cases {
