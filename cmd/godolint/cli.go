@@ -54,7 +54,7 @@ func (cli *CLI) run(args []string) int {
 
 	flags := flag.NewFlagSet(name, flag.ContinueOnError)
 	flags.Usage = func() {
-		_, _ = fmt.Fprintf(cli.outStream, usage)
+		_, _ = fmt.Fprint(cli.outStream, usage)
 	}
 
 	flags.Var(&ignoreString, "ignore", "Set ignore strings")
@@ -90,6 +90,6 @@ func (cli *CLI) run(args []string) int {
 		return ExitCodeLintCheckError
 	}
 
-	_, _ = fmt.Fprintf(cli.outStream, strings.Trim(fmt.Sprintf("%s", rst), "[]"))
+	_, _ = fmt.Fprint(cli.outStream, strings.Trim(fmt.Sprintf("%s", rst), "[]"))
 	return ExitCodeOK
 }
