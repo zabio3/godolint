@@ -1,7 +1,7 @@
 FROM golang:1.12.0-stretch
 
 WORKDIR /go
-ADD . /go
+COPY . /go
 
 RUN cd /usr/src/app && git clone git@github.com:zabio3/godolint.git /usr/src/app
 
