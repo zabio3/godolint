@@ -31,9 +31,7 @@ func Analize(node *parser.Node, file string, ignoreRules []string) ([]string, er
 		if err != nil {
 			return rst, err
 		}
-		for _, w := range v {
-			rst = append(rst, w)
-		}
+		rst = append(rst, v...)
 	}
 	return rst, nil
 }
