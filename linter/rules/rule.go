@@ -28,6 +28,7 @@ var RuleKeys = []string{
 	"DL3015",
 	"DL3016",
 	"DL3017",
+	"DL3018",
 }
 
 // Rules (Docker best practice rule key)
@@ -121,5 +122,10 @@ var Rules = map[string]*Rule{
 		Code:     "DL3017",
 		Severity: "ErrorC",
 		CheckF:   dl3017Check,
+	},
+	"DL3018": {
+		Code:     "DL3018",
+		Severity: "WarningC",
+		CheckF:   dl3018Check,
 	},
 }
