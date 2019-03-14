@@ -24,7 +24,6 @@ func dl3018Check(node *parser.Node, file string) (rst []string, err error) {
 					}
 				case "&&":
 					isApk, isAdd = false, false
-					continue
 				default:
 					if isAdd && !verPattern3018.MatchString(v) && length == len(rst) {
 						rst = append(rst, fmt.Sprintf("%s:%v DL3018 Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`\n", file, child.StartLine))

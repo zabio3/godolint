@@ -13,6 +13,7 @@ type Severity struct {
 	Name string
 }
 
+// Severity Level
 var (
 	SeverityError   = Severity{Name: "ErrorC"}
 	SeverityWarning = Severity{Name: "WarningC"}
@@ -43,6 +44,7 @@ var RuleKeys = []string{
 	"DL3019",
 	"DL3020",
 	"DL3021",
+	"DL3022",
 }
 
 // Rules (Docker best practice rule key)
@@ -156,5 +158,10 @@ var Rules = map[string]*Rule{
 		Code:     "DL3021",
 		Severity: SeverityError,
 		CheckF:   dl3021Check,
+	},
+	"DL3022": {
+		Code:     "DL3022",
+		Severity: SeverityWarning,
+		CheckF:   dl3022Check,
 	},
 }
