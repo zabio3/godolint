@@ -9,7 +9,7 @@ before_install:
 
 script:
   - go test -race -coverprofile=coverage_rules.txt -covermode=atomic ./linter/rules/
-  - go test -race -coverprofile=coverage_cmd.txt -covermode=atomic ./cmd/godolint/
+  - go test -race -coverprofile=coverage_cmd.txt -covermode=atomic ./cmd/
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
