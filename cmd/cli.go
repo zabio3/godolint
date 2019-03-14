@@ -49,6 +49,7 @@ func (ss *sliceString) Set(value string) error {
 	return nil
 }
 
+// Run it takes Dockerfile as an argument and applies it to analyzer to standard output.
 func (cli *CLI) Run(args []string) int {
 	var ignoreString sliceString
 

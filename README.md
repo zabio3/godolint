@@ -1,4 +1,4 @@
-godolint
+godolint (Golang Dockerfile Linter)
 ===
 [![GitHub release](http://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](https://github.com/zabio3/godolint/releases/latest)
 [![Build Status](https://travis-ci.org/zabio3/godolint.svg?branch=master)](https://travis-ci.org/zabio3/godolint)
@@ -24,11 +24,11 @@ $ godolint <Dockerfile>
 To check Dockerfile
 
 ```
-$ godolint testdata/src/DL3000_Dockerfile
-testdata/src/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR
+$ godolint testdata/DL3000_Dockerfile
+testdata/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR
 
-$ godolint testdata/src/DL3001_Dockerfile
-testdata/src/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`
+$ godolint testdata/DL3001_Dockerfile
+testdata/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`
 ```
 
 #### Options
@@ -46,7 +46,7 @@ Available options:
 To check Dockerfile (exclude specific rules).
 
 ```
-$ godolint --ignore DL3000 testdata/src/DL3000_Dockerfile
+$ godolint --ignore DL3000 testdata/DL3000_Dockerfile
 ```
 
 ## Install
@@ -56,12 +56,12 @@ You can download binary from release page and place it in $PATH directory.
 Or you can use go get
 
 ```
-$ go get github.com/zabio3/godolint/cmd/godolint
+$ go get github.com/zabio3/godolint
 ```
 
 ## Rules
 
-An incomplete list of implemented rules.
+An implemented rules.
 
 | Rule                                                         | Description                                                                                                                                         |
 |:-------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -86,6 +86,7 @@ An incomplete list of implemented rules.
 | [DL3018](https://github.com/hadolint/hadolint/wiki/DL3018)   | Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`.                                                          |
 | [DL3019](https://github.com/hadolint/hadolint/wiki/DL3019)   | Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages.                        |
 | [DL3020](https://github.com/hadolint/hadolint/wiki/DL3020)   | Use `COPY` instead of `ADD` for files and folders.                                                                                                  |
+| [DL3021](https://github.com/hadolint/hadolint/wiki/DL3021)   | `COPY` with more than 2 arguments requires the last argument to end with `/`                                                                        |
 
 ### AST
 
