@@ -17,9 +17,6 @@ func dl3009Check(node *parser.Node, file string) (rst []string, err error) {
 }
 
 func isDL3009Error(node *parser.Node) bool {
-	if node.Next == nil {
-		return false
-	}
 	isAptGet, isInstalled, isRm, hasRemove, hasClean := false, false, false, false, false
 	for _, v := range strings.Fields(node.Next.Value) {
 		switch v {
@@ -42,7 +39,7 @@ func isDL3009Error(node *parser.Node) bool {
 				hasRemove = true
 			}
 		case "&&":
-			isAptGet = false
+			isAptGet, isInstalled, isRm, hasRemove, hasClean = false, false, false, false, false
 		}
 	}
 	return isInstalled && !(hasRemove || hasClean)
