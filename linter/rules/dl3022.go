@@ -14,7 +14,6 @@ func dl3022Check(node *parser.Node, file string) (rst []string, err error) {
 		if child.Value == "from" {
 			for _, v := range strings.Fields(child.Original) {
 				switch v {
-				case "from":
 				case "as":
 					isAs = true
 				case "build":
@@ -22,13 +21,10 @@ func dl3022Check(node *parser.Node, file string) (rst []string, err error) {
 						isAsBuild = true
 					}
 				default:
-					switch fromImage {
-					case "", "FROM", "from":
+					if fromImage == "" && fromImage != "FROM" && fromImage != "from" {
 						fromImage = v
-					default:
-						if fromImage == v && !isAsBuild {
-							rst = append(rst, fmt.Sprintf("%s:%v DL3022 COPY --from should reference a previously defined FROM alias\n", file, child.StartLine))
-						}
+					} else if fromImage == v && !isAsBuild {
+						rst = append(rst, fmt.Sprintf("%s:%v DL3022 COPY --from should reference a previously defined FROM alias\n", file, child.StartLine))
 					}
 				}
 			}
