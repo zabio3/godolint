@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"bytes"
@@ -40,55 +40,55 @@ Available options:
 			expectedExitCode:  ExitCodeFileError,
 		},
 		{
-			command:           "godolint ../../testdata/src/OK_Dockerfile",
+			command:           "godolint ../testdata/OK_Dockerfile",
 			expectedOutStream: "",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
-			command:           "godolint ../../testdata/src/DL3000_Dockerfile",
-			expectedOutStream: "../../testdata/src/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR\n",
+			command:           "godolint ../testdata/DL3000_Dockerfile",
+			expectedOutStream: "../testdata/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
-			command:           "godolint ../../testdata/src/DL3001_Dockerfile",
-			expectedOutStream: "../../testdata/src/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`\n",
+			command:           "godolint ../testdata/DL3001_Dockerfile",
+			expectedOutStream: "../testdata/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
-			command:           "godolint --ignore DL3001 ../../testdata/src/DL3001_Dockerfile",
+			command:           "godolint --ignore DL3001 ../testdata/DL3001_Dockerfile",
 			expectedOutStream: "",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
-			command:           "godolint ../../testdata/src/DL3002_Dockerfile",
-			expectedOutStream: "../../testdata/src/DL3002_Dockerfile:3 DL3002 Last USER should not be root\n",
+			command:           "godolint ../testdata/DL3002_Dockerfile",
+			expectedOutStream: "../testdata/DL3002_Dockerfile:3 DL3002 Last USER should not be root\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
-			command:           "godolint ../../testdata/src/DL3003_Dockerfile",
-			expectedOutStream: "../../testdata/src/DL3003_Dockerfile:6 DL3003 Use WORKDIR to switch to a directory\n",
+			command:           "godolint ../testdata/DL3003_Dockerfile",
+			expectedOutStream: "../testdata/DL3003_Dockerfile:6 DL3003 Use WORKDIR to switch to a directory\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
-			command:           "godolint --ignore DL3009 ../../testdata/src/DL3004_Dockerfile",
-			expectedOutStream: "../../testdata/src/DL3004_Dockerfile:3 DL3004 Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root.\n",
+			command:           "godolint --ignore DL3009 ../testdata/DL3004_Dockerfile",
+			expectedOutStream: "../testdata/DL3004_Dockerfile:3 DL3004 Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root.\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
-			command:           "godolint ../../testdata/src/MaxScanSize_File",
+			command:           "godolint ../testdata/MaxScanSize_File",
 			expectedOutStream: "",
 			expectedErrStream: "dockerfile line greater than max allowed size of 65535\n",
 			expectedExitCode:  ExitCodeAstParseError,
 		},
 		{
-			command:           "godolint --ignore NO_RULE ../../testdata/src/OK_Dockerfile",
+			command:           "godolint --ignore NO_RULE ../testdata/OK_Dockerfile",
 			expectedOutStream: "",
 			expectedErrStream: "no exist rule specified by ignore flag: NO_RULE\n",
 			expectedExitCode:  ExitCodeLintCheckError,

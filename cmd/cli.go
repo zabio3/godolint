@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"flag"
@@ -84,7 +84,7 @@ func (cli *CLI) run(args []string) int {
 		return ExitCodeAstParseError
 	}
 
-	rst, err := linter.Analize(r.AST, file, ignoreString)
+	rst, err := linter.Analyzer(r.AST, file, ignoreString)
 	if err != nil {
 		_, _ = fmt.Fprintf(cli.errStream, "%s\n", err)
 		return ExitCodeLintCheckError

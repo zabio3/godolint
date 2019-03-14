@@ -6,8 +6,8 @@ import (
 	"github.com/zabio3/godolint/linter/rules"
 )
 
-// Analize Apply docker best practice rules to docker ast
-func Analize(node *parser.Node, file string, ignoreRules []string) ([]string, error) {
+// Analyzer Apply docker best practice rules to docker ast
+func Analyzer(node *parser.Node, file string, ignoreRules []string) ([]string, error) {
 	var (
 		rst           []string
 		filteredRules []string
