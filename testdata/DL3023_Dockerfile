@@ -1,0 +1,7 @@
+FROM debian:jesse as build
+
+RUN stuff
+
+FROM debian:jesse
+
+COPY --from=build some stuff ./

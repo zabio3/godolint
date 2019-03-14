@@ -21,7 +21,7 @@ func dl3022Check(node *parser.Node, file string) (rst []string, err error) {
 						isAsBuild = true
 					}
 				default:
-					if fromImage == "" && fromImage != "FROM" && fromImage != "from" {
+					if fromImage == "" && v != "FROM" && v != "from" {
 						fromImage = v
 					} else if fromImage == v && !isAsBuild {
 						rst = append(rst, fmt.Sprintf("%s:%v DL3022 COPY --from should reference a previously defined FROM alias\n", file, child.StartLine))
