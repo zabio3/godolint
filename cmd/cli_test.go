@@ -99,10 +99,10 @@ Available options:
 		outStream := new(bytes.Buffer)
 		errStream := new(bytes.Buffer)
 
-		cli := CLI{outStream: outStream, errStream: errStream}
+		cli := CLI{OutStream: outStream, ErrStream: errStream}
 		args := strings.Split(tc.command, " ")
 
-		if got := cli.run(args); got != tc.expectedExitCode {
+		if got := cli.Run(args); got != tc.expectedExitCode {
 			t.Errorf("#%d %q exits: want: %d, got: %d", i, tc.command, tc.expectedExitCode, got)
 		}
 
