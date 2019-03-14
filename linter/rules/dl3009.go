@@ -39,7 +39,9 @@ func isDL3009Error(node *parser.Node) bool {
 				hasRemove = true
 			}
 		case "&&":
-			isAptGet, isInstalled, isRm, hasRemove, hasClean = false, false, false, false, false
+			if isAptGet {
+				isAptGet, hasClean = false, false
+			}
 		}
 	}
 	return isInstalled && !(hasRemove || hasClean)
