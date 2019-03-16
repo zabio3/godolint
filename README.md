@@ -1,5 +1,8 @@
-godolint (Golang Dockerfile Linter)
+**coming soon!**
+
+godolint
 ===
+
 [![GitHub release](http://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](https://github.com/zabio3/godolint/releases/latest)
 [![Build Status](https://travis-ci.org/zabio3/godolint.svg?branch=master)](https://travis-ci.org/zabio3/godolint)
 [![Golang CI](https://golangci.com/badges/github.com/zabio3/godolint.svg)](https://golangci.com/r/github.com/zabio3/godolint)
@@ -89,6 +92,7 @@ An implemented rules.
 | [DL3021](https://github.com/hadolint/hadolint/wiki/DL3021)   | `COPY` with more than 2 arguments requires the last argument to end with `/`                                                                        |
 | [DL3022](https://github.com/hadolint/hadolint/wiki/DL3022)   | `COPY --from` should reference a previously defined `FROM` alias                                                                                    |
 | [DL3023](https://github.com/hadolint/hadolint/wiki/DL3023)   | `COPY --from` cannot reference its own `FROM` alias                                                                                                 |
+| [DL3024](https://github.com/hadolint/hadolint/wiki/DL3024)   | `FROM` aliases (stage names) must be unique                                                                                                         |
 
 ### AST
 

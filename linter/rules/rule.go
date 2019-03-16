@@ -46,6 +46,7 @@ var RuleKeys = []string{
 	"DL3021",
 	"DL3022",
 	"DL3023",
+	"DL3024",
 }
 
 // Rules (Docker best practice rule key)
@@ -170,4 +171,18 @@ var Rules = map[string]*Rule{
 		Severity: SeverityError,
 		CheckF:   dl3023Check,
 	},
+	"DL3024": {
+		Code:     "DL3024",
+		Severity: SeverityError,
+		CheckF:   dl3024Check,
+	},
+}
+
+func isContains(s []string, e string) bool {
+	for _, v := range s {
+		if e == v {
+			return true
+		}
+	}
+	return false
 }
