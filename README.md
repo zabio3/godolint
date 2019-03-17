@@ -1,5 +1,3 @@
-**coming soon!**
-
 godolint
 ===
 
@@ -11,8 +9,8 @@ godolint
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 A Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images (inspired by [Haskell Dockerfile Linter](https://github.com/hadolint/hadolint)). 
-For static analysis of AST, [moby/buildkit](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) is used, and lint check is done.
-The tool is parsing the Dockerfile into an AST and performs rules on top of the AST.
+For static analysis of AST, [moby/buildkit parser](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) is used, and lint check is done.
+This tool performs docker rule checks based on the parsed AST.
 
 ## Usage
 
@@ -113,7 +111,7 @@ Just take a look at [moby/buildkit](https://github.com/moby/buildkit/tree/master
 Make sure you have installed the goreleaser tool and then you can release gosec as follows:
 
 ```
-$ git tag 1.0.0
+$ git tag 0.0.1
 $ export GITHUB_TOKEN=<YOUR GITHUB TOKEN>
 $ goreleaser
 ```
