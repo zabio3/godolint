@@ -10,7 +10,6 @@ import (
 func dl4001Check(node *parser.Node, file string) (rst []string, err error) {
 	isCurl, isWget := false, false
 	for _, child := range node.Children {
-		fmt.Println(child)
 		switch child.Value {
 		case "run":
 			for _, v := range strings.Fields(child.Next.Value) {
