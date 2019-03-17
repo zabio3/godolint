@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dl3004Check is "Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root."
-func dl3004Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3004 is "Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root."
+func validateDL3004(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			for _, v := range strings.Fields(child.Next.Value) {

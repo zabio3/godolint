@@ -5,8 +5,8 @@ import (
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
-// DL4003 Either use Wget or Curl but not both
-func dl4003Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL4003 Either use Wget or Curl but not both
+func validateDL4003(node *parser.Node, file string) (rst []string, err error) {
 	isCmd := false
 	for _, child := range node.Children {
 		switch child.Value {

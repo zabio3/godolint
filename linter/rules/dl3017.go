@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dl3017 Do not use apk upgrade
-func dl3017Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3017 Do not use apk upgrade
+func validateDL3017(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			isApk, length := false, len(rst)

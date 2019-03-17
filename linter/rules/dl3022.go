@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// DL3022 COPY --from should reference a previously defined FROM alias
-func dl3022Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3022 COPY --from should reference a previously defined FROM alias
+func validateDL3022(node *parser.Node, file string) (rst []string, err error) {
 	fromImage := ""
 	isAs, isAsBuild := false, false
 	for _, child := range node.Children {

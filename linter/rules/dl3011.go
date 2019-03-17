@@ -6,8 +6,8 @@ import (
 	"strconv"
 )
 
-// dl3011 Valid UNIX ports range from 0 to 65535
-func dl3011Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3011 Valid UNIX ports range from 0 to 65535
+func validateDL3011(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "expose" {
 			port := child.Next

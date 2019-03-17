@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestDL3025Check(t *testing.T) {
+func TestValidateDL3025(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		file          string
@@ -15,9 +15,9 @@ func TestDL3025Check(t *testing.T) {
 			dockerfileStr: `FROM busybox
 ENTRYPOINT s3cmd
 `,
-			file: "DL3025Check_Dockerfile",
+			file: "DL3025_Dockerfile",
 			expectedRst: []string{
-				"DL3025Check_Dockerfile:2 DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments\n",
+				"DL3025_Dockerfile:2 DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments\n",
 			},
 			expectedErr: nil,
 		},
@@ -25,27 +25,27 @@ ENTRYPOINT s3cmd
 			dockerfileStr: `FROM busybox
 CMD my-service server
 `,
-			file: "DL3025Check_Dockerfile_2",
+			file: "DL3025_Dockerfile_2",
 			expectedRst: []string{
-				"DL3025Check_Dockerfile_2:2 DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments\n",
+				"DL3025_Dockerfile_2:2 DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments\n",
 			},
 			expectedErr: nil,
 		},
 	}
 
 	for i, tc := range cases {
-		rst, err := dockerFileParse(tc.dockerfileStr)
+		rst, err := parseDockerfile(tc.dockerfileStr)
 		if err != nil {
-			t.Errorf("#%d dl3025Check parse error %s", i, tc.dockerfileStr)
+			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := dl3025Check(rst.AST, tc.file)
+		gotRst, gotErr := validateDL3025(rst.AST, tc.file)
 		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d dl3025Check results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {
-			t.Errorf("#%d dl3025Check error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
+			t.Errorf("#%d error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
 		}
 		cleanup(t)
 	}

@@ -7,10 +7,10 @@ import (
 	"strings"
 )
 
-var verPattern3008 = regexp.MustCompile(`.+=.+`)
+var regexDL3008 = regexp.MustCompile(`.+=.+`)
 
-// dl3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`
-func dl3008Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`
+func validateDL3008(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			isAptGet, isInstall, length := false, false, len(rst)
@@ -26,7 +26,7 @@ func dl3008Check(node *parser.Node, file string) (rst []string, err error) {
 					isAptGet, isInstall = false, false
 					continue
 				default:
-					if isInstall && !verPattern3008.MatchString(v) && length == len(rst) {
+					if isInstall && !regexDL3008.MatchString(v) && length == len(rst) {
 						rst = append(rst, fmt.Sprintf("%s:%v DL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`\n", file, child.StartLine))
 						isAptGet, isInstall = false, false
 					}

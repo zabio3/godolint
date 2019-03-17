@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func dockerFileParse(dockerfileStr string) (*parser.Result, error) {
+func parseDockerfile(dockerfileStr string) (*parser.Result, error) {
 	dockerfile := bytes.NewBufferString(dockerfileStr)
 	return parser.Parse(dockerfile)
 }

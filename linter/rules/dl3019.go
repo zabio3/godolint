@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dl3019 Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages
-func dl3019Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3019 Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages
+func validateDL3019(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			isApk, isAdd, length := false, false, len(rst)

@@ -6,9 +6,8 @@ import (
 	"strings"
 )
 
-// DL4005 Use SHELL to change the default shell
-func dl4005Check(node *parser.Node, file string) (rst []string, err error) {
-
+// validateDL4005 Use SHELL to change the default shell
+func validateDL4005(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		switch child.Value {
 		case "run":

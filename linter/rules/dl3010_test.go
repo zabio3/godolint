@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestDL3010Check(t *testing.T) {
+func TestValidateDL3010(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		file          string
@@ -18,25 +18,25 @@ COPY hoge.tar.xz /
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3010Check_Dockerfile",
-			expectedRst: []string{"DL3010Check_Dockerfile:3 DL3010 Use ADD for extracting archives into an image.\n"},
+			file:        "DL3010_Dockerfile",
+			expectedRst: []string{"DL3010_Dockerfile:3 DL3010 Use ADD for extracting archives into an image.\n"},
 			expectedErr: nil,
 		},
 	}
 
 	for i, tc := range cases {
-		rst, err := dockerFileParse(tc.dockerfileStr)
+		rst, err := parseDockerfile(tc.dockerfileStr)
 		if err != nil {
-			t.Errorf("#%d dl3010Check parse error %s", i, tc.dockerfileStr)
+			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := dl3010Check(rst.AST, tc.file)
+		gotRst, gotErr := validateDL3010(rst.AST, tc.file)
 		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d dl3010Check results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {
-			t.Errorf("#%d dl3010Check error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
+			t.Errorf("#%d error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
 		}
 		cleanup(t)
 	}

@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dl3005Check is "Do not use apt-get upgrade or dist-upgrade."
-func dl3005Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3005 is "Do not use apt-get upgrade or dist-upgrade."
+func validateDL3005(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			isAptGet, isUpgrade := false, false
@@ -17,7 +17,6 @@ func dl3005Check(node *parser.Node, file string) (rst []string, err error) {
 					isAptGet = true
 				case "upgrade":
 					isUpgrade = true
-				default:
 				}
 			}
 			if isAptGet && isUpgrade {

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestDL3011Check(t *testing.T) {
+func TestValidateDL3011(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		file          string
@@ -17,8 +17,8 @@ func TestDL3011Check(t *testing.T) {
 
 EXPOSE 80000
 `,
-			file:        "DL3011Check_Dockerfile",
-			expectedRst: []string{"DL3011Check_Dockerfile:3 DL3011 Valid UNIX ports range from 0 to 65535\n"},
+			file:        "DL3011_Dockerfile",
+			expectedRst: []string{"DL3011_Dockerfile:3 DL3011 Valid UNIX ports range from 0 to 65535\n"},
 			expectedErr: nil,
 		},
 		{
@@ -26,31 +26,31 @@ EXPOSE 80000
 
 EXPOSE hoge
 `,
-			file:        "DL3011Check_Dockerfile_2",
+			file:        "DL3011_Dockerfile_2",
 			expectedRst: nil,
-			expectedErr: fmt.Errorf("DL3011Check_Dockerfile_2:3 DL3011 not numeric is the value set for the port: hoge"),
+			expectedErr: fmt.Errorf("DL3011_Dockerfile_2:3 DL3011 not numeric is the value set for the port: hoge"),
 		},
 	}
 
 	for i, tc := range cases {
-		rst, err := dockerFileParse(tc.dockerfileStr)
+		rst, err := parseDockerfile(tc.dockerfileStr)
 		if err != nil {
-			t.Errorf("#%d dl3011Check parse error %s", i, tc.dockerfileStr)
+			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := dl3011Check(rst.AST, tc.file)
+		gotRst, gotErr := validateDL3011(rst.AST, tc.file)
 		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d dl3011Check results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
 		}
 
 		expectedErr := tc.expectedErr
 		if gotErr != nil && expectedErr != nil {
 			if gotErr.Error() != expectedErr.Error() {
-				t.Errorf("#%d dl3011Check error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
+				t.Errorf("#%d error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
 			}
 		} else {
 			if gotErr != tc.expectedErr {
-				t.Errorf("#%d dl3011Check error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
+				t.Errorf("#%d error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
 			}
 		}
 

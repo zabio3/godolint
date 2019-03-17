@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dl3009 DL3009 Delete the apt-get lists after installing something.
-func dl3009Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3009 Delete the apt-get lists after installing something.
+func validateDL3009(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" && isDL3009Error(child) {
 			rst = append(rst, fmt.Sprintf("%s:%v DL3009 Delete the apt-get lists after installing something\n", file, child.StartLine))

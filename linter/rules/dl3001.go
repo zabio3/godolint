@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dl3001Check is "For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig."
-func dl3001Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3001 is "For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig."
+func validateDL3001(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			for _, v := range strings.Fields(child.Next.Value) {

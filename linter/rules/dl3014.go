@@ -9,9 +9,8 @@ import (
 
 var yesPattern = regexp.MustCompile(`^-[^-]*y.*$`)
 
-// dl3014 Use the `-y` switch to avoid manual input `apt-get -y install <package>`
-func dl3014Check(node *parser.Node, file string) (rst []string, err error) {
-
+// validateDL3014 Use the `-y` switch to avoid manual input `apt-get -y install <package>`
+func validateDL3014(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			isAptGet, isInstalled, length := false, false, len(rst)

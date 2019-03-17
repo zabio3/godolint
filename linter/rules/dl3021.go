@@ -5,8 +5,8 @@ import (
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
-// DL3021 `COPY` with more than 2 arguments requires the last argument to end with `/`
-func dl3021Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3021 `COPY` with more than 2 arguments requires the last argument to end with `/`
+func validateDL3021(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "copy" {
 			if isDL3021Error(child) {

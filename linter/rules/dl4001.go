@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// DL4001 Either use Wget or Curl but not both
-func dl4001Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL4001 Either use Wget or Curl but not both
+func validateDL4001(node *parser.Node, file string) (rst []string, err error) {
 	isCurl, isWget := false, false
 	for _, child := range node.Children {
 		switch child.Value {

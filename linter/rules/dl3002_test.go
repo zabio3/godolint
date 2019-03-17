@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestDL3002Check(t *testing.T) {
+func TestValidateDL3002(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		file          string
@@ -20,8 +20,8 @@ ADD . /go
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3002Check_Dockerfile",
-			expectedRst: []string{"DL3002Check_Dockerfile:3 DL3002 Last USER should not be root\n"},
+			file:        "DL3002_Dockerfile",
+			expectedRst: []string{"DL3002_Dockerfile:3 DL3002 Last USER should not be root\n"},
 			expectedErr: nil,
 		},
 		{
@@ -34,25 +34,25 @@ USER zabio3
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3002Check_Dockerfile_2",
+			file:        "DL3002_Dockerfile_2",
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 	}
 
 	for i, tc := range cases {
-		rst, err := dockerFileParse(tc.dockerfileStr)
+		rst, err := parseDockerfile(tc.dockerfileStr)
 		if err != nil {
-			t.Errorf("#%d dl3002Check parse error %s", i, tc.dockerfileStr)
+			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := dl3002Check(rst.AST, tc.file)
+		gotRst, gotErr := validateDL3002(rst.AST, tc.file)
 		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d dl3002Check results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {
-			t.Errorf("#%d dl3002Check error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
+			t.Errorf("#%d error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
 		}
 		cleanup(t)
 	}

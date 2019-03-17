@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments
-func dl3025Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments
+func validateDL3025(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		isErr := false
 		switch child.Value {

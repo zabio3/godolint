@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// dl3015 Avoid additional packages by specifying --no-install-recommends.
-func dl3015Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3015 Avoid additional packages by specifying --no-install-recommends.
+func validateDL3015(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		if child.Value == "run" {
 			isAptGet, isInstalled, length := false, false, len(rst)

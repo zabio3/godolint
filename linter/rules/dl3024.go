@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// DL3024 FROM aliases (stage names) must be unique
-func dl3024Check(node *parser.Node, file string) (rst []string, err error) {
+// validateDL3024 FROM aliases (stage names) must be unique
+func validateDL3024(node *parser.Node, file string) (rst []string, err error) {
 	isAs := false
 	var asBuildName []string
 	for _, child := range node.Children {
