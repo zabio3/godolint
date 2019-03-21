@@ -1,35 +1,37 @@
-version: "2"         # required to adjust maintainability checks
+version: "2"
 checks:
   argument-count:
+    enabled: true
     config:
-      threshold: 4
+      threshold: 10
   complex-logic:
+    enabled: true
     config:
       threshold: 4
   file-lines:
-    config:
-      threshold: 250
+    enabled: false
   method-complexity:
+    enabled: true
     config:
-      threshold: 5
+      threshold: 25
   method-count:
+    enabled: true
     config:
       threshold: 20
   method-lines:
+    enabled: true
     config:
-      threshold: 25
+      threshold: 60
   nested-control-flow:
+    enabled: true
     config:
       threshold: 4
   return-statements:
-    config:
-      threshold: 4
+    enabled: false
   similar-code:
-    config:
-      threshold: # language-specific defaults. an override will affect all languages.
+    enabled: false
   identical-code:
-    config:
-      threshold: # language-specific defaults. an override will affect all languages.
+    enabled: false
 plugins:
   gofmt:
     enabled: true
@@ -39,3 +41,6 @@ plugins:
     enabled: false
   fixme:
     enabled: true
+exclude_patterns:
+  - Makefile
+  - testdata/*
