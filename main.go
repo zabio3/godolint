@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/zabio3/godolint/cmd"
 	"os"
+
+	"github.com/zabio3/godolint/cmd"
 )
 
 func main() {

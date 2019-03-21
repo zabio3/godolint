@@ -1,3 +1,4 @@
+// Package rules provides dockerfile lint rules.
 package rules
 
 // Rule is filtered rule (with ignore rule applied)
@@ -7,6 +8,25 @@ type Rule struct {
 	Severity     Severity
 	ValidateFunc interface{}
 }
+
+// Dockerfile instruction
+var (
+	FROM       = "from"
+	LABEL      = "label"
+	RUN        = "run"
+	CMD        = "cmd"
+	EXPOSE     = "expose"
+	ADD        = "add"
+	COPY       = "copy"
+	ENTRYPOINT = "entrypoint"
+	VOLUME     = "volume"
+	USER       = "user"
+	WORKDIR    = "workdir"
+	SHELL      = "shell"
+
+	// deprecated instruction
+	MAINTAINER = "maintainer"
+)
 
 // Severity stand check type
 type Severity struct {
@@ -221,7 +241,8 @@ var Rules = map[string]*Rule{
 	},
 }
 
-func isContains(s []string, e string) bool {
+// isContain is a function to check if s is in xs
+func isContain(s []string, e string) bool {
 	for _, v := range s {
 		if e == v {
 			return true

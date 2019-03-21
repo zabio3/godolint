@@ -2,9 +2,10 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"regexp"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 var regexVersion3013 = regexp.MustCompile(`.+[==|@].+`)
@@ -12,7 +13,7 @@ var regexVersion3013 = regexp.MustCompile(`.+[==|@].+`)
 // validateDL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`
 func validateDL3013(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
-		if child.Value == "run" {
+		if child.Value == RUN {
 			isPip, isInstall, length := false, false, len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {

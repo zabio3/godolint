@@ -2,6 +2,7 @@ package rules
 
 import (
 	"fmt"
+
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
@@ -10,7 +11,7 @@ func validateDL3002(node *parser.Node, file string) (rst []string, err error) {
 	isLastRootUser := false
 	var lastRootUserPos int
 	for _, child := range node.Children {
-		if child.Value == "user" {
+		if child.Value == USER {
 			if child.Next.Value == "root" || child.Next.Value == "0" {
 				isLastRootUser = true
 				lastRootUserPos = child.StartLine

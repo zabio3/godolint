@@ -2,14 +2,15 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"path/filepath"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3000 is "Use absolute WORKDIR."
 func validateDL3000(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
-		if child.Value == "workdir" {
+		if child.Value == WORKDIR {
 			absPath, err := filepath.Abs(child.Next.Value)
 			if err != nil {
 				return nil, err

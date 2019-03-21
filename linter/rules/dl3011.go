@@ -2,14 +2,15 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"strconv"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3011 Valid UNIX ports range from 0 to 65535
 func validateDL3011(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
-		if child.Value == "expose" {
+		if child.Value == EXPOSE {
 			port := child.Next
 			if port != nil {
 				portNum, err := strconv.Atoi(port.Value)

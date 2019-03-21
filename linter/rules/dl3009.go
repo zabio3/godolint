@@ -2,14 +2,15 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3009 Delete the apt-get lists after installing something.
 func validateDL3009(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
-		if child.Value == "run" && isDL3009Error(child) {
+		if child.Value == RUN && isDL3009Error(child) {
 			rst = append(rst, fmt.Sprintf("%s:%v DL3009 Delete the apt-get lists after installing something\n", file, child.StartLine))
 		}
 	}

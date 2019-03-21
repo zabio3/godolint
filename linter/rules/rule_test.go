@@ -2,8 +2,9 @@ package rules
 
 import (
 	"bytes"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"testing"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 func parseDockerfile(dockerfileStr string) (*parser.Result, error) {

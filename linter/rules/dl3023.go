@@ -2,9 +2,10 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"regexp"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 var regexVersion3023 = regexp.MustCompile(`--from=.+`)
@@ -15,7 +16,7 @@ func validateDL3023(node *parser.Node, file string) (rst []string, err error) {
 	asFromName := ""
 	for _, child := range node.Children {
 		switch child.Value {
-		case "from":
+		case FROM:
 			for _, v := range strings.Fields(child.Original) {
 				switch v {
 				case "as":
@@ -29,7 +30,7 @@ func validateDL3023(node *parser.Node, file string) (rst []string, err error) {
 					}
 				}
 			}
-		case "copy":
+		case COPY:
 			for _, v := range strings.Fields(child.Original) {
 				if regexVersion3023.MatchString(v) && v == fmt.Sprintf("--from=%s", asFromName) {
 					rst = append(rst, fmt.Sprintf("%s:%v DL3023 COPY --from should reference a previously defined FROM alias\n", file, child.StartLine))

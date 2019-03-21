@@ -2,9 +2,10 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"regexp"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 var regexDL3008 = regexp.MustCompile(`.+=.+`)
@@ -12,7 +13,7 @@ var regexDL3008 = regexp.MustCompile(`.+=.+`)
 // validateDL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`
 func validateDL3008(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
-		if child.Value == "run" {
+		if child.Value == RUN {
 			isAptGet, isInstall, length := false, false, len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {

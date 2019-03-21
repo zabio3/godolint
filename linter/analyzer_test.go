@@ -1,8 +1,9 @@
 package linter
 
 import (
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"testing"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 func TestAnalyzer(t *testing.T) {

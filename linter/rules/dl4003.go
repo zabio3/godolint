@@ -2,6 +2,7 @@ package rules
 
 import (
 	"fmt"
+
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
@@ -10,7 +11,7 @@ func validateDL4003(node *parser.Node, file string) (rst []string, err error) {
 	isCmd := false
 	for _, child := range node.Children {
 		switch child.Value {
-		case "cmd":
+		case CMD:
 			if !isCmd {
 				isCmd = true
 			} else {

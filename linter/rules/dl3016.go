@@ -2,9 +2,10 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"regexp"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 var regexVersion3016 = regexp.MustCompile(`.+[#|@][0-9\"]+`)
@@ -12,7 +13,7 @@ var regexVersion3016 = regexp.MustCompile(`.+[#|@][0-9\"]+`)
 // validateDL3016 Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`
 func validateDL3016(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
-		if child.Value == "run" {
+		if child.Value == RUN {
 			isNpm, isInstall, length := false, false, len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {

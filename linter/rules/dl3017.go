@@ -2,14 +2,15 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3017 Do not use apk upgrade
 func validateDL3017(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
-		if child.Value == "run" {
+		if child.Value == RUN {
 			isApk, length := false, len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {

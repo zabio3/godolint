@@ -2,8 +2,9 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL4001 Either use Wget or Curl but not both
@@ -11,7 +12,7 @@ func validateDL4001(node *parser.Node, file string) (rst []string, err error) {
 	isCurl, isWget := false, false
 	for _, child := range node.Children {
 		switch child.Value {
-		case "run":
+		case RUN:
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "curl":

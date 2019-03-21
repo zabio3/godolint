@@ -2,8 +2,9 @@ package rules
 
 import (
 	"fmt"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"strings"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments
@@ -11,7 +12,7 @@ func validateDL3025(node *parser.Node, file string) (rst []string, err error) {
 	for _, child := range node.Children {
 		isErr := false
 		switch child.Value {
-		case "entrypoint", "cmd":
+		case ENTRYPOINT, CMD:
 			args := strings.Fields(child.Original)
 			length := len(args) - 1
 			for i, v := range strings.Fields(child.Original) {
