@@ -1,14 +1,13 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL4001 Either use Wget or Curl but not both
-func validateDL4001(node *parser.Node, file string) (rst []string, err error) {
+func validateDL4001(node *parser.Node) (rst []ValidateResult, err error) {
 	isCurl, isWget := false, false
 	for _, child := range node.Children {
 		switch child.Value {
@@ -23,7 +22,7 @@ func validateDL4001(node *parser.Node, file string) (rst []string, err error) {
 			}
 		}
 		if isCurl && isWget {
-			rst = append(rst, fmt.Sprintf("%s:%v DL4001 Either use Wget or Curl but not both\n", file, child.StartLine))
+			rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 		}
 	}
 	return rst, nil

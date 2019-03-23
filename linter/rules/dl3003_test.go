@@ -7,8 +7,7 @@ import (
 func TestValidateDL3003(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -21,8 +20,9 @@ RUN cd /usr/src/app && git clone git@github.com:zabio3/godolint.git /usr/src/app
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3003_Dockerfile",
-			expectedRst: []string{"DL3003_Dockerfile:6 DL3003 Use WORKDIR to switch to a directory\n"},
+			expectedRst: []ValidateResult{
+				{line: 6, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 	}
@@ -33,9 +33,9 @@ CMD ["go", "run", "main.go"]
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3003(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3003(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

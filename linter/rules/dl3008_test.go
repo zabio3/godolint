@@ -7,8 +7,7 @@ import (
 func TestValidateDL3008(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -17,8 +16,9 @@ RUN apt-get install python
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3008_Dockerfile",
-			expectedRst: []string{"DL3008_Dockerfile:2 DL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`\n"},
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 		{
@@ -27,8 +27,9 @@ RUN apt-get install python && apt-get clean
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3008_Dockerfile_2",
-			expectedRst: []string{"DL3008_Dockerfile_2:2 DL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`\n"},
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 	}
@@ -39,9 +40,9 @@ CMD ["go", "run", "main.go"]
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3008(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3008(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

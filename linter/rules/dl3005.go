@@ -1,14 +1,13 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3005 is "Do not use apt-get upgrade or dist-upgrade."
-func validateDL3005(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3005(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			isAptGet, isUpgrade := false, false
@@ -21,7 +20,7 @@ func validateDL3005(node *parser.Node, file string) (rst []string, err error) {
 				}
 			}
 			if isAptGet && isUpgrade {
-				rst = append(rst, fmt.Sprintf("%s:%v DL3005 Do not use apt-get upgrade or dist-upgrade.\n", file, child.StartLine))
+				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 			}
 		}
 	}

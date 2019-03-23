@@ -7,17 +7,15 @@ import (
 func TestValidateDL4000(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
 			dockerfileStr: `FROM busybox
 MAINTAINER zabio3 <zabio1192@gmail.com>
 `,
-			file: "DL4000_Dockerfile",
-			expectedRst: []string{
-				"DL4000_Dockerfile:2 DL4000 MAINTAINER is deprecated\n",
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -29,9 +27,9 @@ MAINTAINER zabio3 <zabio1192@gmail.com>
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL4000(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL4000(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

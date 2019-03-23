@@ -1,17 +1,15 @@
 package rules
 
 import (
-	"fmt"
-
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3021 `COPY` with more than 2 arguments requires the last argument to end with `/`
-func validateDL3021(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3021(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == COPY {
 			if isDL3021Error(child) {
-				rst = append(rst, fmt.Sprintf("%s:%v DL3021 `COPY` with more than 2 arguments requires the last argument to end with `/`\n", file, child.StartLine))
+				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 			}
 		}
 	}

@@ -7,16 +7,14 @@ import (
 func TestValidateDL4006(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
 			dockerfileStr: `RUN wget -O - https://some.site | wc -l > /number
 `,
-			file: "DL4006_Dockerfile",
-			expectedRst: []string{
-				"DL4006_Dockerfile:1 DL4006 Set the `SHELL` option -o pipefail before `RUN` with a pipe in it\n",
+			expectedRst: []ValidateResult{
+				{line: 1, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -24,7 +22,6 @@ func TestValidateDL4006(t *testing.T) {
 			dockerfileStr: `SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN wget -O - https://some.site | wc -l > /number
 `,
-			file:        "DL4006_Dockerfile_2",
 			expectedRst: nil,
 			expectedErr: nil,
 		},
@@ -36,9 +33,9 @@ RUN wget -O - https://some.site | wc -l > /number
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL4006(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL4006(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

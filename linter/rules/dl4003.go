@@ -1,13 +1,11 @@
 package rules
 
 import (
-	"fmt"
-
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL4003 Either use Wget or Curl but not both
-func validateDL4003(node *parser.Node, file string) (rst []string, err error) {
+func validateDL4003(node *parser.Node) (rst []ValidateResult, err error) {
 	isCmd := false
 	for _, child := range node.Children {
 		switch child.Value {
@@ -15,7 +13,7 @@ func validateDL4003(node *parser.Node, file string) (rst []string, err error) {
 			if !isCmd {
 				isCmd = true
 			} else {
-				rst = append(rst, fmt.Sprintf("%s:%v DL4003 Multiple `CMD` instructions found. If you list more than one `CMD` then only the last `CMD` will take effect\n", file, child.StartLine))
+				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 			}
 		}
 	}

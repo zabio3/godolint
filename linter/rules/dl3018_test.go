@@ -7,17 +7,15 @@ import (
 func TestValidateDL3018(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
 			dockerfileStr: `FROM alpine:3.7
 RUN apk --no-cache add foo
 `,
-			file: "DL3018_Dockerfile",
-			expectedRst: []string{
-				"DL3018_Dockerfile:2 DL3018 Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`\n",
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -25,9 +23,8 @@ RUN apk --no-cache add foo
 			dockerfileStr: `FROM alpine:3.7
 RUN apk --no-cache add foo && bar
 `,
-			file: "DL3018_Dockerfile",
-			expectedRst: []string{
-				"DL3018_Dockerfile:2 DL3018 Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`\n",
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -39,9 +36,9 @@ RUN apk --no-cache add foo && bar
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3018(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3018(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

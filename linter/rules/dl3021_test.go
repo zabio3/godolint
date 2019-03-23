@@ -7,17 +7,15 @@ import (
 func TestValidateDL3021(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
 			dockerfileStr: `FROM node:carbon
 COPY package.json yarn.lock my_app
 `,
-			file: "DL3021_Dockerfile",
-			expectedRst: []string{
-				"DL3021_Dockerfile:2 DL3021 `COPY` with more than 2 arguments requires the last argument to end with `/`\n",
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -25,7 +23,6 @@ COPY package.json yarn.lock my_app
 			dockerfileStr: `FROM node:carbon
 COPY package.json yarn.lock my_app/
 `,
-			file:        "DL3021_Dockerfile_2",
 			expectedRst: nil,
 			expectedErr: nil,
 		},
@@ -37,9 +34,9 @@ COPY package.json yarn.lock my_app/
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3021(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3021(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

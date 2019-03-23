@@ -7,8 +7,7 @@ import (
 func TestValidateDL4001(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -16,9 +15,8 @@ func TestValidateDL4001(t *testing.T) {
 RUN wget http://google.com
 RUN curl http://bing.com
 `,
-			file: "DL4001_Dockerfile",
-			expectedRst: []string{
-				"DL4001_Dockerfile:3 DL4001 Either use Wget or Curl but not both\n",
+			expectedRst: []ValidateResult{
+				{line: 3, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -30,9 +28,9 @@ RUN curl http://bing.com
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL4001(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL4001(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

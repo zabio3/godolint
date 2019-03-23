@@ -1,7 +1,6 @@
 package rules
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
@@ -11,7 +10,7 @@ import (
 var regexVersion3018 = regexp.MustCompile(`.+=.+`)
 
 // validateDL3018 Do not use apk upgrade
-func validateDL3018(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3018(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			isApk, isAdd, length := false, false, len(rst)
@@ -27,7 +26,7 @@ func validateDL3018(node *parser.Node, file string) (rst []string, err error) {
 					isApk, isAdd = false, false
 				default:
 					if isAdd && !regexVersion3018.MatchString(v) && length == len(rst) {
-						rst = append(rst, fmt.Sprintf("%s:%v DL3018 Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`\n", file, child.StartLine))
+						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 						isApk, isAdd = false, false
 					}
 				}

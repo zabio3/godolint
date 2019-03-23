@@ -1,19 +1,18 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3003 is "Use WORKDIR to switch to a directory"
-func validateDL3003(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3003(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			for _, v := range strings.Fields(child.Next.Value) {
 				if v == "cd" {
-					rst = append(rst, fmt.Sprintf("%s:%v DL3003 Use WORKDIR to switch to a directory\n", file, child.StartLine))
+					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 				}
 			}
 		}

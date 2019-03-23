@@ -7,8 +7,7 @@ import (
 func TestValidateDL3023(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -16,9 +15,8 @@ func TestValidateDL3023(t *testing.T) {
 
 COPY --from=build some stuff ./
 `,
-			file: "DL3023_Dockerfile",
-			expectedRst: []string{
-				"DL3023_Dockerfile:3 DL3023 COPY --from should reference a previously defined FROM alias\n",
+			expectedRst: []ValidateResult{
+				{line: 3, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -31,7 +29,6 @@ FROM debian:jesse
 
 COPY --from=build some stuff ./
 `,
-			file:        "DL3023_Dockerfile_2",
 			expectedRst: nil,
 			expectedErr: nil,
 		},
@@ -43,9 +40,9 @@ COPY --from=build some stuff ./
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3023(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3023(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

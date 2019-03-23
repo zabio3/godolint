@@ -11,7 +11,7 @@ import (
 var regexVersion3023 = regexp.MustCompile(`--from=.+`)
 
 // validateDL3023 COPY --from should reference a previously defined FROM alias
-func validateDL3023(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3023(node *parser.Node) (rst []ValidateResult, err error) {
 	isAs := false
 	asFromName := ""
 	for _, child := range node.Children {
@@ -33,7 +33,7 @@ func validateDL3023(node *parser.Node, file string) (rst []string, err error) {
 		case COPY:
 			for _, v := range strings.Fields(child.Original) {
 				if regexVersion3023.MatchString(v) && v == fmt.Sprintf("--from=%s", asFromName) {
-					rst = append(rst, fmt.Sprintf("%s:%v DL3023 COPY --from should reference a previously defined FROM alias\n", file, child.StartLine))
+					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 				}
 			}
 		}

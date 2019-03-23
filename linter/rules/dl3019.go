@@ -1,14 +1,13 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3019 Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages
-func validateDL3019(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3019(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			isApk, isAdd, length := false, false, len(rst)
@@ -25,7 +24,7 @@ func validateDL3019(node *parser.Node, file string) (rst []string, err error) {
 					continue
 				default:
 					if isAdd && v != "--update" && length == len(rst) {
-						rst = append(rst, fmt.Sprintf("%s:%v DL3019 Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages\n", file, child.StartLine))
+						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 						isApk, isAdd = false, false
 					}
 				}

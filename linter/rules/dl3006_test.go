@@ -7,8 +7,7 @@ import (
 func TestValidateDL3006(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -20,8 +19,9 @@ ADD . /go
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3006_Dockerfile",
-			expectedRst: []string{"DL3006_Dockerfile:1 DL3006 Always tag the version of an image explicitly\n"},
+			expectedRst: []ValidateResult{
+				{line: 1, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 	}
@@ -32,9 +32,9 @@ CMD ["go", "run", "main.go"]
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3006(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3006(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

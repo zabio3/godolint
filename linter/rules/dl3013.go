@@ -1,7 +1,6 @@
 package rules
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
@@ -11,7 +10,7 @@ import (
 var regexVersion3013 = regexp.MustCompile(`.+[==|@].+`)
 
 // validateDL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`
-func validateDL3013(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3013(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			isPip, isInstall, length := false, false, len(rst)
@@ -27,7 +26,7 @@ func validateDL3013(node *parser.Node, file string) (rst []string, err error) {
 					isPip, isInstall = false, false
 				default:
 					if isPip && isInstall && !regexVersion3013.MatchString(v) && length == len(rst) {
-						rst = append(rst, fmt.Sprintf("%s:%v DL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`\n", file, child.StartLine))
+						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 					}
 					isPip, isInstall = false, false
 				}

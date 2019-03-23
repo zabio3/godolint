@@ -7,8 +7,7 @@ import (
 func TestValidateDL3010(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -17,9 +16,9 @@ func TestValidateDL3010(t *testing.T) {
 COPY hoge.tar.xz /
 
 CMD ["go", "run", "main.go"]
-`,
-			file:        "DL3010_Dockerfile",
-			expectedRst: []string{"DL3010_Dockerfile:3 DL3010 Use ADD for extracting archives into an image.\n"},
+`, expectedRst: []ValidateResult{
+				{line: 3, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 	}
@@ -30,9 +29,9 @@ CMD ["go", "run", "main.go"]
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3010(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3010(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

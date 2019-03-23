@@ -9,7 +9,6 @@ import (
 func TestAnalyzer(t *testing.T) {
 	cases := []struct {
 		node        *parser.Node
-		file        string
 		ignoreRules []string
 		expectedRst []string
 		expectedErr error
@@ -119,18 +118,16 @@ func TestAnalyzer(t *testing.T) {
 				Flags:      nil,
 				StartLine:  1,
 			},
-			file: "TestAnalyzerFile",
 			ignoreRules: []string{
 				"DL4000",
 			},
 			expectedRst: []string{
-				"TestAnalyzerFile:3 DL3000 Use absolute WORKDIR\n",
+				"#3 DL3000 Use absolute WORKDIR. \n",
 			},
 			expectedErr: nil,
 		},
 		{
 			node: nil,
-			file: "TestAnalyzerFile_2",
 			ignoreRules: []string{
 				"DL3000",
 				"DL3001",
@@ -171,7 +168,8 @@ func TestAnalyzer(t *testing.T) {
 	}
 
 	for i, tc := range cases {
-		gotRst, gotErr := Analyzer(tc.node, tc.file, tc.ignoreRules)
+		analyzer := NewAnalyzer(tc.ignoreRules)
+		gotRst, gotErr := analyzer.Run(tc.node)
 		if !sliceEq(tc.expectedRst, gotRst) {
 			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
 		}
@@ -338,7 +336,7 @@ func TestGetMakeDifference(t *testing.T) {
 	}
 
 	for i, tc := range cases {
-		rst := GetMakeDifference(tc.rules, tc.ignoreRules)
+		rst := getMakeDifference(tc.rules, tc.ignoreRules)
 		if !sliceEq(tc.expectedRst, rst) {
 			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, rst)
 		}

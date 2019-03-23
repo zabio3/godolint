@@ -7,8 +7,7 @@ import (
 func TestValidateDL3024(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -20,9 +19,8 @@ FROM debian:jesse as build
 
 RUN more_stuff
 `,
-			file: "DL3024_Dockerfile",
-			expectedRst: []string{
-				"DL3024_Dockerfile:5 DL3024 FROM aliases (stage names) must be unique\n",
+			expectedRst: []ValidateResult{
+				{line: 5, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -34,9 +32,9 @@ RUN more_stuff
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3024(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3024(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

@@ -12,17 +12,16 @@ func parseDockerfile(dockerfileStr string) (*parser.Result, error) {
 	return parser.Parse(dockerfile)
 }
 
-// reflect.DeepEqual(gotRst, gotRst)
-func sliceEq(a, b []string) bool {
-	// If one is nil, the other must also be nil.
-	if (a == nil) != (b == nil) {
+// reflect.DeepEqual(gotRst, expectedRst)
+func isValidateResultEq(xs, ys []ValidateResult) bool {
+	if (xs == nil) != (ys == nil) {
 		return false
 	}
-	if len(a) != len(b) {
+	if len(xs) != len(ys) {
 		return false
 	}
-	for i := range a {
-		if a[i] != b[i] {
+	for i := range xs {
+		if xs[i] != ys[i] {
 			return false
 		}
 	}

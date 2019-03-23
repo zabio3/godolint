@@ -1,7 +1,6 @@
 package rules
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
@@ -11,7 +10,7 @@ import (
 var regexVersion3016 = regexp.MustCompile(`.+[#|@][0-9\"]+`)
 
 // validateDL3016 Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`
-func validateDL3016(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3016(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			isNpm, isInstall, length := false, false, len(rst)
@@ -28,7 +27,7 @@ func validateDL3016(node *parser.Node, file string) (rst []string, err error) {
 					continue
 				default:
 					if isInstall && !regexVersion3016.MatchString(v) && length == len(rst) {
-						rst = append(rst, fmt.Sprintf("%s:%v DL3016 Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`\n", file, child.StartLine))
+						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 						isNpm, isInstall = false, false
 					}
 				}

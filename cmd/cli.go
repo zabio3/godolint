@@ -23,14 +23,20 @@ const (
 
 const name = "godolint"
 
+const version = "0.0.1"
+
 const usage = `godolint - Dockerfile Linter written in Golang
 
 Usage: godolint [--ignore RULECODE]
   Lint Dockerfile for errors and best practices
 
 Available options:
-  --ignore RULECODE        A rule to ignore. If present, the ignore list in the
-                           config file is ignored
+  --ignore RULECODE	A rule to ignore. If present, the ignore list in the
+			config file is ignored
+
+Other Commands:
+  --help	-h	Help about any command
+  --version	-v	Print the version information
 `
 
 // CLI represents CLI interface
@@ -51,18 +57,26 @@ func (ss *sliceString) Set(value string) error {
 
 // Run it takes Dockerfile as an argument and applies it to analyzer to standard output.
 func (cli *CLI) Run(args []string) int {
-	var ignoreString sliceString
+	var ingnoreRules sliceString
+	var isVersion bool
 
 	flags := flag.NewFlagSet(name, flag.ContinueOnError)
 	flags.Usage = func() {
 		_, _ = fmt.Fprint(cli.OutStream, usage)
 	}
 
-	flags.Var(&ignoreString, "ignore", "Set ignore strings")
+	flags.Var(&ingnoreRules, "ignore", "Set ignore strings")
+	flags.BoolVar(&isVersion, "version", false, "version")
+	flags.BoolVar(&isVersion, "v", false, "version")
 
 	if err := flags.Parse(args[1:]); err != nil {
 		_, _ = fmt.Fprintf(cli.ErrStream, "%s\n", err)
 		return ExitCodeParseFlagsError
+	}
+
+	if isVersion {
+		_, _ = fmt.Fprintf(cli.OutStream, "godolint version %s\n", version)
+		return ExitCodeOK
 	}
 
 	length := len(args)
@@ -85,7 +99,8 @@ func (cli *CLI) Run(args []string) int {
 		return ExitCodeAstParseError
 	}
 
-	rst, err := linter.Analyzer(r.AST, file, ignoreString)
+	analyzer := linter.NewAnalyzer(ingnoreRules)
+	rst, err := analyzer.Run(r.AST)
 	if err != nil {
 		_, _ = fmt.Fprintf(cli.ErrStream, "%s\n", err)
 		return ExitCodeLintCheckError

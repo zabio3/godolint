@@ -1,13 +1,11 @@
 package rules
 
 import (
-	"fmt"
-
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3002 is "Last user should not be root."
-func validateDL3002(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3002(node *parser.Node) (rst []ValidateResult, err error) {
 	isLastRootUser := false
 	var lastRootUserPos int
 	for _, child := range node.Children {
@@ -22,8 +20,7 @@ func validateDL3002(node *parser.Node, file string) (rst []string, err error) {
 		}
 	}
 	if isLastRootUser {
-		rst = append(rst, fmt.Sprintf("%s:%v DL3002 Last USER should not be root\n", file, lastRootUserPos))
+		rst = append(rst, ValidateResult{line: lastRootUserPos, addMsg: ""})
 	}
-
 	return rst, nil
 }

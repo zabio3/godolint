@@ -7,17 +7,15 @@ import (
 func TestValidateDL3025(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
 			dockerfileStr: `FROM busybox
 ENTRYPOINT s3cmd
 `,
-			file: "DL3025_Dockerfile",
-			expectedRst: []string{
-				"DL3025_Dockerfile:2 DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments\n",
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -25,9 +23,8 @@ ENTRYPOINT s3cmd
 			dockerfileStr: `FROM busybox
 CMD my-service server
 `,
-			file: "DL3025_Dockerfile_2",
-			expectedRst: []string{
-				"DL3025_Dockerfile_2:2 DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments\n",
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -39,9 +36,9 @@ CMD my-service server
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3025(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3025(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

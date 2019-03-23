@@ -27,11 +27,21 @@ Usage: godolint [--ignore RULECODE]
   Lint Dockerfile for errors and best practices
 
 Available options:
-  --ignore RULECODE        A rule to ignore. If present, the ignore list in the
-                           config file is ignored
+  --ignore RULECODE	A rule to ignore. If present, the ignore list in the
+			config file is ignored
+
+Other Commands:
+  --help	-h	Help about any command
+  --version	-v	Print the version information
 `,
 			expectedErrStream: "flag: help requested\n",
 			expectedExitCode:  ExitCodeParseFlagsError,
+		},
+		{
+			command:           "godolint --version",
+			expectedOutStream: "godolint version 0.0.1\n",
+			expectedErrStream: "",
+			expectedExitCode:  ExitCodeOK,
 		},
 		{
 			command:           "godolint testdata/no-file",
@@ -47,13 +57,13 @@ Available options:
 		},
 		{
 			command:           "godolint ../testdata/DL3000_Dockerfile",
-			expectedOutStream: "../testdata/DL3000_Dockerfile:3 DL3000 Use absolute WORKDIR\n",
+			expectedOutStream: "#3 DL3000 Use absolute WORKDIR. \n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
 			command:           "godolint ../testdata/DL3001_Dockerfile",
-			expectedOutStream: "../testdata/DL3001_Dockerfile:6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`\n",
+			expectedOutStream: "#6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`. \n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
@@ -65,19 +75,19 @@ Available options:
 		},
 		{
 			command:           "godolint ../testdata/DL3002_Dockerfile",
-			expectedOutStream: "../testdata/DL3002_Dockerfile:3 DL3002 Last USER should not be root\n",
+			expectedOutStream: "#3 DL3002 Last USER should not be root. \n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
 			command:           "godolint ../testdata/DL3003_Dockerfile",
-			expectedOutStream: "../testdata/DL3003_Dockerfile:6 DL3003 Use WORKDIR to switch to a directory\n",
+			expectedOutStream: "#6 DL3003 Use WORKDIR to switch to a directory. \n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
 			command:           "godolint --ignore DL3009 ../testdata/DL3004_Dockerfile",
-			expectedOutStream: "../testdata/DL3004_Dockerfile:3 DL3004 Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root.\n",
+			expectedOutStream: "#3 DL3004 Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root. \n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},

@@ -7,8 +7,7 @@ import (
 func TestValidateDL3005(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -20,8 +19,9 @@ ADD . /go
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3005_Dockerfile",
-			expectedRst: []string{"DL3005_Dockerfile:2 DL3005 Do not use apt-get upgrade or dist-upgrade.\n"},
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 	}
@@ -32,9 +32,9 @@ CMD ["go", "run", "main.go"]
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3005(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3005(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

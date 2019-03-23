@@ -1,14 +1,13 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments
-func validateDL3025(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3025(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		isErr := false
 		switch child.Value {
@@ -28,7 +27,7 @@ func validateDL3025(node *parser.Node, file string) (rst []string, err error) {
 				}
 			}
 			if isErr {
-				rst = append(rst, fmt.Sprintf("%s:%v DL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments\n", file, child.StartLine))
+				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 			}
 		}
 	}

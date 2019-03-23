@@ -7,8 +7,7 @@ import (
 func TestValidateDL4003(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -16,9 +15,8 @@ func TestValidateDL4003(t *testing.T) {
 CMD /bin/true
 CMD /bin/false
 `,
-			file: "DL4003_Dockerfile",
-			expectedRst: []string{
-				"DL4003_Dockerfile:3 DL4003 Multiple `CMD` instructions found. If you list more than one `CMD` then only the last `CMD` will take effect\n",
+			expectedRst: []ValidateResult{
+				{line: 3, addMsg: ""},
 			},
 			expectedErr: nil,
 		},
@@ -30,9 +28,9 @@ CMD /bin/false
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL4003(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL4003(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

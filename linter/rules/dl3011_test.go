@@ -8,17 +8,16 @@ import (
 func TestValidateDL3011(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
 			dockerfileStr: `FROM debian:1.12.0-stretch
 
 EXPOSE 80000
-`,
-			file:        "DL3011_Dockerfile",
-			expectedRst: []string{"DL3011_Dockerfile:3 DL3011 Valid UNIX ports range from 0 to 65535\n"},
+`, expectedRst: []ValidateResult{
+				{line: 3, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 		{
@@ -26,9 +25,8 @@ EXPOSE 80000
 
 EXPOSE hoge
 `,
-			file:        "DL3011_Dockerfile_2",
 			expectedRst: nil,
-			expectedErr: fmt.Errorf("DL3011_Dockerfile_2:3 DL3011 not numeric is the value set for the port: hoge"),
+			expectedErr: fmt.Errorf("#3 DL3011 not numeric is the value set for the port: hoge"),
 		},
 	}
 
@@ -38,9 +36,9 @@ EXPOSE hoge
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3011(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3011(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		expectedErr := tc.expectedErr

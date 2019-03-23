@@ -5,6 +5,6 @@ package rules
 //)
 //
 //// validateDL3012 Provide an email address or URL as maintainer. (deprecated)
-//func validateDL3012(node *parser.Node, file string) (rst []string, err error) {
+//func validateDL3012(node *parser.Node, file string) (rst []ValidateResult, err error) {
 //	return rst, nil
 //}

@@ -6,21 +6,41 @@ import (
 	"github.com/zabio3/godolint/linter/rules"
 )
 
-// Analyzer Apply docker best practice rules to docker ast
-func Analyzer(node *parser.Node, file string, ignoreRules []string) ([]string, error) {
+// Analyzer implements Analyzer.
+type Analyzer struct {
+	rules []*rules.Rule
+}
+
+// NewAnalyzer generate a NewAnalyzer with rules to apply
+func NewAnalyzer(ignoreRules []string) Analyzer {
+	return newAnalyzer(ignoreRules)
+}
+
+func newAnalyzer(ignoreRules []string) Analyzer {
+	var filteredRules []*rules.Rule
+	for _, k := range getMakeDifference(rules.RuleKeys, ignoreRules) {
+		if rule, ok := rules.Rules[k]; ok {
+			filteredRules = append(filteredRules, rule)
+		}
+	}
+	return Analyzer{rules: filteredRules}
+}
+
+// Run apply docker best practice rules to docker ast
+func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 	var rst []string
-	for _, k := range GetMakeDifference(rules.RuleKeys, ignoreRules) {
-		v, err := rules.Rules[k].ValidateFunc.(func(node *parser.Node, file string) (rst []string, err error))(node, file)
+	for _, rule := range a.rules {
+		vrst, err := rule.ValidateFunc.(func(*parser.Node) ([]rules.ValidateResult, error))(node)
 		if err != nil {
 			return rst, err
 		}
-		rst = append(rst, v...)
+		rst = append(rst, rules.CreateMessage(rule, vrst)...)
 	}
 	return rst, nil
 }
 
-// GetMakeDifference is a function to create a difference set
-func GetMakeDifference(xs, ys []string) []string {
+// getMakeDifference is a function to create a difference set
+func getMakeDifference(xs, ys []string) []string {
 	if len(xs) > len(ys) {
 		return makeDifference(xs, ys)
 	}

@@ -8,17 +8,17 @@ import (
 )
 
 // validateDL3011 Valid UNIX ports range from 0 to 65535
-func validateDL3011(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3011(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == EXPOSE {
 			port := child.Next
 			if port != nil {
 				portNum, err := strconv.Atoi(port.Value)
 				if err != nil {
-					return nil, fmt.Errorf("%s:%v DL3011 not numeric is the value set for the port: %s", file, child.StartLine, port.Value)
+					return nil, fmt.Errorf("#%v DL3011 not numeric is the value set for the port: %s", child.StartLine, port.Value)
 				}
 				if portNum < 0 || portNum > 65535 {
-					rst = append(rst, fmt.Sprintf("%s:%v DL3011 Valid UNIX ports range from 0 to 65535\n", file, child.StartLine))
+					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 				}
 			}
 		}

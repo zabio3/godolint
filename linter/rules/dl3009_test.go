@@ -7,8 +7,7 @@ import (
 func TestValidateDL3009(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
-		file          string
-		expectedRst   []string
+		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
@@ -17,8 +16,9 @@ RUN apt-get update && apt-get install -y python
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3009_Dockerfile",
-			expectedRst: []string{"DL3009_Dockerfile:2 DL3009 Delete the apt-get lists after installing something\n"},
+			expectedRst: []ValidateResult{
+				{line: 2, addMsg: ""},
+			},
 			expectedErr: nil,
 		},
 		{
@@ -27,7 +27,6 @@ RUN apt-get update && apt-get install -y python && apt-get clean && rm /var/lib/
 
 CMD ["go", "run", "main.go"]
 `,
-			file:        "DL3009_Dockerfile_2",
 			expectedRst: nil,
 			expectedErr: nil,
 		},
@@ -39,9 +38,9 @@ CMD ["go", "run", "main.go"]
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3009(rst.AST, tc.file)
-		if !sliceEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+		gotRst, gotErr := validateDL3009(rst.AST)
+		if !isValidateResultEq(gotRst, tc.expectedRst) {
+			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
 
 		if gotErr != tc.expectedErr {

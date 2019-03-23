@@ -1,5 +1,6 @@
 package rules
 
+//
 //import (
 //	"testing"
 //)
@@ -7,15 +8,13 @@ package rules
 //func TestValidateDL3012(t *testing.T) {
 //	cases := []struct {
 //		dockerfileStr string
-//		file          string
-//		expectedRst   []string
+//		expectedRst   []ValidateResult
 //		expectedErr   error
 //	}{
 //		{
 //			dockerfileStr: `FROM busybox
 //MAINTAINER zabio3
 //`,
-//			file:        "DL3012_Dockerfile",
 //			expectedRst: nil,
 //			expectedErr: nil,
 //		},
@@ -27,9 +26,9 @@ package rules
 //			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 //		}
 //
-//		gotRst, gotErr := validateDL3012(rst.AST, tc.file)
-//		if !sliceEq(gotRst, tc.expectedRst) {
-//			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)
+//		gotRst, gotErr := validateDL3012(rst.AST)
+//		if !isValidateResultEq(gotRst, tc.expectedRst) {
+//			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 //		}
 //
 //		if gotErr != tc.expectedErr {

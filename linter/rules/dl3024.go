@@ -1,14 +1,13 @@
 package rules
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // validateDL3024 FROM aliases (stage names) must be unique
-func validateDL3024(node *parser.Node, file string) (rst []string, err error) {
+func validateDL3024(node *parser.Node) (rst []ValidateResult, err error) {
 	isAs := false
 	var asBuildName []string
 	for _, child := range node.Children {
@@ -21,7 +20,7 @@ func validateDL3024(node *parser.Node, file string) (rst []string, err error) {
 				default:
 					if isAs {
 						if isContain(asBuildName, v) {
-							rst = append(rst, fmt.Sprintf("%s:%v DL3024 FROM aliases (stage names) must be unique\n", file, child.StartLine))
+							rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 						} else {
 							asBuildName = append(asBuildName, v)
 						}
