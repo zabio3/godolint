@@ -109,14 +109,14 @@ An implemented rules.
 Dockerfile syntax is fully described in the [Dockerfile reference](https://docs.docker.com/engine/reference/builder/). 
 Just take a look at [moby/buildkit](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) in the language-docker project to see the AST definition.
 
-## Development
+## Contribution
+Contributions are of course always welcome!
 
-### Release Build
+1. Fork zabio3/godolint (https://github.com/zabio3/godolint/fork)
+2. Run `go get` to install dependencies
+3. Create a feature branch
+4. Commit your changes
+5. Run test using `go test ./...`
+6. Create a Pull Request
 
-Make sure you have installed the goreleaser tool and then you can release gosec as follows:
-
-```
-$ git tag 0.0.1
-$ export GITHUB_TOKEN=<YOUR GITHUB TOKEN>
-$ goreleaser
-```
+See [`CONTRIBUTING.md`](https://github.com/zabio3/godolint/blob/master/CONTRIBUTING.md) for details.
