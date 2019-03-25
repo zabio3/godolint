@@ -29,13 +29,26 @@ func newAnalyzer(ignoreRules []string) Analyzer {
 // Run apply docker best practice rules to docker ast
 func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 	var rst []string
+	rstChan := make(chan []string, len(a.rules))
+	errChan := make(chan error, len(a.rules))
+
 	for _, rule := range a.rules {
-		vrst, err := rule.ValidateFunc.(func(*parser.Node) ([]rules.ValidateResult, error))(node)
-		if err != nil {
-			return rst, err
+		go func(r *rules.Rule) {
+			vrst, err := r.ValidateFunc.(func(*parser.Node) ([]rules.ValidateResult, error))(node)
+			if err != nil {
+				errChan <- err
+			} else {
+				rstChan <- rules.CreateMessage(rule, vrst)
+			}
+		}(rule)
+		select {
+		case value := <-rstChan:
+			rst = append(rst, value...)
+		case err := <-errChan:
+			return nil, err
 		}
-		rst = append(rst, rules.CreateMessage(rule, vrst)...)
 	}
+
 	return rst, nil
 }
 
