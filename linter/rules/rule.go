@@ -14,6 +14,7 @@ type Rule struct {
 	ValidateFunc interface{}
 }
 
+// ValidateResult ValidateFunc's results
 type ValidateResult struct {
 	line   int
 	addMsg string

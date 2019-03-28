@@ -21,7 +21,7 @@ checks:
   method-lines:
     enabled: true
     config:
-      threshold: 60
+      threshold: 180
   nested-control-flow:
     enabled: true
     config:

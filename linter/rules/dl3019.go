@@ -10,22 +10,30 @@ import (
 func validateDL3019(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isApk, isAdd, length := false, false, len(rst)
+			isApk, isUpdate, isRm, hasRemove, length := false, false, false, false, len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apk":
 					isApk = true
-				case "add":
+				case "update":
 					if isApk {
-						isAdd = true
+						isUpdate = true
+					}
+				case "rm":
+					if isApk {
+						isRm = true
+					}
+				case "/var/cache/apk/*":
+					if isRm {
+						hasRemove = true
 					}
 				case "&&":
-					isApk, isAdd = false, false
+					isApk = false
 					continue
 				default:
-					if isAdd && v != "--update" && length == len(rst) {
+					if (isUpdate || hasRemove) && length == len(rst) {
 						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
-						isApk, isAdd = false, false
+						isApk = false
 					}
 				}
 			}
