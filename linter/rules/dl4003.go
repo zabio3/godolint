@@ -4,7 +4,7 @@ import (
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
-// validateDL4003 Either use Wget or Curl but not both
+// validateDL4003 Multiple CMD instructions found.
 func validateDL4003(node *parser.Node) (rst []ValidateResult, err error) {
 	isCmd := false
 	for _, child := range node.Children {
