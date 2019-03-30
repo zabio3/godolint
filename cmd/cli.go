@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strings"
+	"sort"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 	"github.com/zabio3/godolint/linter"
@@ -107,6 +107,12 @@ func (cli *CLI) Run(args []string) int {
 		return ExitCodeLintCheckError
 	}
 
-	_, _ = fmt.Fprint(cli.OutStream, strings.Trim(fmt.Sprintf("%s", rst), "[]"))
+	rst = sort.StringSlice(rst)
+	var output string
+	for _, s := range rst {
+		// ends of each strings have "\n"
+		output = output + s
+	}
+	_, _ = fmt.Fprint(cli.OutStream, output)
 	return ExitCodeOK
 }
