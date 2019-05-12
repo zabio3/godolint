@@ -3,6 +3,8 @@ package rules
 
 import (
 	"fmt"
+
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
 // Rule is filtered rule (with ignore rule applied)
@@ -11,7 +13,7 @@ type Rule struct {
 	Code         string
 	Severity     Severity
 	Description  string
-	ValidateFunc interface{}
+	ValidateFunc func(node *parser.Node) (rst []ValidateResult, err error)
 }
 
 // ValidateResult ValidateFunc's results

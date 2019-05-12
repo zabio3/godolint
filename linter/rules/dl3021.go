@@ -27,7 +27,7 @@ func isDL3021Error(node *parser.Node) bool {
 			}
 			return false
 		default:
-			c += 1
+			c++
 			return fn(nd.Next, nd.Value)
 		}
 	}
