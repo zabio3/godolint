@@ -34,7 +34,7 @@ func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 
 	for _, rule := range a.rules {
 		go func(r *rules.Rule) {
-			vrst, err := r.ValidateFunc.(func(*parser.Node) ([]rules.ValidateResult, error))(node)
+			vrst, err := r.ValidateFunc(node)
 			if err != nil {
 				errChan <- err
 			} else {
