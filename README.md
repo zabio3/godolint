@@ -13,6 +13,11 @@ A Dockerfile linter that helps you build [best practice](https://docs.docker.com
 For static analysis of AST, [moby/buildkit parser](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) is used, and lint check is done.
 This tool performs docker rule checks based on the parsed AST.
 
+## Dependency
+ 
+  - [moby/buildkit/frontend/dockerfile/parser](https://github.com/moby/buildkit)
+     - The official Dockerfile parser provided by moby. Used when parsing Dockerfile.
+          
 ## Usage
 
 You can run godolint locally to lint your Dockerfile.
@@ -67,7 +72,7 @@ $ go get github.com/zabio3/godolint
 
 ## Rules
 
-An implemented rules.
+An implemented rules. (Dockerfile lint rule provided by [hadolint](https://github.com/hadolint/hadolint))
 
 | Rule                                                         | Description                                                                                                                                         |
 |:-------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|

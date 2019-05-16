@@ -18,7 +18,7 @@ func NewAnalyzer(ignoreRules []string) Analyzer {
 
 func newAnalyzer(ignoreRules []string) Analyzer {
 	var filteredRules []*rules.Rule
-	for _, k := range getMakeDifference(rules.RuleKeys, ignoreRules) {
+	for _, k := range getMakeDiff(rules.RuleKeys, ignoreRules) {
 		if rule, ok := rules.Rules[k]; ok {
 			filteredRules = append(filteredRules, rule)
 		}
@@ -48,20 +48,19 @@ func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 			return nil, err
 		}
 	}
-
 	return rst, nil
 }
 
 // getMakeDifference is a function to create a difference set
-func getMakeDifference(xs, ys []string) []string {
+func getMakeDiff(xs, ys []string) []string {
 	if len(xs) > len(ys) {
-		return makeDifference(xs, ys)
+		return makeDiff(xs, ys)
 	}
-	return makeDifference(ys, xs)
+	return makeDiff(ys, xs)
 }
 
 // make set difference
-func makeDifference(xs, ys []string) []string {
+func makeDiff(xs, ys []string) []string {
 	var set []string
 	for _, c := range xs {
 		if !isContain(ys, c) {

@@ -297,9 +297,10 @@ func isContain(s []string, e string) bool {
 }
 
 // CreateMessage : create output message
-func CreateMessage(rule *Rule, vrst []ValidateResult) (rst []string) {
-	for _, v := range vrst {
-		rst = append(rst, fmt.Sprintf("#%v %s %s %s\n", v.line, rule.Code, rule.Description, v.addMsg))
+func CreateMessage(rule *Rule, vrst []ValidateResult) []string {
+	rst := make([]string, len(vrst))
+	for i, v := range vrst {
+		rst[i] = fmt.Sprintf("#%v %s %s %s\n", v.line, rule.Code, rule.Description, v.addMsg)
 	}
-	return
+	return rst
 }

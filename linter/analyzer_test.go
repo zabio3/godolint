@@ -336,7 +336,7 @@ func TestGetMakeDifference(t *testing.T) {
 	}
 
 	for i, tc := range cases {
-		rst := getMakeDifference(tc.rules, tc.ignoreRules)
+		rst := getMakeDiff(tc.rules, tc.ignoreRules)
 		if !sliceEq(tc.expectedRst, rst) {
 			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, rst)
 		}
