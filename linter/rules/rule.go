@@ -300,7 +300,7 @@ func isContain(s []string, e string) bool {
 func CreateMessage(rule *Rule, vrst []ValidateResult) []string {
 	rst := make([]string, len(vrst))
 	for i, v := range vrst {
-		rst[i] = fmt.Sprintf("#%v %s %s %s\n", v.line, rule.Code, rule.Description, v.addMsg)
+		rst[i] = fmt.Sprintf("#%d %s %s %s\n", v.line, rule.Code, rule.Description, v.addMsg)
 	}
 	return rst
 }

@@ -9,6 +9,7 @@ import (
 	"sort"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
+
 	"github.com/zabio3/godolint/linter"
 )
 
@@ -24,7 +25,7 @@ const (
 
 const name = "godolint"
 
-const version = "0.0.5"
+const version = "0.0.6"
 
 const usage = `godolint - Dockerfile Linter written in Golang
 
@@ -58,7 +59,7 @@ func (ss *sliceString) Set(value string) error {
 
 // Run it takes Dockerfile as an argument and applies it to analyzer to standard output.
 func (cli *CLI) Run(args []string) int {
-	var ingnoreRules sliceString
+	var ignoreRules sliceString
 	var isVersion bool
 
 	flags := flag.NewFlagSet(name, flag.ContinueOnError)
@@ -66,17 +67,17 @@ func (cli *CLI) Run(args []string) int {
 		_, _ = fmt.Fprint(cli.OutStream, usage)
 	}
 
-	flags.Var(&ingnoreRules, "ignore", "Set ignore strings")
+	flags.Var(&ignoreRules, "ignore", "Set ignore strings")
 	flags.BoolVar(&isVersion, "version", false, "version")
 	flags.BoolVar(&isVersion, "v", false, "version")
 
 	if err := flags.Parse(args[1:]); err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%s\n", err)
+		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeParseFlagsError
 	}
 
 	if isVersion {
-		_, _ = fmt.Fprintf(cli.OutStream, "godolint version %s\n", version)
+		_, _ = fmt.Fprintf(cli.OutStream, "godolint version %v\n", version)
 		return ExitCodeOK
 	}
 
@@ -90,20 +91,20 @@ func (cli *CLI) Run(args []string) int {
 	file := args[length-1]
 	f, err := os.Open(file)
 	if err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%s\n", err)
+		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeFileError
 	}
 
 	r, err := parser.Parse(f)
 	if err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%s\n", err)
+		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeAstParseError
 	}
 
-	analyzer := linter.NewAnalyzer(ingnoreRules)
+	analyzer := linter.NewAnalyzer(ignoreRules)
 	rst, err := analyzer.Run(r.AST)
 	if err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%s\n", err)
+		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeLintCheckError
 	}
 
