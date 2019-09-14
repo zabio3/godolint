@@ -24,7 +24,6 @@ func isDL3019Error(node *parser.Node) bool {
 			isApk = true
 		case "update":
 			if isApk {
-				isApk = false
 				return true
 			}
 		case "rm":
@@ -33,7 +32,6 @@ func isDL3019Error(node *parser.Node) bool {
 			}
 		case "/var/cache/apk/*":
 			if isRm {
-				isApk = false
 				return true
 			}
 		case "&&":
