@@ -7,7 +7,7 @@ import (
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
-var regexVersion3013 = regexp.MustCompile(`.+[==|@].+`)
+var regexVersion3013 = regexp.MustCompile(`.+[=|@].+`)
 
 // validateDL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`
 func validateDL3013(node *parser.Node) (rst []ValidateResult, err error) {

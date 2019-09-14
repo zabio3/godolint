@@ -1,6 +1,8 @@
-debug-docker:
-	go run main.go ./testdata/DL3000_Dockerfile
+.PHONY: check
+check: fmt test
+
+fmt:
+	@go fmt ./...
 
 test:
-	go test -cover -v $$(go list ./...)
-
+	@go test -cover -v ./...

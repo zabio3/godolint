@@ -17,32 +17,38 @@ func validateDL3009(node *parser.Node) (rst []ValidateResult, err error) {
 }
 
 func isDL3009Error(node *parser.Node) bool {
-	isAptGet, isInstalled, isRm, hasRemove, hasClean := false, false, false, false, false
+	isAptGet, isInstalled, hasClean, isRm, hasRemove := false, false, false, false, false
 	for _, v := range strings.Fields(node.Next.Value) {
-		switch v {
-		case "apt-get":
-			isAptGet = true
-		case "install", "update":
-			if isAptGet {
-				isInstalled = true
-			}
-		case "clean":
-			if isAptGet && isInstalled {
-				hasClean = true
-			}
-		case "rm":
-			if isInstalled {
-				isRm = true
-			}
-		case "/var/lib/apt/lists/*":
-			if isRm {
-				hasRemove = true
-			}
-		case "&&":
-			if isAptGet {
-				isAptGet, hasClean = false, false
-			}
-		}
+		isAptGet, isInstalled, hasClean, isRm, hasRemove = updateDL3009Status(v, isAptGet, isInstalled, hasClean, isRm, hasRemove)
 	}
 	return isInstalled && !(hasRemove || hasClean)
+}
+
+func updateDL3009Status(v string, isAptGet, isInstalled, hasClean, isRm, hasRemove bool) (bool, bool, bool, bool, bool) {
+	switch v {
+	case "apt-get":
+		return true, isInstalled, hasClean, isRm, hasRemove
+	case "install", "update":
+		if isAptGet {
+			return true, true, hasClean, isRm, hasRemove
+		}
+	case "clean":
+		if isAptGet && isInstalled {
+			return true, true, true, isRm, hasRemove
+		}
+	case "rm":
+		if isInstalled {
+			return true, true, hasClean, hasRemove, true
+		}
+	case "/var/lib/apt/lists/*":
+		if isRm {
+			return true, true, hasClean, true, true
+		}
+	case "&&":
+		if isAptGet {
+			return false, isInstalled, false, isRm, hasRemove
+		}
+	}
+
+	return isAptGet, isInstalled, hasClean, isRm, hasRemove
 }
