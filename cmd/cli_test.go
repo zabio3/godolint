@@ -39,7 +39,7 @@ Other Commands:
 		},
 		{
 			command:           "godolint --version",
-			expectedOutStream: "godolint version 0.0.6\n",
+			expectedOutStream: "godolint version 0.1.0\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
