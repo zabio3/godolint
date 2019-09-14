@@ -1,4 +1,4 @@
-// Package command line tool to analyzer dockerfile.
+// Package cmd provides command line tool to analyzer dockerfile.
 package cmd
 
 import (

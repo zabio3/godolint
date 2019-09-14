@@ -6,6 +6,7 @@ godolint
 [![Golang CI](https://golangci.com/badges/github.com/zabio3/godolint.svg)](https://golangci.com/r/github.com/zabio3/godolint)
 [![codecov](https://codecov.io/gh/zabio3/godolint/branch/master/graph/badge.svg)](https://codecov.io/gh/zabio3/godolint)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
+[![GoDoc](https://godoc.org/github.com/zabio3/godolint?status.svg)](https://godoc.org/github.com/zabio3/godolint)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4c1c216781e5592d4194/maintainability)](https://codeclimate.com/github/zabio3/godolint/maintainability)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
