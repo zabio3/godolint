@@ -13,16 +13,16 @@ type Rule struct {
 	Code         string
 	Severity     Severity
 	Description  string
-	ValidateFunc func(node *parser.Node) (rst []ValidateResult, err error)
+	ValidateFunc func(node *parser.Node) ([]ValidateResult, error)
 }
 
-// ValidateResult ValidateFunc's results
+// ValidateResult ValidateFunc's results.
 type ValidateResult struct {
 	line   int
 	addMsg string
 }
 
-// Dockerfile instruction
+// Dockerfile instruction.
 const (
 	FROM       = "from"
 	LABEL      = "label"
@@ -37,21 +37,21 @@ const (
 	WORKDIR    = "workdir"
 	SHELL      = "shell"
 
-	// deprecated instruction
+	// deprecated instruction.
 	MAINTAINER = "maintainer"
 )
 
-// Severity stand check type
+// Severity stand check type.
 type Severity struct {
 	Name string
 }
 
-// Severity Level
+// Severity Level.
 var (
-	SeverityError   = Severity{Name: "ErrorC"}
-	SeverityWarning = Severity{Name: "WarningC"}
-	SeverityInfo    = Severity{Name: "InfoC"}
-	//SeverityDeprecated = Severity{Name: "Deprecated"}
+	SeverityError      = Severity{Name: "ErrorC"}
+	SeverityWarning    = Severity{Name: "WarningC"}
+	SeverityInfo       = Severity{Name: "InfoC"}
+	SeverityDeprecated = Severity{Name: "Deprecated"}
 )
 
 // RuleKeys is (Docker best practice rule key)
@@ -167,7 +167,7 @@ var Rules = map[string]*Rule{
 	//"DL3012": {
 	//	Code:     "DL3012",
 	//	Severity: SeverityDeprecated,
-	//	Description:  "",
+	//	Description:  "Provide an email address or URL as maintainer.",
 	//	ValidateFunc:   validateDL3012,
 	//},
 	"DL3013": {

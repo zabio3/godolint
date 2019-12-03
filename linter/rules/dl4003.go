@@ -8,8 +8,7 @@ import (
 func validateDL4003(node *parser.Node) (rst []ValidateResult, err error) {
 	isCmd := false
 	for _, child := range node.Children {
-		switch child.Value {
-		case CMD:
+		if child.Value == CMD {
 			if !isCmd {
 				isCmd = true
 			} else {

@@ -15,7 +15,7 @@ import (
 
 // Exit codes are int values that represent an exit code for a particular error.
 const (
-	ExitCodeOK = iota
+	ExitCodeOK = iota + 1
 	ExitCodeParseFlagsError
 	ExitCodeNoExistError
 	ExitCodeFileError
@@ -41,7 +41,7 @@ Other Commands:
   --version	-v	Print the version information
 `
 
-// CLI represents CLI interface
+// CLI represents CLI interface.
 type CLI struct {
 	OutStream, ErrStream io.Writer
 }
@@ -64,7 +64,7 @@ func (cli *CLI) Run(args []string) int {
 
 	flags := flag.NewFlagSet(name, flag.ContinueOnError)
 	flags.Usage = func() {
-		_, _ = fmt.Fprint(cli.OutStream, usage)
+		fmt.Fprint(cli.OutStream, usage)
 	}
 
 	flags.Var(&ignoreRules, "ignore", "Set ignore strings")
@@ -72,48 +72,48 @@ func (cli *CLI) Run(args []string) int {
 	flags.BoolVar(&isVersion, "v", false, "version")
 
 	if err := flags.Parse(args[1:]); err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeParseFlagsError
 	}
 
 	if isVersion {
-		_, _ = fmt.Fprintf(cli.OutStream, "godolint version %v\n", version)
+		fmt.Fprintf(cli.OutStream, "godolint version %v\n", version)
 		return ExitCodeOK
 	}
 
 	length := len(args)
 	// The Dockerfile to be analyzed must be the last.
 	if length < 2 {
-		_, _ = fmt.Fprintf(cli.ErrStream, "Please provide a Dockerfile\n")
+		fmt.Fprintf(cli.ErrStream, "Please provide a Dockerfile\n")
 		return ExitCodeNoExistError
 	}
 
 	file := args[length-1]
 	f, err := os.Open(file)
 	if err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeFileError
 	}
 
 	r, err := parser.Parse(f)
 	if err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeAstParseError
 	}
 
 	analyzer := linter.NewAnalyzer(ignoreRules)
 	rst, err := analyzer.Run(r.AST)
 	if err != nil {
-		_, _ = fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprintf(cli.ErrStream, "%v\n", err)
 		return ExitCodeLintCheckError
 	}
 
 	rst = sort.StringSlice(rst)
 	var output string
-	for _, s := range rst {
+	for i := range rst {
 		// ends of each strings have "\n"
-		output = output + s
+		output = output + rst[i]
 	}
-	_, _ = fmt.Fprint(cli.OutStream, output)
+	fmt.Fprint(cli.OutStream, output)
 	return ExitCodeOK
 }

@@ -2,9 +2,8 @@ godolint
 ===
 
 [![GitHub release](http://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](https://github.com/zabio3/godolint/releases/latest)
-[![Build Status](https://travis-ci.org/zabio3/godolint.svg?branch=master)](https://travis-ci.org/zabio3/godolint)
+[![Actions Status](https://github.com/zabio3/godolint/workflows/go1.12/badge.svg)](https://github.com/zabio3/godolint/actions)
 [![Golang CI](https://golangci.com/badges/github.com/zabio3/godolint.svg)](https://golangci.com/r/github.com/zabio3/godolint)
-[![codecov](https://codecov.io/gh/zabio3/godolint/branch/master/graph/badge.svg)](https://codecov.io/gh/zabio3/godolint)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
 [![GoDoc](https://godoc.org/github.com/zabio3/godolint?status.svg)](https://godoc.org/github.com/zabio3/godolint)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4c1c216781e5592d4194/maintainability)](https://codeclimate.com/github/zabio3/godolint/maintainability)
