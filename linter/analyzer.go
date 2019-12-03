@@ -12,7 +12,7 @@ type Analyzer struct {
 	rules []*rules.Rule
 }
 
-// NewAnalyzer generate a NewAnalyzer with rules to apply
+// NewAnalyzer generate a NewAnalyzer with rules to apply.
 func NewAnalyzer(ignoreRules []string) Analyzer {
 	return newAnalyzer(ignoreRules)
 }
@@ -27,21 +27,21 @@ func newAnalyzer(ignoreRules []string) Analyzer {
 	return Analyzer{rules: filteredRules}
 }
 
-// Run apply docker best practice rules to docker ast
+// Run apply docker best practice rules to docker ast.
 func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 	var rst []string
 	rstChan := make(chan []string, len(a.rules))
 	errChan := make(chan error, len(a.rules))
 
-	for _, rule := range a.rules {
+	for i := range a.rules {
 		go func(r *rules.Rule) {
 			vrst, err := r.ValidateFunc(node)
 			if err != nil {
 				errChan <- err
 			} else {
-				rstChan <- rules.CreateMessage(rule, vrst)
+				rstChan <- rules.CreateMessage(a.rules[i], vrst)
 			}
-		}(rule)
+		}(a.rules[i])
 		select {
 		case value := <-rstChan:
 			rst = append(rst, value...)
@@ -52,7 +52,7 @@ func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 	return rst, nil
 }
 
-// getMakeDifference is a function to create a difference set
+// getMakeDifference is a function to create a difference set.
 func getMakeDiff(xs, ys []string) []string {
 	if len(xs) > len(ys) {
 		return makeDiff(xs, ys)
@@ -60,21 +60,21 @@ func getMakeDiff(xs, ys []string) []string {
 	return makeDiff(ys, xs)
 }
 
-// make set difference
+// make set difference.
 func makeDiff(xs, ys []string) []string {
 	var set []string
-	for _, c := range xs {
-		if !isContain(ys, c) {
-			set = append(set, c)
+	for i := range xs {
+		if !isContain(ys, xs[i]) {
+			set = append(set, xs[i])
 		}
 	}
 	return set
 }
 
-// isContain is a function to check if s is in xs
+// isContain is a function to check if s is in xs.
 func isContain(xs []string, s string) bool {
-	for _, x := range xs {
-		if s == x {
+	for i := range xs {
+		if xs[i] == s {
 			return true
 		}
 	}

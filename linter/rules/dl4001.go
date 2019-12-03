@@ -11,8 +11,7 @@ func validateDL4001(node *parser.Node) (rst []ValidateResult, err error) {
 	isCurl, isWget := false, false
 	var numArr []int
 	for _, child := range node.Children {
-		switch child.Value {
-		case RUN:
+		if child.Value == RUN {
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "curl":

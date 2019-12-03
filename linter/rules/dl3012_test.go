@@ -1,6 +1,5 @@
 package rules
 
-//
 //import (
 //	"testing"
 //)

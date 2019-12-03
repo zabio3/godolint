@@ -11,8 +11,7 @@ func validateDL3024(node *parser.Node) (rst []ValidateResult, err error) {
 	isAs := false
 	var asBuildName []string
 	for _, child := range node.Children {
-		switch child.Value {
-		case FROM:
+		if child.Value == FROM {
 			for _, v := range strings.Fields(child.Original) {
 				switch v {
 				case "as":

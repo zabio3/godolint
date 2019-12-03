@@ -8,8 +8,7 @@ import (
 func validateDL4004(node *parser.Node) (rst []ValidateResult, err error) {
 	isEntryPoint := false
 	for _, child := range node.Children {
-		switch child.Value {
-		case ENTRYPOINT:
+		if child.Value == ENTRYPOINT {
 			if !isEntryPoint {
 				isEntryPoint = true
 			} else {
