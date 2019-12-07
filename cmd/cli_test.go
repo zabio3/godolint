@@ -34,19 +34,19 @@ Other Commands:
   --help	-h	Help about any command
   --version	-v	Print the version information
 `,
-			expectedErrStream: "flag: help requested\n",
+			expectedErrStream: "flag: help requested",
 			expectedExitCode:  ExitCodeParseFlagsError,
 		},
 		{
 			command:           "godolint --version",
-			expectedOutStream: "godolint version 0.1.0\n",
+			expectedOutStream: "godolint version 0.1.1\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
 		{
 			command:           "godolint testdata/no-file",
 			expectedOutStream: "",
-			expectedErrStream: "open testdata/no-file: no such file or directory\n",
+			expectedErrStream: "open testdata/no-file: no such file or directory",
 			expectedExitCode:  ExitCodeFileError,
 		},
 		{
@@ -94,7 +94,7 @@ Other Commands:
 		{
 			command:           "godolint ../testdata/MaxScanSize_File",
 			expectedOutStream: "",
-			expectedErrStream: "dockerfile line greater than max allowed size of 65535\n",
+			expectedErrStream: "dockerfile line greater than max allowed size of 65535",
 			expectedExitCode:  ExitCodeAstParseError,
 		},
 		{

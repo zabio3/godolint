@@ -25,7 +25,7 @@ const (
 
 const name = "godolint"
 
-const version = "0.1.0"
+const version = "0.1.1"
 
 const usage = `godolint - Dockerfile Linter written in Golang
 
@@ -72,7 +72,7 @@ func (cli *CLI) Run(args []string) int {
 	flags.BoolVar(&isVersion, "v", false, "version")
 
 	if err := flags.Parse(args[1:]); err != nil {
-		fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprint(cli.ErrStream, err)
 		return ExitCodeParseFlagsError
 	}
 
@@ -91,20 +91,20 @@ func (cli *CLI) Run(args []string) int {
 	file := args[length-1]
 	f, err := os.Open(file)
 	if err != nil {
-		fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprint(cli.ErrStream, err)
 		return ExitCodeFileError
 	}
 
 	r, err := parser.Parse(f)
 	if err != nil {
-		fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprint(cli.ErrStream, err)
 		return ExitCodeAstParseError
 	}
 
 	analyzer := linter.NewAnalyzer(ignoreRules)
 	rst, err := analyzer.Run(r.AST)
 	if err != nil {
-		fmt.Fprintf(cli.ErrStream, "%v\n", err)
+		fmt.Fprint(cli.ErrStream, err)
 		return ExitCodeLintCheckError
 	}
 
