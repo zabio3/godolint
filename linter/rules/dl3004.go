@@ -14,6 +14,7 @@ func validateDL3004(node *parser.Node) (rst []ValidateResult, err error) {
 				if v == "sudo" {
 					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
 				}
+				break
 			}
 		}
 	}
