@@ -18,7 +18,7 @@ func validateDL3011(node *parser.Node) (rst []ValidateResult, err error) {
 					return nil, fmt.Errorf("#%v DL3011 not numeric is the value set for the port: %s", child.StartLine, port.Value)
 				}
 				if portNum < 0 || portNum > 65535 {
-					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+					rst = append(rst, ValidateResult{line: child.StartLine})
 				}
 			}
 		}

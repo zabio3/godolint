@@ -16,7 +16,7 @@ CMD /bin/true
 CMD /bin/false
 `,
 			expectedRst: []ValidateResult{
-				{line: 3, addMsg: ""},
+				{line: 3},
 			},
 			expectedErr: nil,
 		},

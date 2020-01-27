@@ -15,7 +15,7 @@ func TestValidateDL3021(t *testing.T) {
 COPY package.json yarn.lock my_app
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

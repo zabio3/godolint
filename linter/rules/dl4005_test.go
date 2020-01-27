@@ -18,7 +18,7 @@ RUN apk add --update-cache bash=4.3.42-r3
 RUN ln -sfv /bin/bash /bin/sh
 `,
 			expectedRst: []ValidateResult{
-				{line: 5, addMsg: ""},
+				{line: 5},
 			},
 			expectedErr: nil,
 		},

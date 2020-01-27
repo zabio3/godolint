@@ -13,7 +13,8 @@ var regexVersion3013 = regexp.MustCompile(`.+[=|@].+`)
 func validateDL3013(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isPip, isInstall, length := false, false, len(rst)
+			var isPip, isInstall bool
+			length := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "pip":
@@ -26,7 +27,7 @@ func validateDL3013(node *parser.Node) (rst []ValidateResult, err error) {
 					isPip, isInstall = false, false
 				default:
 					if isPip && isInstall && !regexVersion3013.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 					isPip, isInstall = false, false
 				}

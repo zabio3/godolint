@@ -15,7 +15,7 @@ func TestValidateDL3014(t *testing.T) {
 RUN apt-get install python=2.7
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
@@ -23,7 +23,7 @@ RUN apt-get install python=2.7
 			dockerfileStr: `FROM debian
 RUN apt-get install python=2.7 && apt-get install ruby
 `, expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

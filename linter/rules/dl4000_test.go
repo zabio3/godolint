@@ -15,7 +15,7 @@ func TestValidateDL4000(t *testing.T) {
 MAINTAINER zabio3 <zabio1192@gmail.com>
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

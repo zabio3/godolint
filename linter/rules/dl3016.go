@@ -13,7 +13,8 @@ var regexVersion3016 = regexp.MustCompile(`.+[#|@][0-9"]+`)
 func validateDL3016(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isNpm, isInstall, length := false, false, len(rst)
+			var isNpm, isInstall bool
+			length := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "npm":
@@ -27,7 +28,7 @@ func validateDL3016(node *parser.Node) (rst []ValidateResult, err error) {
 					continue
 				default:
 					if isInstall && !regexVersion3016.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 						isNpm, isInstall = false, false
 					}
 				}

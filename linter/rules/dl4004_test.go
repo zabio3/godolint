@@ -16,7 +16,7 @@ ENTRYPOINT /bin/true
 ENTRYPOINT /bin/false
 `,
 			expectedRst: []ValidateResult{
-				{line: 3, addMsg: ""},
+				{line: 3},
 			},
 			expectedErr: nil,
 		},

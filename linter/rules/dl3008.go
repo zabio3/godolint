@@ -13,7 +13,8 @@ var regexDL3008 = regexp.MustCompile(`.+=.+`)
 func validateDL3008(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isAptGet, isInstall, length := false, false, len(rst)
+			var isAptGet, isInstall bool
+			l := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apt-get":
@@ -26,8 +27,8 @@ func validateDL3008(node *parser.Node) (rst []ValidateResult, err error) {
 					isAptGet, isInstall = false, false
 					continue
 				default:
-					if isInstall && !regexDL3008.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+					if isInstall && !regexDL3008.MatchString(v) && l == len(rst) {
+						rst = append(rst, ValidateResult{line: child.StartLine})
 						isAptGet, isInstall = false, false
 					}
 				}

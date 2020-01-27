@@ -16,7 +16,7 @@ func TestValidateDL3023(t *testing.T) {
 COPY --from=build some stuff ./
 `,
 			expectedRst: []ValidateResult{
-				{line: 3, addMsg: ""},
+				{line: 3},
 			},
 			expectedErr: nil,
 		},

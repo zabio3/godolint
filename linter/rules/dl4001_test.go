@@ -16,8 +16,8 @@ RUN wget http://google.com
 RUN curl http://bing.com
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
-				{line: 3, addMsg: ""},
+				{line: 2},
+				{line: 3},
 			},
 			expectedErr: nil,
 		},

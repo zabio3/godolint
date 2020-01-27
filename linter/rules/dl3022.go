@@ -9,7 +9,7 @@ import (
 // validateDL3022 COPY --from should reference a previously defined FROM alias
 func validateDL3022(node *parser.Node) (rst []ValidateResult, err error) {
 	fromImage := ""
-	isAs, isAsBuild := false, false
+	var isAs, isAsBuild bool
 	for _, child := range node.Children {
 		if child.Value == FROM {
 			for _, v := range strings.Fields(child.Original) {
@@ -24,7 +24,7 @@ func validateDL3022(node *parser.Node) (rst []ValidateResult, err error) {
 					if fromImage == "" && v != "FROM" && v != "from" {
 						fromImage = v
 					} else if fromImage == v && !isAsBuild {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 				}
 			}

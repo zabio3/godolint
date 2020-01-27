@@ -15,7 +15,7 @@ func TestValidateDL3025(t *testing.T) {
 ENTRYPOINT s3cmd
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
@@ -24,7 +24,7 @@ ENTRYPOINT s3cmd
 CMD my-service server
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

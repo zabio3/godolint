@@ -10,14 +10,14 @@ import (
 func validateDL3019(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN && isDL3019Error(child) {
-			rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+			rst = append(rst, ValidateResult{line: child.StartLine})
 		}
 	}
 	return rst, nil
 }
 
 func isDL3019Error(node *parser.Node) bool {
-	isApk, isRm := false, false
+	var isApk, isRm bool
 	for _, v := range strings.Fields(node.Next.Value) {
 		switch v {
 		case "apk":

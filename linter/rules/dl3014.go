@@ -13,7 +13,8 @@ var yesPattern = regexp.MustCompile(`^-(y|-yes|-assume-yes)$`)
 func validateDL3014(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isAptGet, isInstalled, length := false, false, len(rst)
+			var isAptGet, isInstalled bool
+			length := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apt-get":
@@ -26,7 +27,7 @@ func validateDL3014(node *parser.Node) (rst []ValidateResult, err error) {
 					isAptGet, isInstalled = false, false
 				default:
 					if isInstalled && !yesPattern.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 					isAptGet, isInstalled = false, false
 				}

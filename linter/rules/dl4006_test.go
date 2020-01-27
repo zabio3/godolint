@@ -14,7 +14,7 @@ func TestValidateDL4006(t *testing.T) {
 			dockerfileStr: `RUN wget -O - https://some.site | wc -l > /number
 `,
 			expectedRst: []ValidateResult{
-				{line: 1, addMsg: ""},
+				{line: 1},
 			},
 			expectedErr: nil,
 		},

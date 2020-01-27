@@ -9,7 +9,7 @@ import (
 // validateDL4001 is dockerfile linter DL4001 rule.
 // Either use Wget or Curl but not both.
 func validateDL4001(node *parser.Node) (rst []ValidateResult, err error) {
-	isCurl, isWget := false, false
+	var isCurl, isWget bool
 	var lines []int
 	for _, child := range node.Children {
 		if child.Value == RUN {
@@ -27,7 +27,7 @@ func validateDL4001(node *parser.Node) (rst []ValidateResult, err error) {
 	}
 	if isCurl && isWget {
 		for _, line := range lines {
-			rst = append(rst, ValidateResult{line: line, addMsg: ""})
+			rst = append(rst, ValidateResult{line: line})
 		}
 	}
 	return rst, nil

@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y python
 CMD ["go", "run", "main.go"]
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
