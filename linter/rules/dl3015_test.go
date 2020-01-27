@@ -15,7 +15,7 @@ func TestValidateDL3015(t *testing.T) {
 RUN apt-get install -y python=2.7
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
@@ -24,7 +24,7 @@ RUN apt-get install -y python=2.7
 RUN apt-get install -y python=2.7 && RUN apt-get install -y ruby
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

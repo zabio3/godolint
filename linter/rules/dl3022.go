@@ -24,7 +24,7 @@ func validateDL3022(node *parser.Node) (rst []ValidateResult, err error) {
 					if fromImage == "" && v != "FROM" && v != "from" {
 						fromImage = v
 					} else if fromImage == v && !isAsBuild {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 				}
 			}

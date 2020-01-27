@@ -20,7 +20,7 @@ FROM debian:jesse as build
 RUN more_stuff
 `,
 			expectedRst: []ValidateResult{
-				{line: 5, addMsg: ""},
+				{line: 5},
 			},
 			expectedErr: nil,
 		},

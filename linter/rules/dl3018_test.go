@@ -15,7 +15,7 @@ func TestValidateDL3018(t *testing.T) {
 RUN apk --no-cache add foo
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
@@ -24,7 +24,7 @@ RUN apk --no-cache add foo
 RUN apk --no-cache add foo && bar
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

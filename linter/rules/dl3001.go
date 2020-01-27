@@ -14,7 +14,7 @@ func validateDL3001(node *parser.Node) (rst []ValidateResult, err error) {
 			for _, v := range strings.Fields(child.Next.Value) {
 				for _, c := range []string{"ssh", "vim", "shutdown", "service", "ps", "free", "top", "kill", "mount"} {
 					if v == c {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 				}
 			}

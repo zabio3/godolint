@@ -33,7 +33,7 @@ func validateDL3023(node *parser.Node) (rst []ValidateResult, err error) {
 		case COPY:
 			for _, v := range strings.Fields(child.Original) {
 				if regexVersion3023.MatchString(v) && v == fmt.Sprintf("--from=%s", asFromName) {
-					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+					rst = append(rst, ValidateResult{line: child.StartLine})
 				}
 			}
 		}

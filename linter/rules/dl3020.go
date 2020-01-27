@@ -8,7 +8,7 @@ import (
 func validateDL3020(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == ADD {
-			rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+			rst = append(rst, ValidateResult{line: child.StartLine})
 		}
 	}
 	return rst, nil

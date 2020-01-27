@@ -15,7 +15,7 @@ func TestValidateDL3020(t *testing.T) {
 ADD requirements.txt /usr/src/app/
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

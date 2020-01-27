@@ -15,7 +15,7 @@ func validateDL3010(node *parser.Node) (rst []ValidateResult, err error) {
 		if child.Value == COPY {
 			args := strings.Fields(child.Next.Value)
 			if len(args) >= 1 && isCompressionExt.MatchString(args[0]) {
-				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

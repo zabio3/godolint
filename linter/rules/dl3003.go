@@ -12,7 +12,7 @@ func validateDL3003(node *parser.Node) (rst []ValidateResult, err error) {
 		if child.Value == RUN {
 			for _, v := range strings.Fields(child.Next.Value) {
 				if v == "cd" {
-					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+					rst = append(rst, ValidateResult{line: child.StartLine})
 				}
 			}
 		}

@@ -26,7 +26,7 @@ func validateDL3013(node *parser.Node) (rst []ValidateResult, err error) {
 					isPip, isInstall = false, false
 				default:
 					if isPip && isInstall && !regexVersion3013.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 					isPip, isInstall = false, false
 				}

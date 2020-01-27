@@ -18,7 +18,7 @@ func validateDL4006(node *parser.Node) (rst []ValidateResult, err error) {
 				switch v {
 				case "|":
 					if !isShellPipeFail {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 				}
 			}

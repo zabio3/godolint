@@ -12,7 +12,7 @@ func validateDL3004(node *parser.Node) (rst []ValidateResult, err error) {
 		if child.Value == RUN {
 			for _, v := range strings.Fields(child.Next.Value) {
 				if v == "sudo" {
-					rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+					rst = append(rst, ValidateResult{line: child.StartLine})
 				}
 				break
 			}

@@ -26,7 +26,7 @@ func validateDL3025(node *parser.Node) (rst []ValidateResult, err error) {
 				}
 			}
 			if isErr {
-				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

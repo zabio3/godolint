@@ -12,7 +12,7 @@ var regexDL3006 = regexp.MustCompile(`.+[:].+`)
 func validateDL3006(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == FROM && !regexDL3006.MatchString(child.Next.Value) {
-			rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+			rst = append(rst, ValidateResult{line: child.StartLine})
 		}
 	}
 	return rst, nil

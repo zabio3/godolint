@@ -20,7 +20,7 @@ func validateDL3005(node *parser.Node) (rst []ValidateResult, err error) {
 				}
 			}
 			if isAptGet && isUpgrade {
-				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

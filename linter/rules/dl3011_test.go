@@ -16,7 +16,7 @@ func TestValidateDL3011(t *testing.T) {
 
 EXPOSE 80000
 `, expectedRst: []ValidateResult{
-				{line: 3, addMsg: ""},
+				{line: 3},
 			},
 			expectedErr: nil,
 		},

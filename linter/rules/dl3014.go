@@ -26,7 +26,7 @@ func validateDL3014(node *parser.Node) (rst []ValidateResult, err error) {
 					isAptGet, isInstalled = false, false
 				default:
 					if isInstalled && !yesPattern.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 					isAptGet, isInstalled = false, false
 				}

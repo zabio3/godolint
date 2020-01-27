@@ -15,7 +15,7 @@ func validateDL3000(node *parser.Node) (rst []ValidateResult, err error) {
 				return nil, err
 			}
 			if absPath != child.Next.Value {
-				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

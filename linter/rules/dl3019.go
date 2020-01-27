@@ -10,7 +10,7 @@ import (
 func validateDL3019(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN && isDL3019Error(child) {
-			rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+			rst = append(rst, ValidateResult{line: child.StartLine})
 		}
 	}
 	return rst, nil

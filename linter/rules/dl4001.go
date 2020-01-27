@@ -27,7 +27,7 @@ func validateDL4001(node *parser.Node) (rst []ValidateResult, err error) {
 	}
 	if isCurl && isWget {
 		for _, line := range lines {
-			rst = append(rst, ValidateResult{line: line, addMsg: ""})
+			rst = append(rst, ValidateResult{line: line})
 		}
 	}
 	return rst, nil

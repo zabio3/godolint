@@ -17,7 +17,7 @@ func validateDL4005(node *parser.Node) (rst []ValidateResult, err error) {
 					isLn = true
 				case "/bin/sh":
 					if isLn {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 				}
 			}

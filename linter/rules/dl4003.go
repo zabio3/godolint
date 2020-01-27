@@ -12,7 +12,7 @@ func validateDL4003(node *parser.Node) (rst []ValidateResult, err error) {
 			if !isCmd {
 				isCmd = true
 			} else {
-				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

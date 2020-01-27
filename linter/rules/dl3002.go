@@ -20,7 +20,7 @@ func validateDL3002(node *parser.Node) (rst []ValidateResult, err error) {
 		}
 	}
 	if isLastRootUser {
-		rst = append(rst, ValidateResult{line: lastRootUserPos, addMsg: ""})
+		rst = append(rst, ValidateResult{line: lastRootUserPos})
 	}
 	return rst, nil
 }

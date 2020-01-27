@@ -26,7 +26,7 @@ func TestCreateMessage(t *testing.T) {
 				ValidateFunc: validateDL3000,
 			},
 			vrst: []ValidateResult{
-				{line: 3, addMsg: ""},
+				{line: 3},
 			},
 			expectedRst: []string{
 				"#3 DL3000 Use absolute WORKDIR. ",

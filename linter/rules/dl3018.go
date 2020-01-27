@@ -26,7 +26,7 @@ func validateDL3018(node *parser.Node) (rst []ValidateResult, err error) {
 					isApk, isAdd = false, false
 				default:
 					if isAdd && !regexVersion3018.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 						isApk, isAdd = false, false
 					}
 				}

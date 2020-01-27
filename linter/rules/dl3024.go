@@ -19,7 +19,7 @@ func validateDL3024(node *parser.Node) (rst []ValidateResult, err error) {
 				default:
 					if isAs {
 						if isContain(asBuildName, v) {
-							rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+							rst = append(rst, ValidateResult{line: child.StartLine})
 						} else {
 							asBuildName = append(asBuildName, v)
 						}

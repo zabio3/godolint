@@ -12,7 +12,7 @@ func validateDL4004(node *parser.Node) (rst []ValidateResult, err error) {
 			if !isEntryPoint {
 				isEntryPoint = true
 			} else {
-				rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

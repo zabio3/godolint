@@ -17,7 +17,7 @@ RUN apt-get install python
 CMD ["go", "run", "main.go"]
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
@@ -28,7 +28,7 @@ RUN apt-get install python && apt-get clean
 CMD ["go", "run", "main.go"]
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

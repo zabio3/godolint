@@ -16,8 +16,8 @@ RUN pip install django
 RUN pip install https://github.com/Banno/carbon/tarball/0.9.x-fix-events-callback
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
-				{line: 3, addMsg: ""},
+				{line: 2},
+				{line: 3},
 			},
 			expectedErr: nil,
 		},
@@ -26,7 +26,7 @@ RUN pip install https://github.com/Banno/carbon/tarball/0.9.x-fix-events-callbac
 RUN pip install django && pip install https://github.com/Banno/carbon/tarball/0.9.x-fix-events-callback
 `,
 			expectedRst: []ValidateResult{
-				{line: 2, addMsg: ""},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},

@@ -17,7 +17,7 @@ func validateDL3017(node *parser.Node) (rst []ValidateResult, err error) {
 					isApk = true
 				case "upgrade":
 					if isApk && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 				case "&&":
 					isApk = false

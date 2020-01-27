@@ -27,7 +27,7 @@ func validateDL3016(node *parser.Node) (rst []ValidateResult, err error) {
 					continue
 				default:
 					if isInstall && !regexVersion3016.MatchString(v) && length == len(rst) {
-						rst = append(rst, ValidateResult{line: child.StartLine, addMsg: ""})
+						rst = append(rst, ValidateResult{line: child.StartLine})
 						isNpm, isInstall = false, false
 					}
 				}

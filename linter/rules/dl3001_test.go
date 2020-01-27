@@ -21,7 +21,7 @@ RUN top
 CMD ["go", "run", "main.go"]
 `,
 			expectedRst: []ValidateResult{
-				{line: 6, addMsg: ""},
+				{line: 6},
 			},
 			expectedErr: nil,
 		},

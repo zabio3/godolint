@@ -20,7 +20,7 @@ ADD . /go
 CMD ["go", "run", "main.go"]
 `,
 			expectedRst: []ValidateResult{
-				{line: 1, addMsg: ""},
+				{line: 1},
 			},
 			expectedErr: nil,
 		},
