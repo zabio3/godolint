@@ -14,6 +14,7 @@ func validateDL3003(node *parser.Node) (rst []ValidateResult, err error) {
 				if v == "cd" {
 					rst = append(rst, ValidateResult{line: child.StartLine})
 				}
+				break
 			}
 		}
 	}
