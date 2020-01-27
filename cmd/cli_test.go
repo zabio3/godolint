@@ -63,7 +63,7 @@ Other Commands:
 		},
 		{
 			command:           "godolint ../testdata/DL3001_Dockerfile",
-			expectedOutStream: "#6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`. \n",
+			expectedOutStream: "#6 DL3001 For some bash commands it makes no sense running them in a Docker container like `free`, `ifconfig`, `kill`, `mount`, `ps`, `service`, `shutdown`, `ssh`, `top`, `vim`. \n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},

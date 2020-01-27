@@ -101,7 +101,7 @@ var Rules = map[string]*Rule{
 	"DL3001": {
 		Code:         "DL3001",
 		Severity:     SeverityInfo,
-		Description:  "For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`.",
+		Description:  "For some bash commands it makes no sense running them in a Docker container like `free`, `ifconfig`, `kill`, `mount`, `ps`, `service`, `shutdown`, `ssh`, `top`, `vim`.",
 		ValidateFunc: validateDL3001,
 	},
 	"DL3002": {
