@@ -13,7 +13,8 @@ var regexVersion3013 = regexp.MustCompile(`.+[=|@].+`)
 func validateDL3013(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isPip, isInstall, length := false, false, len(rst)
+			var isPip, isInstall bool
+			length := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "pip":

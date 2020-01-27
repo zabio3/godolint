@@ -10,7 +10,8 @@ import (
 func validateDL3017(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isApk, length := false, len(rst)
+			var isApk bool
+			length := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apk":

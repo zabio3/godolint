@@ -17,7 +17,7 @@ func validateDL3009(node *parser.Node) (rst []ValidateResult, err error) {
 }
 
 func isDL3009Error(node *parser.Node) bool {
-	isAptGet, isInstalled, hasClean, isRm, hasRemove := false, false, false, false, false
+	var isAptGet, isInstalled, hasClean, isRm, hasRemove bool
 	for _, v := range strings.Fields(node.Next.Value) {
 		isAptGet, isInstalled, hasClean, isRm, hasRemove = updateDL3009Status(v, isAptGet, isInstalled, hasClean, isRm, hasRemove)
 	}

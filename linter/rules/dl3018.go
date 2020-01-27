@@ -13,7 +13,8 @@ var regexVersion3018 = regexp.MustCompile(`.+=.+`)
 func validateDL3018(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isApk, isAdd, length := false, false, len(rst)
+			var isApk, isAdd bool
+			length := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apk":

@@ -8,7 +8,7 @@ import (
 
 // validateDL3024 FROM aliases (stage names) must be unique
 func validateDL3024(node *parser.Node) (rst []ValidateResult, err error) {
-	isAs := false
+	var isAs bool
 	var asBuildName []string
 	for _, child := range node.Children {
 		if child.Value == FROM {

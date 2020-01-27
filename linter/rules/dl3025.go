@@ -9,7 +9,7 @@ import (
 // validateDL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments
 func validateDL3025(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
-		isErr := false
+		var isErr bool
 		if (child.Value == ENTRYPOINT) || (child.Value == CMD) {
 			args := strings.Fields(child.Original)
 			length := len(args) - 1

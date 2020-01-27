@@ -6,7 +6,7 @@ import (
 
 // validateDL4003 Multiple CMD instructions found.
 func validateDL4003(node *parser.Node) (rst []ValidateResult, err error) {
-	isCmd := false
+	var isCmd bool
 	for _, child := range node.Children {
 		if child.Value == CMD {
 			if !isCmd {

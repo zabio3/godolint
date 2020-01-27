@@ -17,7 +17,7 @@ func validateDL3019(node *parser.Node) (rst []ValidateResult, err error) {
 }
 
 func isDL3019Error(node *parser.Node) bool {
-	isApk, isRm := false, false
+	var isApk, isRm bool
 	for _, v := range strings.Fields(node.Next.Value) {
 		switch v {
 		case "apk":

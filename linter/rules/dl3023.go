@@ -12,7 +12,7 @@ var regexVersion3023 = regexp.MustCompile(`--from=.+`)
 
 // validateDL3023 COPY --from should reference a previously defined FROM alias
 func validateDL3023(node *parser.Node) (rst []ValidateResult, err error) {
-	isAs := false
+	var isAs bool
 	asFromName := ""
 	for _, child := range node.Children {
 		switch child.Value {

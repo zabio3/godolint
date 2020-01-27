@@ -10,7 +10,7 @@ import (
 func validateDL3005(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			isAptGet, isUpgrade := false, false
+			var isAptGet, isUpgrade bool
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "apt-get":
