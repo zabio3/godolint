@@ -6,3 +6,6 @@ fmt:
 
 test:
 	@go test -cover -v ./...
+
+docker:
+	docker build --rm -t zabio3/godolint .
