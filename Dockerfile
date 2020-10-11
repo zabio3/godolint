@@ -5,5 +5,5 @@ RUN apk add --no-cache git ca-certificates && \
   go build -v .
 
 FROM alpine:3.12.0
-COPY --from=builder /src/cmd/cmd /bin/godolint
+COPY --from=builder /src/cmd /bin/godolint
 ENTRYPOINT ["/bin/godolint"]
