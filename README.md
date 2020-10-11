@@ -125,3 +125,9 @@ Contributions are of course always welcome!
 6. Create a Pull Request
 
 See [`CONTRIBUTING.md`](https://github.com/zabio3/godolint/blob/master/CONTRIBUTING.md) for details.
+
+### Build Docker Image
+
+1. Run `make docker`
+2. Create a new tag for that release (in this example `0.1.2`): `docker tag zabio3/godolint zabio3/godolint:v0.1.2`
+3. Push to [Docker hub](https://hub.docker.com): `docker push zabio3/godolint zabio3/godolint:v0.1.2`
