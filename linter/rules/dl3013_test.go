@@ -30,6 +30,18 @@ RUN pip install django && pip install https://github.com/Banno/carbon/tarball/0.
 			},
 			expectedErr: nil,
 		},
+		{
+			dockerfileStr: `FROM python:3.4
+ARG YAML_LINT_VERSION=v1.26.3
+
+RUN pip install --no-cache-dir yamllint=="${YAML_LINT_VERSION:-v1.26.3}"
+RUN pip install django && pip install https://github.com/Banno/carbon/tarball/0.9.x-fix-events-callback
+`,
+			expectedRst: []ValidateResult{
+				{line: 5},
+			},
+			expectedErr: nil,
+		},
 	}
 
 	for i, tc := range cases {
