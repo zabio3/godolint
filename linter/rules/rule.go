@@ -24,21 +24,21 @@ type ValidateResult struct {
 
 // Dockerfile instruction.
 const (
-	FROM       = "from"
-	LABEL      = "label"
-	RUN        = "run"
-	CMD        = "cmd"
-	EXPOSE     = "expose"
-	ADD        = "add"
-	COPY       = "copy"
-	ENTRYPOINT = "entrypoint"
-	VOLUME     = "volume"
-	USER       = "user"
-	WORKDIR    = "workdir"
-	SHELL      = "shell"
+	FROM       = "FROM"
+	LABEL      = "LABEL"
+	RUN        = "RUN"
+	CMD        = "CMD"
+	EXPOSE     = "EXPOSE"
+	ADD        = "ADD"
+	COPY       = "COPY"
+	ENTRYPOINT = "ENTRYPOINT"
+	VOLUME     = "VOLUME"
+	USER       = "USER"
+	WORKDIR    = "WORKDIR"
+	SHELL      = "SHELL"
 
 	// deprecated instruction.
-	MAINTAINER = "maintainer"
+	MAINTAINER = "MAINTAINER"
 )
 
 // Severity stand check type.

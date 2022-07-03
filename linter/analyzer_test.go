@@ -19,7 +19,7 @@ func TestAnalyzer(t *testing.T) {
 				Next:  (*parser.Node)(nil),
 				Children: []*parser.Node{
 					{
-						Value: "from",
+						Value: "FROM",
 						Next: &parser.Node{
 							Value:      "golang:1.12.0-stretch",
 							Next:       (*parser.Node)(nil),
@@ -36,7 +36,7 @@ func TestAnalyzer(t *testing.T) {
 						StartLine:  1,
 					},
 					{
-						Value: "workdir",
+						Value: "WORKDIR",
 						Next: &parser.Node{
 							Value:      "go/",
 							Next:       (*parser.Node)(nil),
@@ -53,7 +53,7 @@ func TestAnalyzer(t *testing.T) {
 						StartLine:  3,
 					},
 					{
-						Value: "copy",
+						Value: "COPY",
 						Next: &parser.Node{
 							Value: ".",
 							Next: &parser.Node{
@@ -78,7 +78,7 @@ func TestAnalyzer(t *testing.T) {
 						StartLine:  4,
 					},
 					{
-						Value: "cmd",
+						Value: "CMD",
 						Next: &parser.Node{
 							Value: "go",
 							Next: &parser.Node{
