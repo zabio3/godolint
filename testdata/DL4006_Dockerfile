@@ -1,1 +1,2 @@
 RUN wget -O - https://some.site | wc -l > /number
+RUN yq eval '.".docker".script[1] | explode(.)' /base.yml > /usr/local/bin/entrypoint

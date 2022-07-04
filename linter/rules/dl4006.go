@@ -14,11 +14,19 @@ func validateDL4006(node *parser.Node) (rst []ValidateResult, err error) {
 		case SHELL:
 			isShellPipeFail = true
 		case RUN:
+			var isInQuote bool
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
 				case "|":
-					if !isShellPipeFail {
+					if !isInQuote && !isShellPipeFail {
 						rst = append(rst, ValidateResult{line: child.StartLine})
+					}
+				default:
+					if strings.HasPrefix(v, "'") {
+						isInQuote = true
+					}
+					if strings.HasSuffix(v, "'") {
+						isInQuote = false
 					}
 				}
 			}
