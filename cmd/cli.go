@@ -27,7 +27,7 @@ const name = "godolint"
 
 const version = "0.1.4"
 
-const usage = `godolint - Dockerfile Linter written in Golang
+const usage = `godolint - Dockerfile linter written in Golang
 
 Usage: godolint [--ignore RULECODE]
   Lint Dockerfile for errors and best practices
@@ -36,8 +36,7 @@ Available options:
   --ignore RULECODE	A rule to ignore. If present, the ignore list in the
 			config file is ignored
 
-Other Commands:
-  --help	-h	Help about any command
+  --help	-h	Print this help message and exit.
   --version	-v	Print the version information
 `
 
