@@ -9,15 +9,13 @@ godolint
 [![Maintainability](https://api.codeclimate.com/v1/badges/4c1c216781e5592d4194/maintainability)](https://codeclimate.com/github/zabio3/godolint/maintainability)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-A Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images (inspired by [Haskell Dockerfile Linter](https://github.com/hadolint/hadolint)). 
-For static analysis of AST, [moby/buildkit parser](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) is used, and lint check is done.
-This tool performs docker rule checks based on the parsed AST.
+A Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images (inspired by [Haskell Dockerfile Linter](https://github.com/hadolint/hadolint)).
+This tool performs docker rule checks based on an abstract syntax tree (AST) of a Dockerfile where the AST is generated using [moby/buildkit parser](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser).
 
 ## Dependency
- 
-  - [moby/buildkit/frontend/dockerfile/parser](https://github.com/moby/buildkit)
-     - The official Dockerfile parser provided by moby. Used when parsing Dockerfile.
-          
+
+- [moby/buildkit/frontend/dockerfile/parser](https://github.com/moby/buildkit): The official Dockerfile parser provided by moby. Used when parsing Dockerfile.
+
 ## Usage
 
 You can run godolint locally to lint your Dockerfile.
@@ -26,45 +24,48 @@ You can run godolint locally to lint your Dockerfile.
 $ godolint <Dockerfile>
 ```
 
+godolint prints out any violation of the best practices it finds to the
+standard output, and exit with a non-zero exit status.
+
 ##### Example
 
-To check Dockerfile
+Here are examples of the outputs when godolint lints Dockerfiles that have some violations.
 
 ```
 $ godolint testdata/DL3000_Dockerfile
-#3 DL3000 Use absolute WORKDIR. 
+#3 DL3000 Use absolute WORKDIR.
 
 $ godolint testdata/DL3001_Dockerfile
-#6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`. 
+#6 DL3001 For some bash commands it makes no sense running them in a Docker container like `ssh`, `vim`, `shutdown`, `service`, `ps`, `free`, `top`, `kill`, `mount`, `ifconfig`.
 ```
 
 #### Options
 
-You can set some options:
+The available options are:
 
 ```
-Available options:
   --ignore RULECODE     A rule to ignore. If present, the ignore list in the
                         config file is ignored
 
-Other Commands:
-  --help        -h      Help about any command
+  --help        -h      Print this help message and exit.
   --version     -v      Print the version information
 ```
 
-##### Example
+##### Ignore violations
 
-To check Dockerfile (exclude specific rules).
+You can ignore specific violation using the `--ignore` option by specifying
+the rule to ignore. For the list of rules, see [Rules](https://github.com/zabio/godolint#rules).
+For example, here is an example to ignore the rule `DL3000`:
 
 ```
 $ godolint --ignore DL3000 testdata/DL3000_Dockerfile
 ```
 
-## Install
+## Installation
 
-You can download binary from release page and place it in $PATH directory.
+You can download a binary from the release page and place it in `$PATH` directory.
 
-Or you can use go get
+Or you can use `go get`:
 
 ```
 $ go get github.com/zabio3/godolint
@@ -72,7 +73,7 @@ $ go get github.com/zabio3/godolint
 
 ## Rules
 
-An implemented rules. (Dockerfile lint rule provided by [hadolint](https://github.com/hadolint/hadolint))
+The following is a list of the implemented rules. Dockerfile lint rule provided by [hadolint](https://github.com/hadolint/hadolint)
 
 | Rule                                                         | Description                                                                                                                                         |
 |:-------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -111,8 +112,8 @@ An implemented rules. (Dockerfile lint rule provided by [hadolint](https://githu
 
 ### AST
 
-Dockerfile syntax is fully described in the [Dockerfile reference](https://docs.docker.com/engine/reference/builder/). 
-Just take a look at [moby/buildkit](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser) in the language-docker project to see the AST definition.
+Dockerfile syntax is fully described in the [Dockerfile reference](https://docs.docker.com/engine/reference/builder/).
+For the definitions of the AST, see [moby/buildkit](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser).
 
 ## Contribution
 Contributions are of course always welcome!
