@@ -38,7 +38,7 @@ Available options:
 		},
 		{
 			command:           "godolint --version",
-			expectedOutStream: "godolint version 1.0.0\n",
+			expectedOutStream: "godolint version 1.0.1\n",
 			expectedErrStream: "",
 			expectedExitCode:  ExitCodeOK,
 		},
