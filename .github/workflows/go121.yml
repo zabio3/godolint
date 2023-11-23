@@ -1,4 +1,4 @@
-name: go1.18
+name: go1.21
 
 on:
   push:
@@ -9,14 +9,14 @@ on:
 jobs:
 
   build:
-    name: Build in Go1.18
+    name: Build in Go1.21
     runs-on: ubuntu-latest
     steps:
 
-      - name: Set up Go 1.18
+      - name: Set up Go 1.21
         uses: actions/setup-go@v4
         with:
-          go-version: 1.18
+          go-version: 1.21
         id: go
 
       - name: Check out code into the Go module directory
