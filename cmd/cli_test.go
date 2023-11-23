@@ -21,7 +21,7 @@ func TestCLI_Run(t *testing.T) {
 		},
 		{
 			command: "godolint -h",
-			expectedOutStream: `godolint - Dockerfile Linter written in Golang
+			expectedOutStream: `godolint - Dockerfile linter written in Golang
 
 Usage: godolint [--ignore RULECODE]
   Lint Dockerfile for errors and best practices
@@ -30,8 +30,7 @@ Available options:
   --ignore RULECODE	A rule to ignore. If present, the ignore list in the
 			config file is ignored
 
-Other Commands:
-  --help	-h	Help about any command
+  --help	-h	Print this help message and exit.
   --version	-v	Print the version information
 `,
 			expectedErrStream: "flag: help requested",
