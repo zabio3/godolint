@@ -25,7 +25,7 @@ const (
 
 const name = "godolint"
 
-const version = "0.1.5"
+const version = "1.0.0"
 
 const usage = `godolint - Dockerfile linter written in Golang
 
