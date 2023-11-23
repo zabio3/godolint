@@ -15,7 +15,7 @@ import (
 
 // Exit codes are int values that represent an exit code for a particular error.
 const (
-	ExitCodeOK = iota + 1
+	ExitCodeOK = iota
 	ExitCodeParseFlagsError
 	ExitCodeNoExistError
 	ExitCodeFileError
@@ -25,7 +25,7 @@ const (
 
 const name = "godolint"
 
-const version = "0.1.4"
+const version = "0.1.5"
 
 const usage = `godolint - Dockerfile linter written in Golang
 
