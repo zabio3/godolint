@@ -2,7 +2,7 @@ module github.com/zabio3/godolint
 
 go 1.21
 
-require github.com/moby/buildkit v0.12.3
+require github.com/moby/buildkit v0.12.5
 
 require (
 	github.com/containerd/typeurl/v2 v2.1.1 // indirect
