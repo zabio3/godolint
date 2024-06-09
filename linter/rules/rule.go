@@ -73,7 +73,6 @@ var RuleKeys = []string{
 	"DL3014",
 	"DL3015",
 	"DL3016",
-	"DL3017",
 	"DL3018",
 	"DL3019",
 	"DL3020",
@@ -193,12 +192,6 @@ var Rules = map[string]*Rule{
 		Severity:     SeverityWarning,
 		Description:  "Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`.",
 		ValidateFunc: validateDL3016,
-	},
-	"DL3017": {
-		Code:         "DL3017",
-		Severity:     SeverityError,
-		Description:  "Do not use apk upgrade.",
-		ValidateFunc: validateDL3017,
 	},
 	"DL3018": {
 		Code:         "DL3018",
