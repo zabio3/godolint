@@ -154,6 +154,7 @@ func TestAnalyzer(t *testing.T) {
 				"DL3023",
 				"DL3024",
 				"DL3025",
+				"DL3027",
 				"DL4000",
 				"DL4001",
 				"DL4003",

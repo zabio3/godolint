@@ -81,6 +81,7 @@ var RuleKeys = []string{
 	"DL3023",
 	"DL3024",
 	"DL3025",
+	"DL3027",
 	"DL4000",
 	"DL4001",
 	"DL4003",
@@ -240,6 +241,12 @@ var Rules = map[string]*Rule{
 		Severity:     SeverityWarning,
 		Description:  "Use arguments JSON notation for CMD and ENTRYPOINT arguments.",
 		ValidateFunc: validateDL3025,
+	},
+	"DL3027": {
+		Code:         "DL3027",
+		Severity:     SeverityWarning,
+		Description:  "Do not use apt; use apt-get or apt-cache instead.",
+		ValidateFunc: validateDL3027,
 	},
 	"DL4000": {
 		Code:         "DL4000",
