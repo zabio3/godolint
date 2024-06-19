@@ -32,6 +32,25 @@ CMD ["go", "run", "main.go"]
 			},
 			expectedErr: nil,
 		},
+		{ // Has options before package installation
+			dockerfileStr: `FROM ubuntu:nonexistent-hash
+RUN apt-get install -y --no-install-recommends nonexistent-package="2.37-2build1" nonpackage="2.42.2-6"
+`,
+			expectedRst: nil,
+			expectedErr: nil,
+		},
+		{ // Options before package installation & contains newlines with \
+			dockerfileStr: `FROM ubuntu:nonexistent-hash
+RUN \
+	apt-get update \
+	&& apt-get install -y --no-install-recommends \
+	nonexistent-package="2.37-2build1" \
+	nonpackage="2.42.2-6" \
+	&& rm -rf /some/path/to/somewhere*
+`,
+			expectedRst: nil,
+			expectedErr: nil,
+		},
 	}
 
 	for i, tc := range cases {

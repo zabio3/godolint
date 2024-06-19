@@ -1,6 +1,6 @@
 FROM ubuntu:1.12.0-stretch
 
-RUN sudo apt-get install
+RUN sudo apt-get install -y --no-install-recommends
 
 WORKDIR /go
 COPY . /go
