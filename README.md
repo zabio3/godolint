@@ -54,7 +54,7 @@ The available options are:
 ##### Ignore violations
 
 You can ignore specific violation using the `--ignore` option by specifying
-the rule to ignore. For the list of rules, see [Rules](https://github.com/zabio/godolint#rules).
+the rule to ignore. For the list of rules, see [Rules](https://github.com/zabio3/godolint#rules).
 For example, here is an example to ignore the rule `DL3000`:
 
 ```

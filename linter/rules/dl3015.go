@@ -10,7 +10,7 @@ import (
 func validateDL3015(node *parser.Node) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			var isAptGet, isInstalled bool
+			var isAptGet, isInstalled, hasRecommends bool
 			length := len(rst)
 			for _, v := range strings.Fields(child.Next.Value) {
 				switch v {
@@ -20,14 +20,22 @@ func validateDL3015(node *parser.Node) (rst []ValidateResult, err error) {
 					if isAptGet {
 						isInstalled = true
 					}
+				case "--no-install-recommends":
+					if isInstalled {
+						hasRecommends = true
+					}
 				case "&&":
-					isAptGet, isInstalled = false, false
-				default:
-					if isInstalled && v != "--no-install-recommends" && length == len(rst) {
+					if isInstalled && !hasRecommends && length == len(rst) {
 						rst = append(rst, ValidateResult{line: child.StartLine})
 					}
 					isAptGet, isInstalled = false, false
+				default:
+					continue
 				}
+			}
+
+			if isInstalled && !hasRecommends && length == len(rst) {
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

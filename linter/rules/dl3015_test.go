@@ -28,6 +28,43 @@ RUN apt-get install -y python=2.7 && RUN apt-get install -y ruby
 			},
 			expectedErr: nil,
 		},
+		{ // Has two && but only returns one error for the whole line
+			dockerfileStr: `FROM busybox
+RUN apt-get install -y python=2.7 && RUN apt-get install -y ruby && RUN apt-get install -y nodejs
+`,
+			expectedRst: []ValidateResult{
+				{line: 2},
+			},
+			expectedErr: nil,
+		},
+		{ // Three install commands, first one is missing --no-install-recommends
+			dockerfileStr: `FROM busybox
+RUN apt-get install -y python=2.7 && RUN apt-get install --no-install-recommends -y ruby && RUN apt-get install --no-install-recommends -y nodejs
+`,
+			expectedRst: []ValidateResult{
+				{line: 2},
+			},
+			expectedErr: nil,
+		},
+		{ // Basic correct case
+			dockerfileStr: `FROM ubuntu:nonexistent-hash
+RUN apt-get install -y --no-install-recommends python=2.7
+`,
+			expectedRst: nil,
+			expectedErr: nil,
+		},
+		{ // Options before package installation & contains newlines with \
+			dockerfileStr: `FROM ubuntu:nonexistent-hash
+RUN \
+apt-get update \
+&& apt-get install -y --no-install-recommends \
+nonexistent-package="2.37-2build1" \
+nonpackage="2.42.2-6" \
+&& rm -rf /some/path/to/somewhere*
+`,
+			expectedRst: nil,
+			expectedErr: nil,
+		},
 	}
 
 	for i, tc := range cases {

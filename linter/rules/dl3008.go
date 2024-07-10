@@ -27,7 +27,7 @@ func validateDL3008(node *parser.Node) (rst []ValidateResult, err error) {
 					isAptGet, isInstall = false, false
 					continue
 				default:
-					if isInstall && !regexDL3008.MatchString(v) && l == len(rst) {
+					if !strings.HasPrefix(v, "-") && isInstall && !regexDL3008.MatchString(v) && l == len(rst) {
 						rst = append(rst, ValidateResult{line: child.StartLine})
 						isAptGet, isInstall = false, false
 					}
