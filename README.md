@@ -2,7 +2,7 @@ godolint
 ===
 
 [![GitHub release](http://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](https://github.com/zabio3/godolint/releases/latest)
-[![Actions Status](https://github.com/zabio3/godolint/workflows/go1.21/badge.svg)](https://github.com/zabio3/godolint/actions)
+[![Actions Status](https://github.com/zabio3/godolint/workflows/go1.22/badge.svg)](https://github.com/zabio3/godolint/actions)
 [![Golang CI](https://golangci.com/badges/github.com/zabio3/godolint.svg)](https://golangci.com/r/github.com/zabio3/godolint)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
 [![GoDoc](https://godoc.org/github.com/zabio3/godolint?status.svg)](https://godoc.org/github.com/zabio3/godolint)

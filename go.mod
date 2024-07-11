@@ -1,6 +1,6 @@
 module github.com/zabio3/godolint
 
-go 1.21
+go 1.22.5
 
 require github.com/moby/buildkit v0.14.1
 
