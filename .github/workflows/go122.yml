@@ -1,4 +1,4 @@
-name: go1.21
+name: go1.22
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    name: Build in Go1.21
+    name: Build in Go1.22
     runs-on: ubuntu-latest
     steps:
 
