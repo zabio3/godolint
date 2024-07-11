@@ -4,22 +4,26 @@ import (
 	"testing"
 )
 
-func TestValidateDL3017(t *testing.T) {
+func TestValidateDL3027(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
-		{
-			dockerfileStr: `FROM alpine:3.7
-RUN apk update \
-    && apk upgrade \
-    && apk add foo=1.0 \
-    && rm -rf /var/cache/apk/*
+		{ // Basic failure case
+			dockerfileStr: `FROM busybox
+RUN apt install curl=1.1.0
 `,
 			expectedRst: []ValidateResult{
 				{line: 2},
 			},
+			expectedErr: nil,
+		},
+		{ // Basic success case
+			dockerfileStr: `FROM busybox
+RUN apt-get install curl=1.1.0
+`,
+			expectedRst: nil,
 			expectedErr: nil,
 		},
 	}
@@ -30,7 +34,7 @@ RUN apk update \
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3017(rst.AST)
+		gotRst, gotErr := validateDL3027(rst.AST)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}

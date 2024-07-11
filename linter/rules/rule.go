@@ -73,7 +73,6 @@ var RuleKeys = []string{
 	"DL3014",
 	"DL3015",
 	"DL3016",
-	"DL3017",
 	"DL3018",
 	"DL3019",
 	"DL3020",
@@ -82,6 +81,7 @@ var RuleKeys = []string{
 	"DL3023",
 	"DL3024",
 	"DL3025",
+	"DL3027",
 	"DL4000",
 	"DL4001",
 	"DL4003",
@@ -194,12 +194,6 @@ var Rules = map[string]*Rule{
 		Description:  "Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`.",
 		ValidateFunc: validateDL3016,
 	},
-	"DL3017": {
-		Code:         "DL3017",
-		Severity:     SeverityError,
-		Description:  "Do not use apk upgrade.",
-		ValidateFunc: validateDL3017,
-	},
 	"DL3018": {
 		Code:         "DL3018",
 		Severity:     SeverityWarning,
@@ -247,6 +241,12 @@ var Rules = map[string]*Rule{
 		Severity:     SeverityWarning,
 		Description:  "Use arguments JSON notation for CMD and ENTRYPOINT arguments.",
 		ValidateFunc: validateDL3025,
+	},
+	"DL3027": {
+		Code:         "DL3027",
+		Severity:     SeverityWarning,
+		Description:  "Do not use apt; use apt-get or apt-cache instead.",
+		ValidateFunc: validateDL3027,
 	},
 	"DL4000": {
 		Code:         "DL4000",
