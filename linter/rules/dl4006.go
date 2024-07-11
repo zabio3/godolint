@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL4006 Set the `SHELL` option -o pipefail before `RUN` with a pipe in it
-func validateDL4006(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL4006(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	var isShellPipeFail bool
 	for _, child := range node.Children {
 		switch child.Value {

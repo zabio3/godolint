@@ -10,7 +10,7 @@ import (
 var isCompressionExt = regexp.MustCompile(`(?:\.tar\.gz|tar\.bz|\.tar.xz|\.tgz|\.tbz)$`)
 
 // validateDL3010 Use ADD for extracting archives into an image.
-func validateDL3010(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3010(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == COPY {
 			args := strings.Fields(child.Next.Value)

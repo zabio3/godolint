@@ -35,7 +35,7 @@ RUN apt-get install python=2.7 && apt-get install ruby
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3014(rst.AST)
+		gotRst, gotErr := validateDL3014(rst.AST, nil)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}

@@ -13,7 +13,11 @@ type Rule struct {
 	Code         string
 	Severity     Severity
 	Description  string
-	ValidateFunc func(node *parser.Node) ([]ValidateResult, error)
+	ValidateFunc func(node *parser.Node, opts *RuleOptions) ([]ValidateResult, error)
+}
+
+type RuleOptions struct {
+	TrustedRegistries []string
 }
 
 // ValidateResult ValidateFunc's results.
@@ -241,6 +245,12 @@ var Rules = map[string]*Rule{
 		Severity:     SeverityWarning,
 		Description:  "Use arguments JSON notation for CMD and ENTRYPOINT arguments.",
 		ValidateFunc: validateDL3025,
+	},
+	"DL3026": {
+		Code:         "DL3026",
+		Severity:     SeverityWarning,
+		Description:  "Use only an allowed registry in the FROM image.",
+		ValidateFunc: validateDL3026,
 	},
 	"DL3027": {
 		Code:         "DL3027",

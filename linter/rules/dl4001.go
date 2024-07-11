@@ -8,7 +8,7 @@ import (
 
 // validateDL4001 is dockerfile linter DL4001 rule.
 // Either use Wget or Curl but not both.
-func validateDL4001(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL4001(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	var isCurl, isWget bool
 	var lines []int
 	for _, child := range node.Children {

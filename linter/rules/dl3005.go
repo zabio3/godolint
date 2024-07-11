@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL3005 is "Do not use apt-get upgrade or dist-upgrade."
-func validateDL3005(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3005(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			var isAptGet, isUpgrade bool

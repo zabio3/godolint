@@ -5,7 +5,7 @@ import (
 )
 
 // validateDL3002 is "Last user should not be root."
-func validateDL3002(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3002(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	var isLastRootUser bool
 	var lastRootUserPos int
 	for _, child := range node.Children {

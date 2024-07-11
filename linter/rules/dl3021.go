@@ -5,7 +5,7 @@ import (
 )
 
 // validateDL3021 `COPY` with more than 2 arguments requires the last argument to end with `/`
-func validateDL3021(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3021(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == COPY {
 			if isDL3021Error(child) {
