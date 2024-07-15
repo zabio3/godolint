@@ -50,7 +50,7 @@ RUN pip install django && pip install https://github.com/Banno/carbon/tarball/0.
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3013(rst.AST)
+		gotRst, gotErr := validateDL3013(rst.AST, nil)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}

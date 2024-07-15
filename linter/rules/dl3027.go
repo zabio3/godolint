@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL3027 do not use apt; use apt-get or apt-cache instead.
-func validateDL3027(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3027(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			length := len(rst)

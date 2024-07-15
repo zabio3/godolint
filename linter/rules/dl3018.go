@@ -10,7 +10,7 @@ import (
 var regexVersion3018 = regexp.MustCompile(`.+=.+`)
 
 // validateDL3018 Do not use apk upgrade
-func validateDL3018(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3018(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			var isApk, isAdd bool

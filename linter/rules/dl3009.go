@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL3009 Delete the apt-get lists after installing something.
-func validateDL3009(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3009(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN && isDL3009Error(child) {
 			rst = append(rst, ValidateResult{line: child.StartLine})

@@ -10,7 +10,7 @@ import (
 var regexDL3008 = regexp.MustCompile(`.+=.+`)
 
 // validateDL3008 Pin versions in apt get install. Instead of `apt-get install <package>` use `apt-get install <package>=<version>`
-func validateDL3008(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3008(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			var isAptGet, isInstall bool

@@ -10,7 +10,7 @@ import (
 var yesPattern = regexp.MustCompile(`^-(y|-yes|-assume-yes)$`)
 
 // validateDL3014 Use the `-y` switch to avoid manual input `apt-get -y install <package>`
-func validateDL3014(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3014(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			var isAptGet, isInstalled bool

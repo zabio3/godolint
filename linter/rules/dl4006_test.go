@@ -40,7 +40,7 @@ RUN yq eval '.".docker".script[1] | explode(.)' /base.yml > /usr/local/bin/entry
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL4006(rst.AST)
+		gotRst, gotErr := validateDL4006(rst.AST, nil)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}

@@ -29,6 +29,8 @@ Usage: godolint [--ignore RULECODE]
 Available options:
   --ignore RULECODE	A rule to ignore. If present, the ignore list in the
 			config file is ignored
+  --trusted-registry REGISTRY (e.g. docker.io)
+			A docker registry to allow to appear in FROM instructions
 
   --help	-h	Print this help message and exit.
   --version	-v	Print the version information

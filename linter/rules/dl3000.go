@@ -8,7 +8,7 @@ import (
 )
 
 // validateDL3000 is "Use absolute WORKDIR."
-func validateDL3000(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3000(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == WORKDIR {
 			absPath, err := filepath.Abs(child.Next.Value)

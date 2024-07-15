@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL3004 is "Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root."
-func validateDL3004(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3004(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			for _, v := range strings.Fields(child.Next.Value) {

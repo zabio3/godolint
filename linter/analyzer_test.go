@@ -168,7 +168,7 @@ func TestAnalyzer(t *testing.T) {
 	}
 
 	for i, tc := range cases {
-		analyzer := NewAnalyzer(tc.ignoreRules)
+		analyzer := NewAnalyzer(tc.ignoreRules, nil)
 		gotRst, gotErr := analyzer.Run(tc.node)
 		if !sliceEq(tc.expectedRst, gotRst) {
 			t.Errorf("#%d results deep equal has returned: want %s, got %s", i, tc.expectedRst, gotRst)

@@ -10,7 +10,7 @@ import (
 var regexVersion3013 = regexp.MustCompile(`.+[=|@].+`)
 
 // validateDL3013 Pin versions in pip. Instead of `pip install <package>` use `pip install <package>==<version>`.
-func validateDL3013(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3013(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			var isPip, isInstall bool

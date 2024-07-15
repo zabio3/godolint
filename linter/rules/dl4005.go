@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL4005 Use SHELL to change the default shell
-func validateDL4005(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL4005(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			isLn := false

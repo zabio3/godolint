@@ -5,7 +5,7 @@ import (
 )
 
 // validateDL3025 Use arguments JSON notation for CMD and ENTRYPOINT arguments
-func validateDL3025(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3025(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if (child.Value == ENTRYPOINT) || (child.Value == CMD) {
 			l := len(child.Value)

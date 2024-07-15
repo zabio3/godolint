@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL3022 COPY --from should reference a previously defined FROM alias
-func validateDL3022(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3022(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	fromImage := ""
 	var isAs, isAsBuild bool
 	for _, child := range node.Children {
