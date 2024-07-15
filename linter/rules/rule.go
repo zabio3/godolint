@@ -85,6 +85,7 @@ var RuleKeys = []string{
 	"DL3023",
 	"DL3024",
 	"DL3025",
+	"DL3026",
 	"DL3027",
 	"DL4000",
 	"DL4001",
