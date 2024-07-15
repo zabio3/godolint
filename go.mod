@@ -2,7 +2,7 @@ module github.com/zabio3/godolint
 
 go 1.22.5
 
-require github.com/moby/buildkit v0.14.1
+require github.com/moby/buildkit v0.15.0
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
