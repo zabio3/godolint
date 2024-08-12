@@ -35,6 +35,8 @@ Usage: godolint [--ignore RULECODE]
 Available options:
   --ignore RULECODE	A rule to ignore. If present, the ignore list in the
 			config file is ignored
+  --trusted-registry REGISTRY (e.g. docker.io)
+			A docker registry to allow to appear in FROM instructions
 
   --help	-h	Print this help message and exit.
   --version	-v	Print the version information
@@ -60,6 +62,7 @@ func (ss *sliceString) Set(value string) error {
 func (cli *CLI) Run(args []string) int {
 	var ignoreRules sliceString
 	var isVersion bool
+	var trustedRegistries sliceString
 
 	flags := flag.NewFlagSet(name, flag.ContinueOnError)
 	flags.Usage = func() {
@@ -69,6 +72,7 @@ func (cli *CLI) Run(args []string) int {
 	flags.Var(&ignoreRules, "ignore", "Set ignore strings")
 	flags.BoolVar(&isVersion, "version", false, "version")
 	flags.BoolVar(&isVersion, "v", false, "version")
+	flags.Var(&trustedRegistries, "trusted-registry", "Docker registries to allow to appear in FROM instructions")
 
 	if err := flags.Parse(args[1:]); err != nil {
 		fmt.Fprint(cli.ErrStream, err)
@@ -100,7 +104,7 @@ func (cli *CLI) Run(args []string) int {
 		return ExitCodeAstParseError
 	}
 
-	analyzer := linter.NewAnalyzer(ignoreRules)
+	analyzer := linter.NewAnalyzer(ignoreRules, trustedRegistries)
 	rst, err := analyzer.Run(r.AST)
 	if err != nil {
 		fmt.Fprint(cli.ErrStream, err)

@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL3015 Avoid additional packages by specifying --no-install-recommends.
-func validateDL3015(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3015(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			var isAptGet, isInstalled, hasRecommends bool

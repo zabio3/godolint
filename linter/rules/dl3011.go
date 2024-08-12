@@ -8,7 +8,7 @@ import (
 )
 
 // validateDL3011 Valid UNIX ports range from 0 to 65535
-func validateDL3011(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3011(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == EXPOSE {
 			port := child.Next

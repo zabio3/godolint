@@ -8,7 +8,7 @@ import (
 
 // validateDL3001 is "For some bash commands it makes no sense running them in a Docker container
 // like free, ifconfig, kill, mount, ps, service, shutdown, ssh, top, vim"
-func validateDL3001(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3001(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			for _, v := range strings.Fields(child.Next.Value) {

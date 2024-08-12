@@ -46,6 +46,8 @@ The available options are:
 ```
   --ignore RULECODE     A rule to ignore. If present, the ignore list in the
                         config file is ignored
+  --trusted-registry REGISTRY (e.g. docker.io)
+			A docker registry to allow to appear in FROM instructions
 
   --help        -h      Print this help message and exit.
   --version     -v      Print the version information
@@ -102,6 +104,7 @@ The following is a list of the implemented rules. Dockerfile lint rule provided 
 | [DL3023](https://github.com/hadolint/hadolint/wiki/DL3023)   | `COPY --from` cannot reference its own `FROM` alias.                                                                                                |
 | [DL3024](https://github.com/hadolint/hadolint/wiki/DL3024)   | `FROM` aliases (stage names) must be unique.                                                                                                        |
 | [DL3025](https://github.com/hadolint/hadolint/wiki/DL3025)   | Use arguments JSON notation for CMD and ENTRYPOINT arguments.                                                                                       |
+| [DL3026](https://github.com/hadolint/hadolint/wiki/DL3027)   | Use only an allowed registry in the `FROM image`                                                                                       |
 | [DL3027](https://github.com/hadolint/hadolint/wiki/DL3027)   | Do not use apt; use apt-get or apt-cache instead.                                                                                       |
 | [DL4000](https://github.com/hadolint/hadolint/wiki/DL4000)   | MAINTAINER is deprecated.                                                                                                                           |
 | [DL4001](https://github.com/hadolint/hadolint/wiki/DL4001)   | Either use Wget or Curl but not both.                                                                                                               |

@@ -9,22 +9,26 @@ import (
 
 // Analyzer implements Analyzer.
 type Analyzer struct {
-	rules []*rules.Rule
+	rules             []*rules.Rule
+	trustedRegistries []string
 }
 
 // NewAnalyzer generate a NewAnalyzer with rules to apply.
-func NewAnalyzer(ignoreRules []string) Analyzer {
-	return newAnalyzer(ignoreRules)
+func NewAnalyzer(ignoreRules []string, trustedRegistries []string) Analyzer {
+	return newAnalyzer(ignoreRules, trustedRegistries)
 }
 
-func newAnalyzer(ignoreRules []string) Analyzer {
+func newAnalyzer(ignoreRules []string, trustedRegistries []string) Analyzer {
 	var filteredRules []*rules.Rule
 	for _, k := range getMakeDiff(rules.RuleKeys, ignoreRules) {
 		if rule, ok := rules.Rules[k]; ok {
 			filteredRules = append(filteredRules, rule)
 		}
 	}
-	return Analyzer{rules: filteredRules}
+	return Analyzer{
+		rules:             filteredRules,
+		trustedRegistries: trustedRegistries,
+	}
 }
 
 // Run apply docker best practice rules to docker ast.
@@ -35,7 +39,9 @@ func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 
 	for i := range a.rules {
 		go func(r *rules.Rule) {
-			vrst, err := r.ValidateFunc(node)
+			vrst, err := r.ValidateFunc(node, &rules.RuleOptions{
+				TrustedRegistries: a.trustedRegistries,
+			})
 			if err != nil {
 				errChan <- err
 			} else {

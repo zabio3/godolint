@@ -10,7 +10,7 @@ import (
 var regexVersion3016 = regexp.MustCompile(`.+[#|@][0-9"]+`)
 
 // validateDL3016 Pin versions in npm. Instead of `npm install <package>` use `npm install <package>@<version>`
-func validateDL3016(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3016(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
 			var isNpm, isInstall bool

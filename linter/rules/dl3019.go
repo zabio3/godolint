@@ -7,7 +7,7 @@ import (
 )
 
 // validateDL3019 Use the `--no-cache` switch to avoid the need to use `--update` and remove `/var/cache/apk/*` when done installing packages
-func validateDL3019(node *parser.Node) (rst []ValidateResult, err error) {
+func validateDL3019(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN && isDL3019Error(child) {
 			rst = append(rst, ValidateResult{line: child.StartLine})
