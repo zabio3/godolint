@@ -4,7 +4,7 @@ go 1.22.5
 
 require (
 	github.com/distribution/reference v0.6.0
-	github.com/moby/buildkit v0.15.1
+	github.com/moby/buildkit v0.15.2
 )
 
 require (
