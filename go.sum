@@ -4,6 +4,8 @@ github.com/containerd/typeurl/v2 v2.1.1 h1:3Q4Pt7i8nYwy2KmQWIw2+1hTvwTE/6w9Fqctt
 github.com/containerd/typeurl/v2 v2.1.1/go.mod h1:IDp2JFvbwZ31H8dQbEIY7sDl2L3o3HZj1hsSQlywkQ0=
 github.com/containerd/typeurl/v2 v2.2.0 h1:6NBDbQzr7I5LHgp34xAXYF5DOTQDn05X58lsPEmzLso=
 github.com/containerd/typeurl/v2 v2.2.0/go.mod h1:8XOOxnyatxSWuG8OfsZXVnAF4iZfedjS/8UHSPJnX4g=
+github.com/containerd/typeurl/v2 v2.2.3 h1:yNA/94zxWdvYACdYO8zofhrTVuQY73fFU1y++dYSw40=
+github.com/containerd/typeurl/v2 v2.2.3/go.mod h1:95ljDnPfD3bAbDJRugOiShd/DlAAsxGtUBhJxIn7SCk=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/distribution/reference v0.6.0 h1:0IXCQ5g4/QMHHkarYzh5l+u8T3t73zM5QvfrDyIgxBk=
@@ -24,6 +26,8 @@ github.com/moby/buildkit v0.15.2 h1:DnONr0AoceTWyv+plsQ7IhkSaj+6o0WyoaxYPyTFIxs=
 github.com/moby/buildkit v0.15.2/go.mod h1:Yis8ZMUJTHX9XhH9zVyK2igqSHV3sxi3UN0uztZocZk=
 github.com/moby/buildkit v0.17.1 h1:VWj6eIdk7u6acHPn2CiA+tdq0/mQoBEk9ckweRzWmPw=
 github.com/moby/buildkit v0.17.1/go.mod h1:ru8NFyDHD8HbuKaLXJIjK9nr3x6FZR+IWjtF07S+wdM=
+github.com/moby/buildkit v0.18.1 h1:Iwrz2F/Za2Gjkpwu3aM2LX92AFfJCJe2oNnvGNvh2Rc=
+github.com/moby/buildkit v0.18.1/go.mod h1:vCR5CX8NGsPTthTg681+9kdmfvkvqJBXEv71GZe5msU=
 github.com/moby/docker-image-spec v1.3.1 h1:jMKff3w6PgbfSa69GfNg+zN/XLhfXJGnEx3Nl2EsFP0=
 github.com/moby/docker-image-spec v1.3.1/go.mod h1:eKmb5VW8vQEh/BAr2yvVNvuiJuY6UIocYsFu/DxxRpo=
 github.com/opencontainers/go-digest v1.0.0 h1:apOUWs51W5PlhuyGyz9FCeeBIOUDA/6nW8Oi/yOhh5U=
