@@ -1,8 +1,22 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
     "config:recommended",
     ":dependencyDashboard"
+  ],
+  "schedule": ["on sunday"],
+  "automerge": true,
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "automerge": true
+    },
+    {
+      "matchManagers": ["gomod"],
+      "groupName": "Go dependencies",
+      "automerge": true
+    }
   ]
 }
