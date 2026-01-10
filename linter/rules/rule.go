@@ -28,18 +28,22 @@ type ValidateResult struct {
 
 // Dockerfile instruction.
 const (
-	FROM       = "FROM"
-	LABEL      = "LABEL"
-	RUN        = "RUN"
-	CMD        = "CMD"
-	EXPOSE     = "EXPOSE"
-	ADD        = "ADD"
-	COPY       = "COPY"
-	ENTRYPOINT = "ENTRYPOINT"
-	VOLUME     = "VOLUME"
-	USER       = "USER"
-	WORKDIR    = "WORKDIR"
-	SHELL      = "SHELL"
+	FROM        = "FROM"
+	LABEL       = "LABEL"
+	RUN         = "RUN"
+	CMD         = "CMD"
+	EXPOSE      = "EXPOSE"
+	ADD         = "ADD"
+	COPY        = "COPY"
+	ENTRYPOINT  = "ENTRYPOINT"
+	VOLUME      = "VOLUME"
+	USER        = "USER"
+	WORKDIR     = "WORKDIR"
+	SHELL       = "SHELL"
+	HEALTHCHECK = "HEALTHCHECK"
+	ONBUILD     = "ONBUILD"
+	ARG         = "ARG"
+	ENV         = "ENV"
 
 	// deprecated instruction.
 	MAINTAINER = "MAINTAINER"
@@ -56,6 +60,8 @@ var (
 	SeverityWarning    = Severity{Name: "WarningC"}
 	SeverityInfo       = Severity{Name: "InfoC"}
 	SeverityDeprecated = Severity{Name: "Deprecated"}
+	SeverityStyle      = Severity{Name: "Style"}
+	SeverityIgnore     = Severity{Name: "Ignore"}
 )
 
 // RuleKeys is (Docker best practice rule key)
@@ -72,7 +78,7 @@ var RuleKeys = []string{
 	"DL3009",
 	"DL3010",
 	"DL3011",
-	//"DL3012",
+	"DL3012",
 	"DL3013",
 	"DL3014",
 	"DL3015",
@@ -87,6 +93,39 @@ var RuleKeys = []string{
 	"DL3025",
 	"DL3026",
 	"DL3027",
+	"DL3028",
+	"DL3029",
+	"DL3030",
+	"DL3032",
+	"DL3033",
+	"DL3034",
+	"DL3035",
+	"DL3036",
+	"DL3037",
+	"DL3038",
+	"DL3040",
+	"DL3041",
+	"DL3042",
+	"DL3043",
+	"DL3044",
+	"DL3045",
+	"DL3046",
+	"DL3047",
+	"DL3048",
+	"DL3049",
+	"DL3050",
+	"DL3051",
+	"DL3052",
+	"DL3053",
+	"DL3054",
+	"DL3055",
+	"DL3056",
+	"DL3057",
+	"DL3058",
+	"DL3059",
+	"DL3060",
+	"DL3061",
+	"DL3062",
 	"DL4000",
 	"DL4001",
 	"DL4003",
@@ -169,12 +208,12 @@ var Rules = map[string]*Rule{
 		Description:  "Valid UNIX ports range from 0 to 65535.",
 		ValidateFunc: validateDL3011,
 	},
-	//"DL3012": {
-	//	Code:     "DL3012",
-	//	Severity: SeverityDeprecated,
-	//	Description:  "Provide an email address or URL as maintainer.",
-	//	ValidateFunc:   validateDL3012,
-	//},
+	"DL3012": {
+		Code:         "DL3012",
+		Severity:     SeverityError,
+		Description:  "Multiple `HEALTHCHECK` instructions found. Only the last `HEALTHCHECK` will take effect.",
+		ValidateFunc: validateDL3012,
+	},
 	"DL3013": {
 		Code:         "DL3013",
 		Severity:     SeverityWarning,
@@ -258,6 +297,204 @@ var Rules = map[string]*Rule{
 		Severity:     SeverityWarning,
 		Description:  "Do not use apt; use apt-get or apt-cache instead.",
 		ValidateFunc: validateDL3027,
+	},
+	"DL3028": {
+		Code:         "DL3028",
+		Severity:     SeverityWarning,
+		Description:  "Pin versions in gem install. Instead of `gem install <package>` use `gem install <package>:<version>`.",
+		ValidateFunc: validateDL3028,
+	},
+	"DL3029": {
+		Code:         "DL3029",
+		Severity:     SeverityWarning,
+		Description:  "Do not use --platform flag with FROM.",
+		ValidateFunc: validateDL3029,
+	},
+	"DL3030": {
+		Code:         "DL3030",
+		Severity:     SeverityWarning,
+		Description:  "Use the `-y` switch to avoid manual input `yum install -y <package>`.",
+		ValidateFunc: validateDL3030,
+	},
+	"DL3032": {
+		Code:         "DL3032",
+		Severity:     SeverityWarning,
+		Description:  "`yum clean all` missing after yum command.",
+		ValidateFunc: validateDL3032,
+	},
+	"DL3033": {
+		Code:         "DL3033",
+		Severity:     SeverityWarning,
+		Description:  "Specify version with `yum install -y <package>-<version>`.",
+		ValidateFunc: validateDL3033,
+	},
+	"DL3034": {
+		Code:         "DL3034",
+		Severity:     SeverityWarning,
+		Description:  "Non-interactive switch missing from `zypper` command. Use `zypper -n`.",
+		ValidateFunc: validateDL3034,
+	},
+	"DL3035": {
+		Code:         "DL3035",
+		Severity:     SeverityWarning,
+		Description:  "Do not use `zypper dist-upgrade`.",
+		ValidateFunc: validateDL3035,
+	},
+	"DL3036": {
+		Code:         "DL3036",
+		Severity:     SeverityWarning,
+		Description:  "`zypper clean` missing after zypper use.",
+		ValidateFunc: validateDL3036,
+	},
+	"DL3037": {
+		Code:         "DL3037",
+		Severity:     SeverityWarning,
+		Description:  "Specify version with `zypper install <package>=<version>`.",
+		ValidateFunc: validateDL3037,
+	},
+	"DL3038": {
+		Code:         "DL3038",
+		Severity:     SeverityWarning,
+		Description:  "Use the `-y` switch to avoid manual input `dnf install -y <package>`.",
+		ValidateFunc: validateDL3038,
+	},
+	"DL3040": {
+		Code:         "DL3040",
+		Severity:     SeverityWarning,
+		Description:  "`dnf clean all` missing after dnf command.",
+		ValidateFunc: validateDL3040,
+	},
+	"DL3041": {
+		Code:         "DL3041",
+		Severity:     SeverityWarning,
+		Description:  "Specify version with `dnf install -y <package>-<version>`.",
+		ValidateFunc: validateDL3041,
+	},
+	"DL3042": {
+		Code:         "DL3042",
+		Severity:     SeverityWarning,
+		Description:  "Avoid cache directory with `pip install --no-cache-dir <package>`.",
+		ValidateFunc: validateDL3042,
+	},
+	"DL3043": {
+		Code:         "DL3043",
+		Severity:     SeverityError,
+		Description:  "`ONBUILD`, `FROM` or `MAINTAINER` triggered from within `ONBUILD` instruction.",
+		ValidateFunc: validateDL3043,
+	},
+	"DL3044": {
+		Code:         "DL3044",
+		Severity:     SeverityError,
+		Description:  "Do not refer to an environment variable within the same ENV statement where it is defined.",
+		ValidateFunc: validateDL3044,
+	},
+	"DL3045": {
+		Code:         "DL3045",
+		Severity:     SeverityWarning,
+		Description:  "`COPY` to a relative destination without `WORKDIR` set.",
+		ValidateFunc: validateDL3045,
+	},
+	"DL3046": {
+		Code:         "DL3046",
+		Severity:     SeverityWarning,
+		Description:  "`useradd` without flag `-l` and target UID greater than or equal to 65534 can lead to excessively large Image.",
+		ValidateFunc: validateDL3046,
+	},
+	"DL3047": {
+		Code:         "DL3047",
+		Severity:     SeverityInfo,
+		Description:  "`wget` without flag `--progress` will result in excessively bloated build logs when downloading larger files.",
+		ValidateFunc: validateDL3047,
+	},
+	"DL3048": {
+		Code:         "DL3048",
+		Severity:     SeverityStyle,
+		Description:  "Invalid label key.",
+		ValidateFunc: validateDL3048,
+	},
+	"DL3049": {
+		Code:         "DL3049",
+		Severity:     SeverityIgnore,
+		Description:  "Label is missing.",
+		ValidateFunc: validateDL3049,
+	},
+	"DL3050": {
+		Code:         "DL3050",
+		Severity:     SeverityIgnore,
+		Description:  "Superfluous label(s) present.",
+		ValidateFunc: validateDL3050,
+	},
+	"DL3051": {
+		Code:         "DL3051",
+		Severity:     SeverityWarning,
+		Description:  "Label is empty.",
+		ValidateFunc: validateDL3051,
+	},
+	"DL3052": {
+		Code:         "DL3052",
+		Severity:     SeverityWarning,
+		Description:  "Label is not a valid URL.",
+		ValidateFunc: validateDL3052,
+	},
+	"DL3053": {
+		Code:         "DL3053",
+		Severity:     SeverityWarning,
+		Description:  "Label is not a valid RFC3339 format datetime.",
+		ValidateFunc: validateDL3053,
+	},
+	"DL3054": {
+		Code:         "DL3054",
+		Severity:     SeverityWarning,
+		Description:  "Label is not a valid SPDX license identifier.",
+		ValidateFunc: validateDL3054,
+	},
+	"DL3055": {
+		Code:         "DL3055",
+		Severity:     SeverityWarning,
+		Description:  "Label is not a valid git hash.",
+		ValidateFunc: validateDL3055,
+	},
+	"DL3056": {
+		Code:         "DL3056",
+		Severity:     SeverityWarning,
+		Description:  "Label does not conform to semantic versioning.",
+		ValidateFunc: validateDL3056,
+	},
+	"DL3057": {
+		Code:         "DL3057",
+		Severity:     SeverityIgnore,
+		Description:  "`HEALTHCHECK` instruction missing.",
+		ValidateFunc: validateDL3057,
+	},
+	"DL3058": {
+		Code:         "DL3058",
+		Severity:     SeverityWarning,
+		Description:  "Label is not a valid RFC5322 email format.",
+		ValidateFunc: validateDL3058,
+	},
+	"DL3059": {
+		Code:         "DL3059",
+		Severity:     SeverityInfo,
+		Description:  "Multiple consecutive `RUN` instructions. Consider consolidation.",
+		ValidateFunc: validateDL3059,
+	},
+	"DL3060": {
+		Code:         "DL3060",
+		Severity:     SeverityInfo,
+		Description:  "`yarn cache clean` missing after `yarn install`.",
+		ValidateFunc: validateDL3060,
+	},
+	"DL3061": {
+		Code:         "DL3061",
+		Severity:     SeverityError,
+		Description:  "Invalid instruction order. Dockerfile must begin with `FROM`, `ARG` or comment.",
+		ValidateFunc: validateDL3061,
+	},
+	"DL3062": {
+		Code:         "DL3062",
+		Severity:     SeverityWarning,
+		Description:  "Pin versions in go install. Instead of `go install <package>` use `go install <package>@<version>`.",
+		ValidateFunc: validateDL3062,
 	},
 	"DL4000": {
 		Code:         "DL4000",

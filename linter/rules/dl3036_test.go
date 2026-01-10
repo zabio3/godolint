@@ -4,47 +4,33 @@ import (
 	"testing"
 )
 
-func TestValidateDL3012(t *testing.T) {
+func TestValidateDL3036(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
-			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
+			dockerfileStr: `FROM opensuse
+RUN zypper -n update && zypper -n install python
 `,
 			expectedRst: []ValidateResult{
-				{line: 3},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
 		{
-			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
+			dockerfileStr: `FROM opensuse
+RUN zypper -n update && zypper -n install python && zypper clean
 `,
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 		{
-			dockerfileStr: `FROM ubuntu:latest
-RUN apt-get update
-CMD ["nginx"]
+			dockerfileStr: `FROM opensuse
+RUN zypper -n update && zypper -n install python && zypper cc
 `,
 			expectedRst: nil,
-			expectedErr: nil,
-		},
-		{
-			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
-HEALTHCHECK CMD curl -f http://localhost/status || exit 1
-`,
-			expectedRst: []ValidateResult{
-				{line: 3},
-				{line: 4},
-			},
 			expectedErr: nil,
 		},
 	}
@@ -55,7 +41,7 @@ HEALTHCHECK CMD curl -f http://localhost/status || exit 1
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3012(rst.AST, nil)
+		gotRst, gotErr := validateDL3036(rst.AST, nil)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}
