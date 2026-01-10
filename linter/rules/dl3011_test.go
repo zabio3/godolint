@@ -26,7 +26,7 @@ EXPOSE 80000
 EXPOSE hoge
 `,
 			expectedRst: nil,
-			expectedErr: fmt.Errorf("#3 DL3011 not numeric is the value set for the port: hoge"),
+			expectedErr: fmt.Errorf("#3 DL3011: not numeric value for port \"hoge\": strconv.Atoi: parsing \"hoge\": invalid syntax"),
 		},
 	}
 

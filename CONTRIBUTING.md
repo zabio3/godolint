@@ -25,13 +25,15 @@ guidelines you need to follow.
      project already has good test coverage, so look at some of the existing
      tests if you're unsure how to go about it.
 
-  5. Do your best to have [well-formed commit messages][] for each change.
-     This provides consistency throughout the project, and ensures that commit
-     messages are able to be formatted properly by various git tools.
+  5. Do your best to have well-formed commit messages for each change.
+     This project follows [Conventional Commits](https://www.conventionalcommits.org/).
+     Examples:
+     - `feat: add new rule DL3028`
+     - `fix: correct port validation in DL3011`
+     - `docs: update installation guide`
+     - `refactor: simplify analyzer logic`
 
   6. Finally, push the commits to your fork and submit a [pull request][].
 
 [forking]: https://help.github.com/articles/fork-a-repo
-[well-formed commit messages]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
-[squash]: http://git-scm.com/book/en/Git-Tools-Rewriting-History#Squashing-Commits
 [pull request]: https://help.github.com/articles/creating-a-pull-request

@@ -2,6 +2,8 @@
 package linter
 
 import (
+	"slices"
+
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 
 	"github.com/zabio3/godolint/linter/rules"
@@ -13,15 +15,14 @@ type Analyzer struct {
 	trustedRegistries []string
 }
 
-// NewAnalyzer generate a NewAnalyzer with rules to apply.
+// NewAnalyzer generates a new Analyzer with rules to apply.
 func NewAnalyzer(ignoreRules []string, trustedRegistries []string) Analyzer {
-	return newAnalyzer(ignoreRules, trustedRegistries)
-}
-
-func newAnalyzer(ignoreRules []string, trustedRegistries []string) Analyzer {
 	var filteredRules []*rules.Rule
-	for _, k := range getMakeDiff(rules.RuleKeys, ignoreRules) {
-		if rule, ok := rules.Rules[k]; ok {
+	for _, key := range rules.RuleKeys {
+		if slices.Contains(ignoreRules, key) {
+			continue
+		}
+		if rule, ok := rules.Rules[key]; ok {
 			filteredRules = append(filteredRules, rule)
 		}
 	}
@@ -31,58 +32,17 @@ func newAnalyzer(ignoreRules []string, trustedRegistries []string) Analyzer {
 	}
 }
 
-// Run apply docker best practice rules to docker ast.
+// Run applies docker best practice rules to docker ast.
 func (a Analyzer) Run(node *parser.Node) ([]string, error) {
 	var rst []string
-	rstChan := make(chan []string, len(a.rules))
-	errChan := make(chan error, len(a.rules))
-
-	for i := range a.rules {
-		go func(r *rules.Rule) {
-			vrst, err := r.ValidateFunc(node, &rules.RuleOptions{
-				TrustedRegistries: a.trustedRegistries,
-			})
-			if err != nil {
-				errChan <- err
-			} else {
-				rstChan <- rules.CreateMessage(a.rules[i], vrst)
-			}
-		}(a.rules[i])
-		select {
-		case value := <-rstChan:
-			rst = append(rst, value...)
-		case err := <-errChan:
+	for _, rule := range a.rules {
+		vrst, err := rule.ValidateFunc(node, &rules.RuleOptions{
+			TrustedRegistries: a.trustedRegistries,
+		})
+		if err != nil {
 			return nil, err
 		}
+		rst = append(rst, rules.CreateMessage(rule, vrst)...)
 	}
 	return rst, nil
-}
-
-// getMakeDifference is a function to create a difference set.
-func getMakeDiff(xs, ys []string) []string {
-	if len(xs) > len(ys) {
-		return makeDiff(xs, ys)
-	}
-	return makeDiff(ys, xs)
-}
-
-// make set difference.
-func makeDiff(xs, ys []string) []string {
-	var set []string
-	for i := range xs {
-		if !isContain(ys, xs[i]) {
-			set = append(set, xs[i])
-		}
-	}
-	return set
-}
-
-// isContain is a function to check if s is in xs.
-func isContain(xs []string, s string) bool {
-	for i := range xs {
-		if xs[i] == s {
-			return true
-		}
-	}
-	return false
 }

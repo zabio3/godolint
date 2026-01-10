@@ -297,17 +297,7 @@ var Rules = map[string]*Rule{
 	},
 }
 
-// isContain is a function to check if s is in xs
-func isContain(s []string, e string) bool {
-	for _, v := range s {
-		if e == v {
-			return true
-		}
-	}
-	return false
-}
-
-// CreateMessage : create output message
+// CreateMessage creates output messages from validation results.
 func CreateMessage(rule *Rule, vrst []ValidateResult) []string {
 	rst := make([]string, len(vrst))
 	for i, v := range vrst {
