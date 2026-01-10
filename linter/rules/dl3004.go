@@ -6,15 +6,14 @@ import (
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 )
 
-// validateDL3004 is "Do not use sudo as it leads to unpredictable behavior. Use a tool like gosu to enforce root."
+// validateDL3004 validates "Do not use sudo as it leads to unpredictable behavior".
+// It checks if the first command in a RUN instruction is "sudo".
 func validateDL3004(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == RUN {
-			for _, v := range strings.Fields(child.Next.Value) {
-				if v == "sudo" {
-					rst = append(rst, ValidateResult{line: child.StartLine})
-				}
-				break
+			fields := strings.Fields(child.Next.Value)
+			if len(fields) > 0 && fields[0] == "sudo" {
+				rst = append(rst, ValidateResult{line: child.StartLine})
 			}
 		}
 	}

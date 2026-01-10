@@ -6,12 +6,27 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime/debug"
 	"sort"
+	"strings"
 
 	"github.com/moby/buildkit/frontend/dockerfile/parser"
 
 	"github.com/zabio3/godolint/linter"
 )
+
+const name = "godolint"
+
+// getVersion returns the version from build info, or "dev" if not available.
+func getVersion() string {
+	if info, ok := debug.ReadBuildInfo(); ok {
+		v := info.Main.Version
+		if v != "" && v != "(devel)" {
+			return v
+		}
+	}
+	return "dev"
+}
 
 // Exit codes are int values that represent an exit code for a particular error.
 const (
@@ -22,10 +37,6 @@ const (
 	ExitCodeAstParseError
 	ExitCodeLintCheckError
 )
-
-const name = "godolint"
-
-const version = "1.0.3"
 
 const usage = `godolint - Dockerfile linter written in Golang
 
@@ -50,7 +61,7 @@ type CLI struct {
 type sliceString []string
 
 func (ss *sliceString) String() string {
-	return fmt.Sprintf("%s", *ss)
+	return strings.Join(*ss, ",")
 }
 
 func (ss *sliceString) Set(value string) error {
@@ -80,7 +91,7 @@ func (cli *CLI) Run(args []string) int {
 	}
 
 	if isVersion {
-		fmt.Fprintf(cli.OutStream, "godolint version %v\n", version)
+		fmt.Fprintf(cli.OutStream, "godolint version %s\n", getVersion())
 		return ExitCodeOK
 	}
 
@@ -97,6 +108,7 @@ func (cli *CLI) Run(args []string) int {
 		fmt.Fprint(cli.ErrStream, err)
 		return ExitCodeFileError
 	}
+	defer f.Close()
 
 	r, err := parser.Parse(f)
 	if err != nil {
@@ -111,12 +123,7 @@ func (cli *CLI) Run(args []string) int {
 		return ExitCodeLintCheckError
 	}
 
-	rst = sort.StringSlice(rst)
-	var output string
-	for i := range rst {
-		// ends of each strings have "\n"
-		output = output + rst[i]
-	}
-	fmt.Fprint(cli.OutStream, output)
+	sort.Strings(rst)
+	fmt.Fprint(cli.OutStream, strings.Join(rst, ""))
 	return ExitCodeOK
 }

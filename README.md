@@ -1,13 +1,11 @@
 godolint
 ===
 
-[![GitHub release](http://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](https://github.com/zabio3/godolint/releases/latest)
-[![Actions Status](https://github.com/zabio3/godolint/workflows/go1.22/badge.svg)](https://github.com/zabio3/godolint/actions)
-[![Golang CI](https://golangci.com/badges/github.com/zabio3/godolint.svg)](https://golangci.com/r/github.com/zabio3/godolint)
+[![GitHub release](https://img.shields.io/github/release/zabio3/godolint.svg?style=flat-square)](https://github.com/zabio3/godolint/releases/latest)
+[![CI](https://github.com/zabio3/godolint/workflows/CI/badge.svg)](https://github.com/zabio3/godolint/actions)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zabio3/godolint)](https://goreportcard.com/report/github.com/zabio3/godolint)
-[![GoDoc](https://godoc.org/github.com/zabio3/godolint?status.svg)](https://godoc.org/github.com/zabio3/godolint)
-[![Maintainability](https://api.codeclimate.com/v1/badges/4c1c216781e5592d4194/maintainability)](https://codeclimate.com/github/zabio3/godolint/maintainability)
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/zabio3/godolint.svg)](https://pkg.go.dev/github.com/zabio3/godolint)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 A Dockerfile linter that helps you build [best practice](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) Docker images (inspired by [Haskell Dockerfile Linter](https://github.com/hadolint/hadolint)).
 This tool performs docker rule checks based on an abstract syntax tree (AST) of a Dockerfile where the AST is generated using [moby/buildkit parser](https://github.com/moby/buildkit/tree/master/frontend/dockerfile/parser).
@@ -67,10 +65,10 @@ $ godolint --ignore DL3000 testdata/DL3000_Dockerfile
 
 You can download a binary from the release page and place it in `$PATH` directory.
 
-Or you can use `go get`:
+Or you can use `go install`:
 
 ```
-$ go get github.com/zabio3/godolint
+$ go install github.com/zabio3/godolint@latest
 ```
 
 ## Rules
@@ -122,7 +120,7 @@ For the definitions of the AST, see [moby/buildkit](https://github.com/moby/buil
 Contributions are of course always welcome!
 
 1. Fork zabio3/godolint (https://github.com/zabio3/godolint/fork)
-2. Run `go get` to install dependencies
+2. Run `go mod download` to install dependencies
 3. Create a feature branch
 4. Commit your changes
 5. Run test using `go test ./...`
