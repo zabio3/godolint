@@ -6,11 +6,13 @@ import (
 
 func TestValidateDL3006(t *testing.T) {
 	cases := []struct {
+		name          string
 		dockerfileStr string
 		expectedRst   []ValidateResult
 		expectedErr   error
 	}{
 		{
+			name: "warns on image without tag",
 			dockerfileStr: `FROM debian
 RUN apt-get update
 
@@ -24,22 +26,38 @@ CMD ["go", "run", "main.go"]
 			},
 			expectedErr: nil,
 		},
+		{
+			name:          "doesn't warn on scratch image",
+			dockerfileStr: `FROM scratch`,
+			expectedRst:   nil,
+			expectedErr:   nil,
+		},
+		{
+			name: "doesn't warn on image with tag",
+			dockerfileStr: `FROM debian:11
+RUN apt-get update
+`,
+			expectedRst:   nil,
+			expectedErr:   nil,
+		},
 	}
 
-	for i, tc := range cases {
-		rst, err := parseDockerfile(tc.dockerfileStr)
-		if err != nil {
-			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
-		}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			rst, err := parseDockerfile(tc.dockerfileStr)
+			if err != nil {
+				t.Errorf("parse error %s", tc.dockerfileStr)
+			}
 
-		gotRst, gotErr := validateDL3006(rst.AST, nil)
-		if !isValidateResultEq(gotRst, tc.expectedRst) {
-			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
-		}
+			gotRst, gotErr := validateDL3006(rst.AST, nil)
+			if !isValidateResultEq(gotRst, tc.expectedRst) {
+				t.Errorf("results deep equal has returned: want %v, got %v", tc.expectedRst, gotRst)
+			}
 
-		if gotErr != tc.expectedErr {
-			t.Errorf("#%d error has returned: want %s, got %s", i, tc.expectedErr, gotErr)
-		}
-		cleanup(t)
+			if gotErr != tc.expectedErr {
+				t.Errorf("error has returned: want %s, got %s", tc.expectedErr, gotErr)
+			}
+			cleanup(t)
+		})
 	}
 }
