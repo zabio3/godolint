@@ -13,9 +13,9 @@ var regexDL3006 = regexp.MustCompile(`.+[:].+`)
 func validateDL3006(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
 	for _, child := range node.Children {
 		if child.Value == FROM {
-			inst, err := instructions.ParseInstruction(child)
+			inst, parseErr := instructions.ParseInstruction(child)
 			st, ok := inst.(*instructions.Stage)
-			if err != nil || !ok {
+			if parseErr != nil || !ok {
 				continue
 			}
 
