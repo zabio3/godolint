@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended"
   ],
+  "dependencyDashboard": false,
   "schedule": ["on sunday"],
   "automerge": true,
   "automergeType": "pr",
