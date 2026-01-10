@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestValidateDL3012(t *testing.T) {
+func TestValidateDL3054(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		expectedRst   []ValidateResult
@@ -12,39 +12,39 @@ func TestValidateDL3012(t *testing.T) {
 	}{
 		{
 			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
-`,
-			expectedRst: []ValidateResult{
-				{line: 3},
-			},
-			expectedErr: nil,
-		},
-		{
-			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
+LABEL org.opencontainers.image.licenses="MIT"
 `,
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 		{
 			dockerfileStr: `FROM ubuntu:latest
-RUN apt-get update
-CMD ["nginx"]
+LABEL org.opencontainers.image.licenses="Apache-2.0"
 `,
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 		{
 			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
-HEALTHCHECK CMD curl -f http://localhost/status || exit 1
+LABEL org.opencontainers.image.licenses="CustomLicense"
 `,
 			expectedRst: []ValidateResult{
-				{line: 3},
-				{line: 4},
+				{line: 2, addMsg: "Label value is not a valid SPDX license: org.opencontainers.image.licenses"},
 			},
+			expectedErr: nil,
+		},
+		{
+			dockerfileStr: `FROM ubuntu:latest
+LABEL org.opencontainers.image.licenses="GPL-3.0"
+`,
+			expectedRst: nil,
+			expectedErr: nil,
+		},
+		{
+			dockerfileStr: `FROM ubuntu:latest
+LABEL version="1.0.0"
+`,
+			expectedRst: nil,
 			expectedErr: nil,
 		},
 	}
@@ -55,7 +55,7 @@ HEALTHCHECK CMD curl -f http://localhost/status || exit 1
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3012(rst.AST, nil)
+		gotRst, gotErr := validateDL3054(rst.AST, nil)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}

@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestValidateDL3012(t *testing.T) {
+func TestValidateDL3050(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		expectedRst   []ValidateResult
@@ -12,39 +12,32 @@ func TestValidateDL3012(t *testing.T) {
 	}{
 		{
 			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
-`,
-			expectedRst: []ValidateResult{
-				{line: 3},
-			},
-			expectedErr: nil,
-		},
-		{
-			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
+LABEL org.opencontainers.image.version="1.0.0"
 `,
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 		{
 			dockerfileStr: `FROM ubuntu:latest
-RUN apt-get update
-CMD ["nginx"]
+LABEL version="1.0.0"
 `,
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 		{
 			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
-HEALTHCHECK CMD curl -f http://localhost/status || exit 1
+LABEL custom.label="value"
 `,
 			expectedRst: []ValidateResult{
-				{line: 3},
-				{line: 4},
+				{line: 2, addMsg: "Label not in allowlist: custom.label"},
 			},
+			expectedErr: nil,
+		},
+		{
+			dockerfileStr: `FROM ubuntu:latest
+LABEL com.example.app.version="1.0.0"
+`,
+			expectedRst: nil,
 			expectedErr: nil,
 		},
 	}
@@ -55,7 +48,7 @@ HEALTHCHECK CMD curl -f http://localhost/status || exit 1
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3012(rst.AST, nil)
+		gotRst, gotErr := validateDL3050(rst.AST, nil)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}

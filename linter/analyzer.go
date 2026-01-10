@@ -23,6 +23,10 @@ func NewAnalyzer(ignoreRules []string, trustedRegistries []string) Analyzer {
 			continue
 		}
 		if rule, ok := rules.Rules[key]; ok {
+			// Skip rules with Ignore severity by default
+			if rule.Severity == rules.SeverityIgnore {
+				continue
+			}
 			filteredRules = append(filteredRules, rule)
 		}
 	}

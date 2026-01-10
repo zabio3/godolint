@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestValidateDL3012(t *testing.T) {
+func TestValidateDL3045(t *testing.T) {
 	cases := []struct {
 		dockerfileStr string
 		expectedRst   []ValidateResult
@@ -12,38 +12,38 @@ func TestValidateDL3012(t *testing.T) {
 	}{
 		{
 			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
+COPY src dest
 `,
 			expectedRst: []ValidateResult{
-				{line: 3},
+				{line: 2},
 			},
 			expectedErr: nil,
 		},
 		{
 			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
+WORKDIR /app
+COPY src dest
 `,
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 		{
 			dockerfileStr: `FROM ubuntu:latest
-RUN apt-get update
-CMD ["nginx"]
+COPY src /app/dest
 `,
 			expectedRst: nil,
 			expectedErr: nil,
 		},
 		{
-			dockerfileStr: `FROM ubuntu:latest
-HEALTHCHECK CMD curl -f http://localhost/ || exit 1
-HEALTHCHECK CMD curl -f http://localhost/health || exit 1
-HEALTHCHECK CMD curl -f http://localhost/status || exit 1
+			dockerfileStr: `FROM ubuntu:latest AS builder
+WORKDIR /app
+COPY src dest
+
+FROM ubuntu:latest
+COPY --from=builder /app/dest dest
 `,
 			expectedRst: []ValidateResult{
-				{line: 3},
-				{line: 4},
+				{line: 6},
 			},
 			expectedErr: nil,
 		},
@@ -55,7 +55,7 @@ HEALTHCHECK CMD curl -f http://localhost/status || exit 1
 			t.Errorf("#%d parse error %s", i, tc.dockerfileStr)
 		}
 
-		gotRst, gotErr := validateDL3012(rst.AST, nil)
+		gotRst, gotErr := validateDL3045(rst.AST, nil)
 		if !isValidateResultEq(gotRst, tc.expectedRst) {
 			t.Errorf("#%d results deep equal has returned: want %v, got %v", i, tc.expectedRst, gotRst)
 		}

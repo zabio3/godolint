@@ -1,16 +1,22 @@
 package rules
 
-//import (
-//	"github.com/moby/buildkit/frontend/dockerfile/parser"
-//)
-//
-//// validateDL3012 Provide an email address or URL as maintainer.
-//func validateDL3012(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
-//	for _, child := range node.Children {
-//		if child.Value == MAINTAINER {
-//
-//
-//		}
-//	}
-//	return rst, nil
-//}
+import (
+	"github.com/moby/buildkit/frontend/dockerfile/parser"
+)
+
+// validateDL3012 Multiple `HEALTHCHECK` instructions found. Only the last `HEALTHCHECK` will take effect.
+func validateDL3012(node *parser.Node, _ *RuleOptions) (rst []ValidateResult, err error) {
+	if node == nil {
+		return rst, nil
+	}
+	var healthcheckCount int
+	for _, child := range node.Children {
+		if child.Value == HEALTHCHECK {
+			healthcheckCount++
+			if healthcheckCount > 1 {
+				rst = append(rst, ValidateResult{line: child.StartLine})
+			}
+		}
+	}
+	return rst, nil
+}
