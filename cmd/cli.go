@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime/debug"
 	"sort"
 	"strings"
 
@@ -14,10 +15,18 @@ import (
 	"github.com/zabio3/godolint/linter"
 )
 
-const (
-	name    = "godolint"
-	version = "1.0.3"
-)
+const name = "godolint"
+
+// getVersion returns the version from build info, or "dev" if not available.
+func getVersion() string {
+	if info, ok := debug.ReadBuildInfo(); ok {
+		v := info.Main.Version
+		if v != "" && v != "(devel)" {
+			return v
+		}
+	}
+	return "dev"
+}
 
 // Exit codes are int values that represent an exit code for a particular error.
 const (
@@ -82,7 +91,7 @@ func (cli *CLI) Run(args []string) int {
 	}
 
 	if isVersion {
-		fmt.Fprintf(cli.OutStream, "godolint version %v\n", version)
+		fmt.Fprintf(cli.OutStream, "godolint version %s\n", getVersion())
 		return ExitCodeOK
 	}
 
