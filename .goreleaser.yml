@@ -20,6 +20,9 @@ builds:
 
 archives:
   - format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
     name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
     files:
       - LICENSE*
