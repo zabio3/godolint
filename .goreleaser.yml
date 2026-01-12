@@ -1,9 +1,12 @@
 project_name: godolint
+version: 2
+
 release:
   github:
     owner: zabio3
     name: godolint
   name_template: '{{.Tag}}'
+
 builds:
   - goos:
       - linux
@@ -11,8 +14,16 @@ builds:
       - windows
     goarch:
       - amd64
-    goarm:
-      - "6"
     main: .
-    ldflags: -s -w -X main.Version={{.Version}}  -X main.BuildDate={{.Date}}
+    ldflags: -s -w
     binary: godolint
+
+archives:
+  - format: tar.gz
+    name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+    files:
+      - LICENSE*
+      - README*
+
+checksum:
+  name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
